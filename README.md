@@ -12,4 +12,6 @@ AMX-PAB-reportes		Jasper Reports
 db_resources			Developer DataBAses Resources and scripts
 pom.xml				the parent pom.xml
 
+-----------------
 
+GITHUB TMP REPOSITORY
