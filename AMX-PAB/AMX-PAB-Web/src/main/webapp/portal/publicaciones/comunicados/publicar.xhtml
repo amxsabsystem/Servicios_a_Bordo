@@ -1,0 +1,319 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Comunicados</ui:define>
+
+    <ui:define name="head">
+        <style>
+            body .ui-dialog .ui-dialog-titlebar {
+                background-color: #06c;
+                color: #fff;
+                padding: 10px 16px;
+            }
+            body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon {
+                color: #fff;
+            }
+        </style>
+        
+        
+    </ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title" >
+                        <h1>Publicar Comunicados</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:spacer height="15"/>
+                    
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#CCCCCC"  rendered="#{!comunicadosMB.isVistaPreliminar}">
+                        
+                        <h:outputText value="" />
+                        
+                        <p:panelGrid columns="2"  styleClass="md-inputfield" style="float: right; background-color:#FFF">
+                        
+                            <h:panelGroup id ="etiquetaFecha"  >
+                                <h:outputText  value="Date" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                                <h:outputText  value="Fecha" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                            </h:panelGroup>
+                            <h:panelGroup id ="fechasis"  >
+                            <h:outputText value="#{comunicadosMB.fechaSistema}" />
+                            </h:panelGroup>
+                           
+                            <h:panelGroup id ="etiquetaUsuario"  >
+                                <h:outputText  value="User" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                                <h:outputText  value="Usuario" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                            </h:panelGroup>
+                            <h:panelGroup id ="userSis"  >
+                            <h:outputText value="#{request.getUserPrincipal()}" />
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#CCCCCC" rendered="#{!comunicadosMB.isVistaPreliminar}">
+                        
+                        <h:panelGroup id ="etiquetaClave"  >
+                            <h:outputText  value="Direct to" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText  value="Dirigido A" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="buttonUsers" styleClass="md-inputfield">
+                            <p:commandButton  value="Look Users" icon="ui-icon-add" ajax="false" action="#{comunicadosMB.verUsuarios}" rendered="#{comunicadosMB.idiomaIngles}" immediate="true" />
+                            <p:commandButton  value="Ver Usuarios" icon="ui-icon-add" ajax="false" action="#{comunicadosMB.verUsuarios}" rendered="#{!comunicadosMB.idiomaIngles}" immediate="true" />
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id ="etiquetaRevision"  >
+                            <h:outputText  value="Revision" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText  value="Revision" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="revision"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{comunicadosMB.asignedRevision}"   style="width: 90%;">
+				<f:selectItems value="#{comunicadosMB.selectRevisiones}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id ="etiquetaTema"  >
+                            <h:outputText  value="Theme" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText  value="Tema" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="tema" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{comunicadosMB.asignedTema}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                <f:selectItems value="#{comunicadosMB.selectTemas}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <p:commandButton id="nuevoTemaButton" value="Dar de Alta Nuevo Tema" icon="ui-icon-add" ajax="false" action="#{comunicadosMB.nuevoTema}" immediate="true"/>
+                        <h:outputText value="" />
+                        
+                        <h:panelGroup id ="etiquetaEstatus" rendered="#{comunicadosMB.modificarRegistro}" >
+                            <h:outputText  value="Status" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText  value="Estatus" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{comunicadosMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{comunicadosMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        
+                    
+                        
+                        
+                        <h:panelGroup id ="etiquetaReferencia">
+                            <h:outputText  value="Reference" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText  value="Referencia" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="referencia" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{comunicadosMB.asignedReferencia}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                <f:selectItems value="#{comunicadosMB.selectRefrencias}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id ="etiquetaAccion">
+                            <h:outputText  value="Action" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText  value="Acción" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="accion" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{comunicadosMB.asignedAccion}"   style="width: 90%;">
+                                <f:selectItems value="#{comunicadosMB.selectAccioness}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id ="etiquetaTitulo">
+                            <h:outputText  value="Title" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText  value="Titulo" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="titulo" styleClass="md-inputfield">
+                            <p:inputText  value="#{comunicadosMB.titulo}" maxlength="50" required="false" validatorMessage="Título: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)?"  />
+                            </p:inputText>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id ="etiquetaIdioma">
+                            <h:outputText  value="Languaje" style="float: right;" rendered="#{comunicadosMB.idiomaIngles}"/>
+                            <h:outputText   value="Idioma" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="idioma" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{comunicadosMB.asignedIdioma}"   style="width: 90%;">
+                                <f:selectItems value="#{comunicadosMB.selectIdiomas}" />
+                                <p:ajax  process=":form"  update="editor,titulo,etiquetaIdioma,etiquetaAccion,etiquetaFecha,etiquetaUsuario,etiquetaClave,etiquetaRevision,etiquetaTema,etiquetaEstatus,etiquetaTitulo,etiquetaReferencia,buttonUsers" listener="#{comunicadosMB.cambiarIdioma}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    
+                    <p:textEditor id="editor" widgetVar="editorEspanol" value="#{comunicadosMB.textoComunicado}" height="300" style="margin-bottom:10px" 
+                                  placeholder="Ingresa el contenido del mensaje"  rendered="#{!comunicadosMB.isVistaPreliminar}">
+                        <f:facet name="toolbar">
+                            <span class="ql-formats">
+            <select class="ql-font" />
+            <select class="ql-size" />
+        </span>
+        <span class="ql-formats">
+            <button class="ql-bold" />
+            <button class="ql-italic" />
+            <button class="ql-underline" />
+            <button class="ql-strike" />
+        </span>
+        <span class="ql-formats">
+            <select class="ql-color" />
+            <select class="ql-background" />
+        </span>
+        <span class="ql-formats">
+            <button class="ql-script" value="sub" />
+            <button class="ql-script" value="super" />
+        </span>
+        
+        <span class="ql-formats">
+            <button class="ql-list" value="ordered" />
+            <button class="ql-list" value="bullet" />
+            <button class="ql-indent" value="-1" />
+            <button class="ql-indent" value="+1" />
+        </span>
+        <span class="ql-formats">
+            <button class="ql-direction" value="rtl" />
+            <select class="ql-align" />
+        </span>
+        
+        
+                       </f:facet>
+                    </p:textEditor>
+                    
+                    
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;" rendered="#{!comunicadosMB.isVistaPreliminar}">
+                        <p:commandButton id="vistaPreliminarButton" value="Vista Preliminar" icon="ui-icon-save" ajax="false" action="#{comunicadosMB.vistaPreliminar}"  rendered="#{!comunicadosMB.modificarRegistro}"  process=":form" />
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{comunicadosMB.update}"  rendered="#{comunicadosMB.modificarRegistro}"/>
+                    </p:panelGrid>
+                    
+                    
+                    <p:panelGrid  styleClass="ui-panelgrid-blank form-group" style="background-color:#CCCCCC;width:100%;" rendered="#{comunicadosMB.isVistaPreliminar}">
+                        
+                        <p:row>
+                            <p:column style="width:50%; height: 200px;">
+                                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; height: 100px;">
+                                    <h:outputText  value="Fecha" /><h:outputText  value="#{comunicadosMB.fechaSistema}" />
+                                    
+                                    <h:outputText  value="Usuario" /><h:outputText  value="#{request.getUserPrincipal()}" />
+                                    
+                                </p:panelGrid>
+                            </p:column>
+                            <p:column style="width:50%; height: 200px;">
+                                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; height: 100px;">
+                                    <h:outputText  value="Dirigido A" /><h:outputText  value="" />
+                                    <h:outputText  value="Proveedores" /><h:outputText  value="#{comunicadosMB.proveedores}" />
+                                    
+                                    
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="2" style="width:100%;">
+                                <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; border-width: 2px 2px 0px 2px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+                                    <h:outputText value="Tema" /> <h:outputText value="#{comunicadosMB.temaString}" />   
+                                    <h:outputText value="Titulo" /> <h:outputText value="#{comunicadosMB.titulo}" />
+                                
+                                </p:panelGrid>
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; border-width: 0px 2px 1px 2px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                    <p:textEditor id="editorVistaPrevia" widgetVar="editorEspanol" value="#{comunicadosMB.textoComunicadoVistaPrevia}" height="300" style="margin-bottom:10px" 
+                                  placeholder="Ingresa el contenido en español" >
+                        <f:facet name="toolbar">
+                           <span class="ql-formats">
+                               
+                           </span>
+                           
+                       </f:facet>
+                    </p:textEditor>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="background-color:#CCCCCC;"  rendered="#{comunicadosMB.isVistaPreliminar}">
+                        <p:outputLabel for="vigenciaDese" value="Publicar a Partir de"  style="float: right;"/>
+                        <p:calendar id="vigenciaDese" showOn="button"  value="#{comunicadosMB.fechaVigenciaDe}" styleClass="noprocess" style="border-bottom: 1px solid black;"/>
+                        <p:outputLabel for="vigenciaHasta" value="Vigencia Hasta"  style="float: right;"/>
+                        <p:calendar id="vigenciaHasta" showOn="button" value="#{comunicadosMB.fechaVigenciaHasta}" styleClass="noprocess" style="border-bottom: 1px solid black;"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="3" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;"  rendered="#{comunicadosMB.isVistaPreliminar}">
+                        <h:outputText value=""/>
+                        <p:commandButton id="returnButton" value="Regresar" icon="ui-icon-arrow-back" ajax="false"  action="#{comunicadosMB.Regresar}" immediate="true"/>
+                        <p:commandButton id="saveButton" value="Publicar" icon="ui-icon-save" ajax="false" action="#{comunicadosMB.publicar}"/>
+                        
+                    </p:panelGrid>
+                    
+                    
+                    <p:dialog header="Dirigir Comunicado" widgetVar="dirigirComunicado" modal="true" height="380" width="600" responsive="true">
+                        <h5>Dirigido a Proveedores</h5>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            
+                            <h:outputText value="Región" style="float: right;"/>
+                            <p:selectOneMenu  value="#{comunicadosMB.asignedRegion}"   style="width: 80%;">
+                                    <f:selectItems value="#{comunicadosMB.selectRegiones}" />
+                                    <p:ajax update="estacion"  listener="#{comunicadosMB.getEstaciones}" />
+                            </p:selectOneMenu>
+                            
+                            <h:outputText value="Estación" style="float: right;"/>
+                            <p:selectOneMenu id="estacion" value="#{comunicadosMB.asignedEstacion}"  filter="true" filterMatchMode="startsWith" style="width: 80%;">
+                                        <f:selectItems value="#{comunicadosMB.selectEstaciones}" />
+                                        <p:ajax update="proveedor"  listener="#{comunicadosMB.getProveedoresEstacion}" />
+                            </p:selectOneMenu>
+                            
+                            <h:outputText value=""/>
+                            <p:selectCheckboxMenu id="proveedor" label="Proveedores" value="#{comunicadosMB.asignedProveedores}" filter="true" filterMatchMode="startsWith" style="width: 80%;">
+                                <f:selectItems value="#{comunicadosMB.selectProveedores}" var="proveedores" itemLabel="#{proveedores.claveProveedorEstacion}"  itemValue="#{proveedores.idProveedorEstacion}" />
+                            </p:selectCheckboxMenu>
+                            
+                        </p:panelGrid>
+                        <h5>Dirigido a Areas</h5>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            
+                            <h:outputText value="" style="float: right;"/>
+                            <p:selectCheckboxMenu id="area" label="Áreas" value="#{comunicadosMB.asignedArea}" filter="true" filterMatchMode="startsWith" style="width: 80%;">
+                                <f:selectItems value="#{comunicadosMB.selectAreas}" var="areas" itemLabel="#{areas.clave}"  itemValue="#{proveedores.idArea}" />
+                            </p:selectCheckboxMenu>
+                            
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="otraEstacionButton" value="Agregar otra Estación" icon="ui-icon-add" ajax="false"  action="#{comunicadosMB.otraEstacion}" process="proveedor @this" />
+                            <p:commandButton id="dirigidoButton" value="Aceptar" icon="ui-icon-save" ajax="false"  action="#{comunicadosMB.saveDirigidos}" process="proveedor @this" />
+                            <h:outputText value="" />
+                        </p:panelGrid>
+                        
+                        
+                    </p:dialog> 
+                    
+                    
+                    <p:dialog header="Banner" widgetVar="bannerComunicado" 
+                              modal="true" height="300" width="600" responsive="true">
+                        <h5>Bannner de Publicación</h5>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            
+                            <h:outputText value="Texto para el banner" style="float: right;"/>
+                            <p:inputText  value="#{comunicadosMB.row_selected.mensajeSlider}"  style="width: 90%;"  maxlength="50" required="false" validatorMessage="mensaje: Datos incorrectos, solo caracteres alfanuméricos y -Ampersand.,#/_">
+                                <f:validateRegex pattern="^([A-Za-z0-9ñ-[&amp;].,#/_ ]+)?"  />
+                            </p:inputText>
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="cancelarButton" value="Cancelar" icon="ui-icon-arrow-back" ajax="false"  action="#{comunicadosMB.cancelar}" immediate="true"/>
+                            <p:commandButton id="publicarButton" value="Publicar" icon="ui-icon-save" ajax="false" action="#{comunicadosMB.save}"/>
+
+                        </p:panelGrid>
+                        
+                    </p:dialog>    
+                    
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

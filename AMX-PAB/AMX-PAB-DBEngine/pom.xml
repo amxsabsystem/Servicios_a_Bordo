@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.aeromexico.pab</groupId>
+        <artifactId>AMX-PAB</artifactId>
+        <version>2.0.2</version>
+    </parent>
+    
+    <artifactId>AMX-PAB-DBEngine</artifactId>	
+    <name>AMX-PAB-DBEngine</name>
+    <packaging>jar</packaging>
+
+	
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <staging.dir>${project.build.directory}/staging</staging.dir>
+        <apache.derby.version>10.13.1.1</apache.derby.version>
+		
+        <project.mainclass>com.aeromexico.pab.dbengine.DerbyServerLauncherWrapper</project.mainclass>
+		
+        <derby.server.port>1527</derby.server.port>
+		
+        <nix.file.separator>/</nix.file.separator>
+        <nix.path.separator>:</nix.path.separator>
+		
+        <win.path.separator>;</win.path.separator>
+        <win.file.separator>\</win.file.separator>
+		
+    </properties>
+	
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${apache.derby.version}</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyLocale_es</artifactId>
+            <version>${apache.derby.version}</version>
+        </dependency>
+		
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>${apache.derby.version}</version>
+        </dependency>
+				
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbynet</artifactId>
+            <version>${apache.derby.version}</version>
+        </dependency>
+    </dependencies>
+    
+    <build>                
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+		
+        <finalName>${project.artifactId}</finalName>
+    </build>
+    
+    <profiles>
+        <profile>
+            <id>dist</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>build-classpath</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build-classpath</goal>
+                                </goals>
+                                <configuration>
+                                    <prefix>dependency-jars</prefix>
+                                    <stripVersion>true</stripVersion>
+                                    <fileSeparator>/</fileSeparator>
+                                    <pathSeparator>;</pathSeparator>
+                                    <outputProperty>boundle.classPath</outputProperty>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>copy-dependencies</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <stripVersion>true</stripVersion>
+                                    <outputDirectory>${staging.dir}/dependency-jars/</outputDirectory>
+                                </configuration>
+                            </execution>							
+                        </executions>
+
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.0.2</version>
+
+                        <configuration>
+                            <archive>
+                                <index>true</index>
+                                <manifest>
+                                    <addClasspath>false</addClasspath>
+                                    <mainClass>${project.mainclass}</mainClass>							
+                                </manifest>						
+                            </archive>
+                            <finalName>${project.artifactId}</finalName>
+
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>			
+                            <execution>
+                                <id>clean-my-dirty-space</id>
+                                <phase>pre-clean</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <echo message="======================= clean-my-dirty-space, in pre-clean phase ==============>>>"/>
+                                        <delete quiet="true">
+                                            <fileset dir="${basedir}" includes="*.log"/>							
+                                        </delete>
+                                    </target>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>create-staging-area</id>
+                                <phase>post-clean</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+
+                                <configuration>
+                                    <target>
+                                        <echo message="======================= create-staging-area, in process-resources phase ==============>>>"/>								
+                                    </target>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>preprare-bins-installer</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+
+                                        <echo message="======================= preprare-bins-installer , in package phase, basedir=${basedir}, create ZIP for UPDATE ==============>>>"/>
+
+                                        <echo message="classpath: boundle.classPath[${boundle.classPath}] "/>
+
+                                        <copy todir="${staging.dir}">
+                                            <fileset file="${project.build.directory}/${project.artifactId}.jar" />
+                                            <fileset file="${project.build.directory}/classes/bin/*.sh" />
+                                            <fileset file="${project.build.directory}/classes/bin/*.cmd" />
+                                        </copy>
+
+                                        <chmod file="${staging.dir}/*.sh"  perm="751"/>
+                                        <chmod file="${staging.dir}/*.cmd" perm="751"/>
+
+                                        <zip destfile="${project.build.directory}/${project.artifactId}.zip" preserve0permissions="true" >
+                                            <zipfileset dir="${staging.dir}/dependency-jars"	includes="*.jar"   filemode="751"    prefix="${project.artifactId}/dependency-jars/"/>
+                                            <zipfileset dir="${staging.dir}"	                includes="${project.artifactId}.jar" prefix="${project.artifactId}/"/>
+                                            <zipfileset dir="${staging.dir}"					includes="*.sh"    filemode="751"    prefix="${project.artifactId}/"/>
+                                            <zipfileset dir="${staging.dir}"					includes="*.cmd"   filemode="751"    prefix="${project.artifactId}/"/>
+                                        </zip>
+
+                                    </target>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>install-miniDB-server</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <echo message="======================= install-miniDB-server ==============>>>"/>
+                                        <available file="install" type="dir" property="install.dir.present"/>
+                                        <echo message="==>> install.dir.present=${install.dir.present}, user.home=${user.home} "/>
+                                    </target>
+                                </configuration>
+                            </execution>
+
+                        </executions>
+
+                        <dependencies>
+                            <dependency>
+                                <groupId>commons-net</groupId>
+                                <artifactId>commons-net</artifactId>
+                                <version>1.4.1</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.ant</groupId>
+                                <artifactId>ant-commons-net</artifactId>
+                                <version>1.8.1</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>			
+                </plugins>
+
+            </build>
+
+        </profile>
+    </profiles>
+</project>

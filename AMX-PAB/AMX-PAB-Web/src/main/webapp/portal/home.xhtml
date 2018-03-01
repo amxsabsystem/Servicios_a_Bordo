@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">HOME</ui:define>
+
+    <ui:define name="head">
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/bootstrap/css/carousel.css" />
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/bootstrap/fonts/simple-line-icons.min.css"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="ui-g-12">            
+            <h1><h:outputText value="#{res_i18n.APP_GREATTING_PREFIX} #{sesionInfo.currentUserName} #{res_i18n.APP_GREATTING_SUFIX}"/></h1>
+            
+            <div class="ui-grid-col-8 carousel slide carousel-fade" data-ride="carousel" id="carousel1">
+                <div class="carousel-inner" role="listbox">
+                    <p:repeat value="#{homeMB.list_banner}" var="rowInner"  >
+                        <div class="item #{rowInner.clase}">
+                            <img src="#{facesContext.externalContext.requestContextPath}#{rowInner.urlImagen}"/>
+                            <div class="carousel-caption">
+                                <h3>#{rowInner.titulo} </h3>
+                                <p>#{rowInner.mensaje} </p>
+                            </div>
+                        </div>
+                    </p:repeat>
+                    
+                </div>
+                <div><a class="left carousel-control" href="#carousel1" role="button" data-slide="prev"><i class="icon-arrow-left"></i><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#carousel1" role="button" data-slide="next"><i class="icon-arrow-right"></i><span class="sr-only">Next</span></a></div>
+                <ol
+                    class="carousel-indicators">
+                    <p:repeat value="#{homeMB.list_banner}" var="rowInner"  >
+                        <li data-target="#carousel1" data-slide-to="#{rowInner.id_int}" class="#{rowInner.clase}"></li>
+                    </p:repeat>
+                    
+                </ol>
+            </div>            
+            <div class="ui-grid-col-4 imagenDiv">
+                <img src="#{facesContext.externalContext.requestContextPath}/resources/img/slider/banner.png"/>
+            </div>
+
+            <p:spacer height="15"/>
+
+            <div class="ui-grid-col-4 imagenDiv">
+                <img src="#{facesContext.externalContext.requestContextPath}/resources/img/slider/links.png"/>
+            </div>
+            <div class="ui-grid-col-4 imagenDiv">
+                <img src="#{facesContext.externalContext.requestContextPath}/resources/img/slider/links.png"/>
+            </div>
+            <div class="ui-grid-col-4 imagenDiv">
+                <img src="#{facesContext.externalContext.requestContextPath}/resources/img/slider/links.png"/>
+            </div>
+
+
+
+
+        </div>
+
+        <script src="#{facesContext.externalContext.requestContextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+
+    </ui:define>
+
+</ui:composition>

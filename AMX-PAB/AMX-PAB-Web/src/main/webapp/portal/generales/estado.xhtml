@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{res_i18n.APP_MENU_GEN_CITY_STATE}</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h5><a href="#{facesContext.externalContext.requestContextPath}/portal/generales/regiones.xhtml"> #{res_i18n.APP_MENU_GEN_REGIONS} </a> >
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/generales/paises.xhtml"> #{res_i18n.APP_MENU_GEN_COUNTRY} </a> > #{res_i18n.APP_MENU_GEN_CITY_STATE}</h5>
+                        <h1>#{res_i18n.APP_MENU_GEN_CITY_STATE}</h1>
+                        <p:dataTable    value="#{ciudadMBLDM.itemsLDM}" var="row"  
+                                        rows="#{ciudadMBLDM.defaultRowsPerPage}"
+                                        resizableColumns="true"
+                                        paginator="true" lazy="true" initMode="immediate"
+                                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                        rowsPerPageTemplate="#{ciudadMBLDM.rowsPerPageOptions}" >         
+
+                            
+                            <p:column headerText="Nombre de Ciudad o Estado"  >
+                                <h:outputText    value="#{row.nombre}" />
+                            </p:column>
+                            <p:column headerText="Estatus" sortBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterMatchMode="contains">
+                                <h:outputText value="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Reporte de Irregularidades</ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>Configuración de Irregularidades</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        
+                        <p:spacer height="15"/>
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+
+                            <p:outputLabel for="tiposProducto" value="Tipos de Producto" style="float: right;"/>
+                            <h:panelGroup id="tiposProducto" styleClass="md-inputfield" >
+                                <p:selectOneMenu  value="#{irregularidadesMB.asignedTiposProducto}"   style="width: 90%;">
+                                    <f:selectItems value="#{irregularidadesMB.selectTiposProducto}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="tiposIrregularidad" value="Tipos de Irregularidad" style="float: right;"/>
+                            <h:panelGroup id="tiposIrregularidad" styleClass="md-inputfield" >
+                                <p:selectOneMenu  value="#{irregularidadesMB.asignedIrregularidades}"   style="width: 90%;">
+                                    <f:selectItems value="#{irregularidadesMB.selectIrregularidades}" />
+                                    <p:ajax update="criteriosIrregularidad" process="@form" listener="#{irregularidadesMB.getCriterios}" />    
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="criteriosIrregularidad" value="Criterios de Irregularidad" style="float: right;"/>
+                            <p:selectManyCheckbox id="criteriosIrregularidad" value="#{irregularidadesMB.asignedCriterios}" layout="responsive" columns="1" styleClass="form-group">
+                                <f:selectItems value="#{irregularidadesMB.selectCriterios}" var="criterios" itemLabel="#{criterios.descripcion}" itemValue="#{criterios.idCriterioIrregularidad}" />
+                            </p:selectManyCheckbox>
+
+
+
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+
+                        
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-save" ajax="false" action="#{irregularidadesMB.updateReporte}"  rendered="#{irregularidadesMB.modificarRegistro}" update="dataTableGrid" process="updateButton"/>
+                            <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{irregularidadesMB.saveReporte}"  rendered="#{!irregularidadesMB.modificarRegistro}" update="dataTableGrid" process="saveButton"/>
+                            <h:outputText value="" />
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_ReporteIrregularidades"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+                        </p:panelGrid>  
+
+                        <p:dataTable id="dataTableGrid" var="row" value="#{irregularidadesMB.findAllReporte()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idConfiguracionReporte}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            <p:column headerText="Tipo de Producto" sortBy="#{row.tipoProductoReporte.descripcion}" filterBy="#{row.tipoProductoReporte.descripcion}" filterMatchMode="contains">
+                                <h:outputText    value="#{row.tipoProductoReporte.descripcion}" />
+                            </p:column>
+                            <p:column headerText="Tipo de Irregularidad" sortBy="#{row.tipoIrregularidad.descripcion}" filterBy="#{row.tipoIrregularidad.descripcion}" filterMatchMode="contains">
+                                <h:outputText    value="#{row.tipoIrregularidad.descripcion}" />
+                            </p:column>
+                            <p:column headerText="Criterio de Irregularidad" sortBy="#{row.criterioIrregularidad.descripcion}" filterBy="#{row.criterioIrregularidad.descripcion}" filterMatchMode="contains">
+                                <h:outputText    value="#{row.criterioIrregularidad.descripcion}" />
+                            </p:column>
+                            <p:column headerText="Modificar" exportable="false"> 
+                                <h:commandLink action="#{irregularidadesMB.modifyRowReporte(row) }" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

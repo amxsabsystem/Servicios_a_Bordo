@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Categorías</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta Categoría" rendered="#{!categoriasMB.modificarRegistro}" /><h:outputText value="Modificación Categoría" rendered="#{categoriasMB.modificarRegistro}" /></h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{categoriasMB.returnMaster}" immediate="true"/>
+		    </p:panelGrid>
+                    <br/>
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="nombreEspanol" value="Nombre Español" style="float: right;"/>
+                        <h:panelGroup id="nombreEspanol" styleClass="md-inputfield">
+                            <p:inputText  value="#{categoriasMB.row_selected.nombreEs}" maxlength="50" required="true" requiredMessage="Nombre Español: Campo requerido" validatorMessage="Nombre Español: Datos incorrectos, solo caracteres alfanuméricos">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                            </p:inputText>
+                         	
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="nombreIngles" value="Nombre Ingles" style="float: right;"/>
+                        <h:panelGroup id="nombreIngles" styleClass="md-inputfield">
+                            <p:inputText  value="#{categoriasMB.row_selected.nombreEn}" maxlength="50" required="false" validatorMessage="Nombre Ingles: Datos incorrectos, solo caracteres alfanuméricos">
+                                <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)?"  />
+                            </p:inputText>
+                         	
+                        </h:panelGroup>
+                        
+                     <p:outputLabel for="estatus" value="Estatus" rendered="#{categoriasMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{categoriasMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{categoriasMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{categoriasMB.save}"  rendered="#{!categoriasMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{categoriasMB.update}"  rendered="#{categoriasMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

@@ -1,0 +1,421 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Ciclos</ui:define>
+
+    <ui:define name="head">
+        <style>
+            body .ui-selectmanycheckbox.ui-widget label, body .ui-selectoneradio.ui-widget label {
+    position: inherit !important;
+}
+body.layout-compact .ui-selectonemenu .ui-selectonemenu-label{
+    
+    font-size: 18px !important;
+    color:black;
+}
+        </style>
+    </ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!ciclosMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{ciclosMB.modificarRegistro}" />Ciclo</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{ciclosMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    
+                        
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <h:panelGroup id="origenLabel"  styleClass="md-inputfield"><h:outputText value="Origen" style="float: right;" /></h:panelGroup>
+                        <h:panelGroup id="origen"  styleClass="md-inputfield" style="width:95%">
+                            <p:selectOneRadio  value="#{ciclosMB.asignedOrigen}" columns="2" style="width:95%"  disabled="#{ciclosMB.disabledEdicion}">
+                                <f:selectItems value="#{ciclosMB.selectOrigenes}"  />
+                                <p:ajax update="region"  listener="#{ciclosMB.updateRegiones}" />
+                            </p:selectOneRadio>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="4"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:#CCCCCC;">
+                        <p:outputLabel for="region" value="Región"/>
+                        <h:panelGroup id="region"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{ciclosMB.asignedRegion}"   style="width: 90%;"  disabled="#{ciclosMB.disabledEdicion}">
+				<f:selectItems value="#{ciclosMB.selectRegiones}" />
+                                <p:ajax update="estacion"  listener="#{ciclosMB.getEstaciones}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="estacion" value="Estación"/>
+                        <h:panelGroup id="estacion"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{ciclosMB.asignedEstacion}"  filter="true" filterMatchMode="startsWith" style="width: 90%;"  disabled="#{ciclosMB.disabledEdicion}">
+                                        <f:selectItems value="#{ciclosMB.selectEstaciones}" />
+                                        <p:ajax update="proveedor"  listener="#{ciclosMB.getProveedores}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:outputText value="" />
+                        <h:outputText value="" />
+                        
+                        <h:outputText value="Doble Abastecido"/>
+                        <p:selectBooleanCheckbox value="#{ciclosMB.isdobleAbastecido}" />
+                        
+                        
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <p:outputLabel for="proveedor" value="Proveedor"/>
+                        <h:panelGroup id="proveedor"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{ciclosMB.asignedProveedor}"   style="width: 90%;"  disabled="#{ciclosMB.disabledEdicion}">
+				<f:selectItems value="#{ciclosMB.selectProveedores}" />
+                                
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="TipodeClico" value="Tipo De Ciclo"/>
+                        <h:panelGroup id="TipodeClico"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{ciclosMB.asignedTipoCiclo}"   style="width: 90%;" disabled="#{ciclosMB.disabledEdicion}">
+                                <f:selectItems value="#{ciclosMB.selectTipoCiclos}" />
+                                <f:ajax render="grids" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                   
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <h:panelGroup id="grids">
+                    
+                        <p:panelGrid id="temporada" columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group" 
+                                    rendered="#{(ciclosMB.asignedTipoCiclo eq ciclosMB.idTipoCicloTemporada)}">
+
+                            <h:outputText value="Invierno" />
+                            <h:outputText value="Inicio" />
+                            <h:outputText value="Fin" />
+
+                            <h:outputText value="" />
+                            <h:panelGroup id="invIni"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{ciclosMB.asignedInviernoIni}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup id="inFin"  styleClass="md-inputfield">
+                                 <p:selectOneMenu  value="#{ciclosMB.asignedInviernoFin}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:outputText value="Primavera" />
+                            <h:outputText value="Inicio" />
+                            <h:outputText value="Fin" />
+
+                            <h:outputText value="" />
+                            <h:panelGroup id="primIni"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{ciclosMB.asignedPrimaveraIni}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup id="primFin"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{ciclosMB.asignedPrimaveraFin}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:outputText value="Verano" />
+                            <h:outputText value="Inicio" />
+                            <h:outputText value="Fin" />
+
+                            <h:outputText value="" />
+                            <h:panelGroup id="verIni"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{ciclosMB.asignedVeranoIni}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup id="verFin"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{ciclosMB.asignedVeranoFin}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:outputText value="Otoño" />
+                            <h:outputText value="Inicio" />
+                            <h:outputText value="Fin" />
+
+                            <h:outputText value="" />
+                            <h:panelGroup id="otoIni"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{ciclosMB.asignedOtonoIni}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup id="otoFin"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{ciclosMB.asignedOtonoFin}"   style="width: 90%;font-size: 20px !important;">
+				<f:selectItems value="#{ciclosMB.selectMeses}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+
+                        </p:panelGrid>
+                    <p:panelGrid id="numerico" columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group" 
+                                 rendered="#{(ciclosMB.asignedTipoCiclo eq ciclosMB.idTipoCicloNumerico)}">
+                        <p:outputLabel for="periodicidad" value="Periodicidad"/>
+                        <p:selectOneRadio id="periodicidad"  value="#{ciclosMB.asignedPeriodicidad}" disabled="#{ciclosMB.disabledEdicion}">
+                            <f:selectItems value="#{ciclosMB.selectPeriodicidades}" />
+                            <f:ajax render="periodos" />
+                        </p:selectOneRadio>
+                        
+                    </p:panelGrid>
+                        <h:panelGroup id="periodos">
+                            <p:panelGrid id="mensual" columns="6" layout="grid" styleClass="ui-panelgrid-blank form-group" 
+                                         rendered="#{(ciclosMB.asignedPeriodicidad eq ciclosMB.idPeridicidadMes) and (ciclosMB.asignedTipoCiclo eq ciclosMB.idTipoCicloNumerico) }" >
+                                
+                                <p:outputLabel for="en" value="Enero"/>
+                                <h:panelGroup id="en"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Ene}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <p:outputLabel for="fe" value="Febrero"/>
+                                <h:panelGroup id="fe"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Feb}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <p:outputLabel for="mr" value="Marzo"/>
+                                <h:panelGroup id="mr"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Mar}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <p:outputLabel for="ab" value="Abril"/>
+                                <h:panelGroup id="ab"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Abr}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup> 
+                                <p:outputLabel for="may" value="Mayo"/>
+                                <h:panelGroup id="may"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_May}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup> 
+                                <p:outputLabel for="jun" value="Junio"/>
+                                <h:panelGroup id="jun"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Jun}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="jul" value="Julio"/>
+                                <h:panelGroup id="jul"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Jul}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup> 
+                                <p:outputLabel for="ago" value="Agosto"/>
+                                <h:panelGroup id="ago"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Ago}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup> 
+                                <p:outputLabel for="sep" value="Septiembre"/>
+                                <h:panelGroup id="sep"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Sep}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="oct" value="Octubre"/>
+                                <h:panelGroup id="oct"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Oct}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup> 
+                                <p:outputLabel for="nov" value="Noviembre"/>
+                                <h:panelGroup id="nov"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Nov}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup> 
+                                <p:outputLabel for="dec" value="Diciembre"/>
+                                <h:panelGroup id="dec"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Mes_Numerico_Dic}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup> 
+
+                            </p:panelGrid>
+                            <p:panelGrid id="quincenal" columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group" 
+                                         rendered="#{(ciclosMB.asignedPeriodicidad eq ciclosMB.idPeriodicidadQuincenal) and (ciclosMB.asignedTipoCiclo eq ciclosMB.idTipoCicloNumerico)}">
+                                
+                                <h:outputText value="" />
+                                <h:outputText value="Quincena 1" />
+                                <h:outputText value="Quincena 2" />
+                                
+                                <h:outputText value="Enero" />
+                                <h:panelGroup id="eq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Ene}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="eq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Ene}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Febrero" />
+                                <h:panelGroup id="fq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Feb}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="fq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Feb}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                
+                                <h:outputText value="Marzo" />
+                                <h:panelGroup id="mq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Mar}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="mq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Mar}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Abril" />
+                                <h:panelGroup id="abq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Abr}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="abq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Abr}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Mayo" />
+                                <h:panelGroup id="mayq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_May}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="mayq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_May}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Junio" />
+                                <h:panelGroup id="jnq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Jun}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="jnq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Jun}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Julio" />
+                                <h:panelGroup id="jlq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Jul}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="jlq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Jul}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Agosto" />
+                                <h:panelGroup id="agq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Ago}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="agq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Ago}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Septiembre" />
+                                <h:panelGroup id="spq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Sep}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="spq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Sep}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Octubre" />
+                                <h:panelGroup id="ocq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Oct}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="ocq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Oct}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Noviembre" />
+                                <h:panelGroup id="nvq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Nov}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="nvq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Nov}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                
+                                <h:outputText value="Diciembre" />
+                                <h:panelGroup id="dcq1"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin1_Numerico_Dic}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup id="dcq2"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{ciclosMB.noCiclo_Quin2_Numerico_Dic}"   style="width: 90%;font-size: 20px !important;">
+                                        <f:selectItems value="#{ciclosMB.selectNoCiclos}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+
+                            </p:panelGrid>
+                        </h:panelGroup>        
+                    </h:panelGroup>    
+                    <p:spacer height="30"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{ciclosMB.save}"  rendered="#{!ciclosMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{ciclosMB.update}"  rendered="#{ciclosMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Procesos</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Subir Archivo</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                       
+                        <p:outputLabel for="idioma" value="Idioma" style="float: right;"/>
+                        <h:panelGroup id="idioma" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{procesosMB.asignedIdioma}"   style="width: 90%;">
+				<f:selectItems value="#{procesosMB.selectIdiomas}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="tipo" value="Tipo" style="float: right;"/>
+                        <h:panelGroup id="tipo"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{procesosMB.asignedTipoProceso}"   style="width: 90%;">
+                                <f:selectItems value="#{procesosMB.selectTiposProceso}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:outputText value="Fecha"/>
+                        <h:outputText value="#{procesosMB.fechaSistema}"/>
+                        
+                        
+                        
+                        <p:outputLabel for="titulo" value="Título" style="float: right;"/>
+                        <h:panelGroup id="titulo"  styleClass="md-inputfield">
+                            <p:inputText  value="#{procesosMB.row_selected.titulo}" maxlength="50" required="true" requiredMessage="Título: Campo requerido" validatorMessage="Título: Datos incorrectos, solo caracteres alfanuméricos">
+                                <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)$"  />
+                            </p:inputText>
+                        </h:panelGroup>
+                        
+                    <p:outputLabel for="revision" value="Revisión" style="float: right;"/>
+                    <h:panelGroup id="revision"  styleClass="md-inputfield">
+                        <p:inputText  value="#{procesosMB.revision}" maxlength="50" required="true" requiredMessage="Revisión: Campo requerido" validatorMessage="Revisión: Datos incorrectos, solo números">
+                                <f:validateRegex pattern="^([0-9]+)$"  />
+                            </p:inputText>
+                    </h:panelGroup>    
+                        
+                    <p:outputLabel for="estatus" value="Estatus" rendered="#{procesosMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{procesosMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{procesosMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    
+                    
+                    
+
+                    <p:spacer height="15"/>
+
+                    <p:fileUpload id="fileUpload"
+                            fileUploadListener="#{procesosMB.fileListener}" mode="advanced" cancelLabel="#{res_i18n.CANCEL}" uploadLabel="CARGAR"
+                            immediate="true" label="Carga o remplazar archivo" fileLimit="1" 
+                            fileLimitMessage="La carga esta limitada a 1 archivos"  multiple="true"
+                            update=":form:fileUploadMsg" 
+                            process=":form"
+                            />
+                            <p:message for="fileUpload" id="fileUploadMsg" />
+                    <br />
+                    
+ 
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{procesosMB.save}"  rendered="#{!procesosMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{procesosMB.update}"  rendered="#{procesosMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

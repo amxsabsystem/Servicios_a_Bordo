@@ -1,0 +1,398 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="title">Tablas de Abordamiento</ui:define>
+
+    <ui:define name="head"><style>
+            body .ui-selectmanycheckbox.ui-widget label, body .ui-selectoneradio.ui-widget label {
+                position: inherit !important;
+            }
+        </style></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!tablasDeAbordamientoMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{tablasDeAbordamientoMB.modificarRegistro}" /> Tablas de Abordamiento</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{tablasDeAbordamientoMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:tabView>
+                        <p:tab title="Encabezado">
+                    
+                                            <p:spacer height="15"/>
+                                            <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                                <h:panelGroup id="origenLabel"  styleClass="md-inputfield"><h:outputText value="Origen" style="float: right;" /></h:panelGroup>
+                                                <h:panelGroup id="origen"  styleClass="md-inputfield" style="width:95%">
+                                                    <p:selectOneRadio  value="#{tablasDeAbordamientoMB.asignedOrigen}" columns="2" style="width:95%"  >
+                                                        <f:selectItems value="#{tablasDeAbordamientoMB.selectOrigenes}"  />
+                                                        <p:ajax update="region" process="@this" listener="#{ciclosMB.updateRegiones}" />
+                                                    </p:selectOneRadio>
+                                                </h:panelGroup>
+
+                                            </p:panelGrid>
+                                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                                    <h:outputText value="Todas las Regiones " style="float: right;"/>
+                                                    <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.checkTodasRegiones}" >  
+                                                        <p:ajax event="change" listener="#{tablasDeAbordamientoMB.todasLasRegiones}"/>
+                                                    </p:selectBooleanCheckbox>
+
+                                                    <p:outputLabel for="region" value="Región" style="float: right;"/>
+                                                    <h:panelGroup id="region"  styleClass="md-inputfield">
+                                                        <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedRegion}"   style="width: 90%;"  >
+                                                            <f:selectItems value="#{tablasDeAbordamientoMB.selectRegiones}" />
+                                                            <p:ajax update="estaciones"  listener="#{tablasDeAbordamientoMB.putEstaciones}" />
+                                                        </p:selectOneMenu>
+                                                    </h:panelGroup>
+
+                                                    <h:outputText value="Todas las estaciones " style="float: right;"/>
+                                                    <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.checkTodasEstaciones}"  >  
+                                                            <p:ajax event="change" listener="#{tablasDeAbordamientoMB.todasLasEstaciones}"/>
+                                                    </p:selectBooleanCheckbox>
+                                                    <h:outputText value="Estación " style="float: right;"/>
+                                                    <h:panelGroup id="estaciones">
+                                                        <p:repeat id="listaEstaciones" value="#{tablasDeAbordamientoMB.list_estaciones}" var="rowInner" varStatus="status" >
+                                                            <p:panelGrid  columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                                                                <h:outputText  value="#{rowInner.claveIata}" style="float: right;"  />
+                                                                <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.asignedEstaciones[rowInner.idEstacion]}"  converter="omnifaces.SelectItemsConverter">  
+                                                                </p:selectBooleanCheckbox>
+                                                            </p:panelGrid>
+                                                        </p:repeat>
+                                                    </h:panelGroup>
+                                            </p:panelGrid>
+                                            <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                                <p:commandButton id="agregarButton" value="Agregar" icon="ui-icon-add" ajax="false" action="#{tablasDeAbordamientoMB.addRegionEstacion}" />
+                                                <p:orderList id="tablaCodigo" value="#{asignacionDeServiciosMB.codigos_Servicio}" 
+                                                        var="row" controlsLocation="none" responsive="true"
+                                                        itemValue="#{row}" style="width:100%; height: 50%;" > 
+                                                   <p:column style="width:50%">
+                                                       <h:outputText value="#{row.cveCodigoServicio}" />
+                                                   </p:column>
+                                                   <p:column style="width:50%" > 
+
+                                                       <p:commandButton update="tablaCodigo" process="tablaCodigo @this" ajax="true"
+                                                           icon="ui-icon ui-icon-delete" actionListener="#{asignacionDeServiciosMB.quitarCodigoServicio()}">
+                                                           <f:param name="selectedElement" value="#{row.idCodigoServicio}" />  
+                                                       </p:commandButton>
+                                                    </p:column>
+                                               </p:orderList>
+                                            </p:panelGrid>
+                                            
+                                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                                    <h:outputText value="Clase" style="float: right;" />
+                                                    <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedClase}"   style="width: 90%;" >
+                                                            <f:selectItems value="#{asignacionDeServiciosMB.selectClases}" />
+                                                    </p:selectOneMenu>
+                                                    <h:outputText value="Servicios Alimentos" style="float: right;" />
+                                                    <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedCodigoComples}"   style="width: 90%;" >
+                                                            <f:selectItems value="#{asignacionDeServiciosMB.selectedCodigosComple}" />
+                                                    </p:selectOneMenu>
+                                                    <h:outputText value="Año"  style="float: right;"/>
+                                                    <h:outputText value="2018"/>
+                                                    <h:outputText value="Revisión"  style="float: right;"/>
+                                                    <p:spinner id="spinner" min="1" value="#{potencialesMB.dias_alerta}" />
+                                            </p:panelGrid>
+                                            
+                        
+                        </p:tab>
+                        <p:tab title="Modelo y TSU">
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-1,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                
+                                <h:outputText value="Todos los modelos " style="float: right;"/>
+                                <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.checkTodosLosModelos}" >  
+                                    <p:ajax event="change" listener="#{tablasDeAbordamientoMB.todasLosModelos}"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value=""/>
+                                <h:panelGroup id="modelos">
+                                    <p:repeat id="listaModelos" value="#{tablasDeAbordamientoMB.list_modelos}" var="rowInner" varStatus="status" >
+                                            <p:panelGrid  columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                                                <h:outputText  value="#{rowInner.modelo}" style="float: right;"  />
+                                                <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.asignedModelos[rowInner.idModeloAvion]}"  converter="omnifaces.SelectItemsConverter">  
+                                                </p:selectBooleanCheckbox>
+                                            </p:panelGrid>
+                                    </p:repeat>
+                                </h:panelGroup>
+                                
+                                
+                                <h:outputText value="No aplica TSU " style="float: right;"/>
+                                <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.checkNoAplicaTSU}" >  
+                                    <p:ajax event="change" listener="#{tablasDeAbordamientoMB.noAplicaTSU}"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="" />
+                                <h:panelGroup id="tsu">
+                                <p:repeat id="listaTSUs" value="#{tablasDeAbordamientoMB.list_TSUs}" var="rowInner" varStatus="status" >
+                                            <p:panelGrid  columns="4" columnClasses="ui-grid-col-4,ui-grid-col-2,ui-grid-col-4,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                                                <h:outputText  value="#{rowInner.cveTsu}" style="float: right;"  />
+                                                <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.asignedTSUs[rowInner.idTsu]}"  converter="omnifaces.SelectItemsConverter">  
+                                                </p:selectBooleanCheckbox>
+                                                
+                                                <p:inputText  value="#{tablasDeAbordamientoMB.asignedTSUsPercentage[rowInner.idTsu]}" style="width:50%;"  maxlength="3" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                                    <f:validateRegex pattern="^([0-9]+)?"  />
+                                                </p:inputText>
+                                                <h:outputText value="%"/>
+                                            </p:panelGrid>
+                                </p:repeat>
+                                </h:panelGroup>
+                                
+                                
+                            </p:panelGrid>
+                            
+                            
+                            
+                        </p:tab>
+                        <p:tab title="Configuración por Pasajero">
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                <h:outputText value="Alimento a servir" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.alimento}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                                <h:outputText value="" />
+                                <p:commandButton id="indicarCicloButton" value="Indicar el Ciclo" icon="ui-icon-save" ajax="false" action="#{tablasDeAbordamientoMB.addCiclos}" />
+                                
+                                
+                                <h:outputText value="% de abordamiento" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.porcentaje}" style="width:20%;"  maxlength="3" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([0-9]+)?"  />
+                                </p:inputText>
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+                                
+                                <h:outputText value="No de parte del TSU"  style=" font-weight: bold;"/><h:outputText value=""/><h:outputText value=""/><h:outputText value=""/>
+                                <h:outputText value="No de Parte" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedNoParteTSU}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+                                
+                                <h:outputText value="Material Extra" style=" font-weight: bold;"/><h:outputText value=""/><h:outputText value=""/><h:outputText value=""/>                                
+                                <h:outputText value="Propiedad AMX" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedPropiedadAMXMaterialExtra}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Propiedad comisariato" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.propiedadComisariatoMaterialExtra}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+
+                                <h:outputText value="Montaje" style=" font-weight: bold;"/><h:outputText value=""/><h:outputText value=""/><h:outputText value=""/>
+                                <h:outputText value="No de Parte" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedNoParteMontaje}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Propiedad AMX" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedPropiedadAMXMontaje}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Propiedad comisariato" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.propiedadComisariatoMontaje}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                                
+                                <h:outputText value="Instrucciones / Notas" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.intruccionesNotas}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                                
+                            </p:panelGrid>
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                                <p:commandButton id="addConfPasButton" value="Agregar Configuración" icon="ui-icon-add" ajax="false" action="#{tablasDeAbordamientoMB.agregarConfPorPasajero}"/>
+                            </p:panelGrid>
+                            
+                            <p:dataTable id="dataTableGrid" var="row" value="#{areasDeSABMB.findAll()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idArea}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                            <p:column headerText="Alimento" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Porcentaje" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="No Parte TSU" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. AMX Mat Ext." >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. Com. Mat Ext." >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="No Parte Montaje" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. AMX Montaje" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. Com. Montaje" >
+			       <h:outputText value="" />
+		            </p:column>    
+                            </p:dataTable>    
+                            
+                        </p:tab>
+                        <p:tab title="Configuración por Avión">
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                <h:outputText value="Servicio Complementario" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.servicioComplementario}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                                <h:outputText value="" />
+                                <p:commandButton id="indicarCicloServCompButton" value="Indicar el Ciclo" icon="ui-icon-save" ajax="false" action="#{tablasDeAbordamientoMB.addCiclosServComp}" />
+                                
+                                
+                                <h:outputText value="% de abordamiento" style="float: right;"/>
+                                <p:selectOneRadio  value="#{tablasDeAbordamientoMB.asignedOrigen}" columns="2" style="width:95%"  >
+                                    <f:selectItem itemLabel="Porcentaje %" itemValue="1" />
+                                    <f:selectItem itemLabel="Cantidad por Pax" itemValue="2" />
+                                    <f:selectItem itemLabel="Cantidad por Vuelo" itemValue="3" />
+                                </p:selectOneRadio>
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+                                
+                                
+                                <p:selectOneRadio  value="#{tablasDeAbordamientoMB.asignedOrigen}" columns="2" style="width:95%"  >
+                                    <f:selectItem itemLabel="No Parte" itemValue="1" />
+                                    <f:selectItem itemLabel="Kit Lote" itemValue="2" />
+                                </p:selectOneRadio>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedNoParteTSU}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+                                
+                                <h:outputText value="Material Extra" style=" font-weight: bold;"/><h:outputText value=""/><h:outputText value=""/><h:outputText value=""/>                                
+                                <h:outputText value="Propiedad AMX" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedPropiedadAMXMaterialExtra}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Propiedad comisariato" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.propiedadComisariatoMaterialExtra}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+
+                                <h:outputText value="Montaje" style=" font-weight: bold;"/><h:outputText value=""/><h:outputText value=""/><h:outputText value=""/>
+                                <h:outputText value="No de Parte" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedNoParteMontaje}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Propiedad AMX" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedPropiedadAMXMontaje}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Propiedad comisariato" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.propiedadComisariatoMontaje}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                                
+                                <h:outputText value="Instrucciones / Notas" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.intruccionesNotas}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                                
+                            </p:panelGrid>
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                                <p:commandButton id="addConfPorAvionButton" value="Agregar Configuración" icon="ui-icon-add" ajax="false" action="#{tablasDeAbordamientoMB.agregarConfPorAvion}"/>
+                            </p:panelGrid>
+                            
+                            <p:dataTable id="dataTableGridConfPorAvion" var="row" value="#{areasDeSABMB.findAll()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idArea}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                            <p:column headerText="Servicio Comp" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Abordaje" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="No Parte/Kit" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. AMX Mat Ext." >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. Com. Mat Ext." >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="No Parte Montaje" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. AMX Montaje" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Prop. Com. Montaje" >
+			       <h:outputText value="" />
+		            </p:column>    
+                            </p:dataTable>    
+                        </p:tab>
+                        <p:tab title="Configuración de SobreAbordaje">
+                            <p:panelGrid columns="6" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                
+                                <h:outputText value="No aplica Sobre Abordaje " style="float: right;"/>
+                                <p:selectBooleanCheckbox value="#{tablasDeAbordamientoMB.checkNoAplicaSobreAbordaje}" >  
+                                    <p:ajax event="change" listener="#{tablasDeAbordamientoMB.noAplicaSobreAbordaje}"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                
+                                <h:outputText value="No de Parte" style="float: right;"/>
+                                <p:selectOneMenu  value="#{tablasDeAbordamientoMB.asignedNoParteSobreAbordaje}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{tablasDeAbordamientoMB.selectMateriales}" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Cantidad" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.cantidadSobreAbordaje}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([0-9]+)$"  />
+                                </p:inputText>
+                                <h:outputText value="Instrucciones" style="float: right;"/>
+                                <p:inputText  value="#{tablasDeAbordamientoMB.instrucciones}" style="width:50%;"  maxlength="50" required="false" validatorMessage="Porcentaje: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                                
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                <h:outputText value="" />
+                                
+                            </p:panelGrid>
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                                <p:commandButton id="addSobreAbordajeButton" value="Agregar SobreAbordaje" icon="ui-icon-add" ajax="false" action="#{tablasDeAbordamientoMB.agregarConfPorAvion}"/>
+                            </p:panelGrid>
+                            
+                            <p:dataTable id="dataTableGridSobreAbordaje" var="row" value="#{areasDeSABMB.findAll()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idArea}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                            <p:column headerText="No Parte" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Cantidad" >
+			       <h:outputText value="" />
+		            </p:column>
+                            <p:column headerText="Instrucciones" >
+			       <h:outputText value="" />
+		            </p:column>
+                                
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{tablasDeAbordamientoMB.save}"  rendered="#{!tablasDeAbordamientoMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{tablasDeAbordamientoMB.update}"  rendered="#{tablasDeAbordamientoMB.modificarRegistro}"/>
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

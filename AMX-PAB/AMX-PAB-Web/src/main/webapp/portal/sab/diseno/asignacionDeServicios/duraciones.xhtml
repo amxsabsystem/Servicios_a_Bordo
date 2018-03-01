@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Asignacion de Servicios</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h5>
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/HorariosPorRegion.xhtml"> Horarios Región / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/duraciones.xhtml"> Duración Vuelos / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/asignarServiciosAlimentos.xhtml"> Consulta de Servicios / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/consultaServicios.xhtml"> Consulta </a> 
+                             </h5>
+                        <h1>Duraciones</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:spacer height="15"/>
+                    
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        
+                        <p:outputLabel for="horaini" value="Horario Inicio" style="float: right;"/>
+                        <h:panelGroup id="horaini" styleClass="md-inputfield">
+                            <p:calendar  value="#{asignacionDeServiciosMB.horaInicio}" pattern="HH:mm" timeOnly="true"  />
+                        </h:panelGroup>
+                        <p:outputLabel for="horafin" value="Horario Fin" style="float: right;"/>
+                        <h:panelGroup id="horafin" styleClass="md-inputfield">
+                            <p:calendar value="#{asignacionDeServiciosMB.horaFin}" pattern="HH:mm" timeOnly="true"  />
+                        </h:panelGroup>
+                        
+                        
+                    <p:spacer height="15"/>
+                    
+                        <p:commandButton id="saveButton" value="AGREGAR" icon="ui-icon-add" ajax="false" action="#{asignacionDeServiciosMB.saveDuraciones}"  update="dataTableGrid" process="addButtonTable" rendered="#{!asignacionDeServiciosMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{asignacionDeServiciosMB.updateDuraciones}"  update="dataTableGrid" process="updateButton" rendered="#{asignacionDeServiciosMB.modificarRegistro}" />
+                    <p:spacer height="40"/>
+                        
+                    </p:panelGrid>
+                    
+                    
+                    
+                        <p:dataTable id="dataTableGrid" var="row" value="#{asignacionDeServiciosMB.findAllDuraciones()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idDuracionVuelos}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                           
+                            <p:column headerText="Horario Inicio" sortBy="#{row.tiempoInicio}" filterBy="#{row.tiempoInicio}" filterMatchMode="contains">
+			       <h:outputText value="#{row.tiempoInicio}" />
+		            </p:column>
+                            <p:column headerText="Horario Fin" sortBy="#{row.tiempoFin}" filterBy="#{row.tiempoFin}" filterMatchMode="contains">
+			       <h:outputText value="#{row.tiempoFin}" />
+		            </p:column>
+                            
+                            <p:column headerText="Modificar" exportable="false"> 
+                                <h:commandLink action="#{asignacionDeServiciosMB.modifyRowDuraciones(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

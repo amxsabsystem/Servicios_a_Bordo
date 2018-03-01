@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<faces-config version="2.2"
+			  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+	<application>
+        
+		<name>primefaces_ultima</name>
+    
+		<locale-config>
+			<default-locale>en</default-locale>
+
+			<supported-locale>en</supported-locale>
+			<supported-locale>es</supported-locale>
+            <!--
+			<supported-locale>de</supported-locale>
+			<supported-locale>fr</supported-locale>
+			<supported-locale>ja</supported-locale>
+			<supported-locale>zh</supported-locale>
+			<supported-locale>pt</supported-locale>
+            -->
+		</locale-config>
+   
+		<resource-bundle>
+			<base-name>com.aeromexico.pab.web.res_i18n</base-name>
+			<var>res_i18n</var>
+		</resource-bundle>
+        
+        <resource-bundle>
+            <base-name>model_i18n</base-name>
+			<var>model_i18n</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.aeromexico.pab.backend.info.Version</base-name>
+			<var>System_Version</var>
+        </resource-bundle>        
+	
+		<component>
+			<component-type>org.primefaces.component.UltimaMenu</component-type>
+			<component-class>org.primefaces.ultima.component.menu.UltimaMenu</component-class>
+		</component>
+    
+		<render-kit>
+			<renderer>
+				<component-family>org.primefaces.component</component-family>
+				<renderer-type>org.primefaces.component.UltimaMenuRenderer</renderer-type>
+				<renderer-class>org.primefaces.ultima.component.menu.UltimaMenuRenderer</renderer-class>
+			</renderer>
+		</render-kit>
+	</application>    
+</faces-config>

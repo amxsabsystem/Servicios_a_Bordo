@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Matriz </ui:define>
+
+    <ui:define name="head">        <style>
+            /* DivTable.com */
+            .divTable{
+                display: table;
+                width: 97%;
+            }
+            .divTableRow {
+                display: table-row;
+            }
+            .divTableHeading {
+                background-color: #EEE;
+                display: table-header-group;
+            }
+            .divTableCell, .divTableHead {
+                border: 1px solid #999999;
+                display: table-cell;
+                padding: 3px 10px;
+
+            }
+            .divTableCell2{
+                border: 1px solid #999999;
+                display: table-cell;
+                padding: 3px 10px;}
+
+            .divTableHeading {
+                background-color: #EEE;
+                display: table-header-group;
+                font-weight: bold;
+            }
+            .divTableFoot {
+                background-color: #EEE;
+                display: table-footer-group;
+                font-weight: bold;
+            }
+            .divTableBody {
+                display: table-row-group;
+            }
+            .table_header{ background-color: #4F81BD; text-align: center; font-weight: bold;}
+
+            .imagenDiv{
+                position: relative;
+                height: 80px;
+                top: 40px;
+                width: 80px;
+                background-color: white;
+            }
+
+        </style></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>Matriz</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Nuevo" icon="ui-icon-create"   action="#{matrizMB.addRow}" /><h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Paises"  encoding="ISO-8859-1"/>
+                            </h:commandButton>
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                            <p:outputLabel for="idKitLote" value="Id de Kit / Lote"/>
+                            <h:panelGroup id="idKitLote" styleClass="md-inputfield">
+                                <p:inputText  />
+                                <label>Id de Kit / Lote</label>
+                            </h:panelGroup>
+                        </p:panelGrid>
+
+                        <p:dataList value="#{matrizMB.findAll()}" var="row" paginatorPosition="bottom"
+                                    type="unordered" itemType="none" paginator="true" rows="10" emptyMessage="No se encontraron registros."   styleClass="cars-datalist">
+                            <div class="divTable clearfix" style="border: 1px solid #000;" >
+                                <div class="divTableBody">
+                                    <div class="divTableRow">
+                                        <div class="divTableCell table_header" style="width:30%;" >Tipo de Equipo X Productos</div>
+                                        <p:repeat value="#{matrizMB.equipos}" var="rowInner"  >
+                                            <div class="divTableCell table_header" >#{rowInner.intValue()}</div>
+                                        </p:repeat>
+                                        <div class="divTableCell table_header" style="width: 25px; " >CJ</div>
+                                        <div class="divTableCell table_header" style="width: 25px; ">CY</div>
+                                    </div>
+                                    <div class="divTableRow">
+                                        <div class="divTableCell" style="width:30%;" >#{row.idTipoEquipoAvion}</div>
+                                        <p:repeat value="#{matrizMB.equipos}" var="rowInner"  >
+                                            <div class="divTableCell" ><p:selectBooleanCheckbox value="" id="equipo_" /></div>
+                                        </p:repeat>
+                                        <div class="divTableCell" ><p:inputText value=""/></div>
+                                        <div class="divTableCell" ><p:inputText value=""/></div>
+                                    </div>
+                                </div>            
+                            </div>
+                        </p:dataList>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

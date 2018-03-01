@@ -1,0 +1,128 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima">
+    
+<h:form id="menuform"> 
+        <div class="layout-menu">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <pu:menu widgetVar="me">
+                        <p:submenu  label="#{res_i18n.APP_MENU_REPORTS}" icon="fa fa-clipboard">
+                            <p:submenu label="Irregularidades" icon="fa fa-paper-plane">
+                                <p:menuitem value="Tipo de Producto" icon="fa fa-list-ol" outcome="/portal/reportes/irregularidades/tipoDeProducto" />
+                                <p:menuitem value="Tipo de Irregularidad" icon="fa fa-list-ol" outcome="/portal/reportes/irregularidades/tipoDeIrregularidad" />
+                                <p:menuitem value="Criterio de Irregularidades" icon="fa fa-list-ol" outcome="/portal/reportes/irregularidades/criteriosDeIrregularidades" />
+                                <p:menuitem value="Configuración Irregularidades" icon="fa fa-list-ol" outcome="/portal/reportes/irregularidades/reporteDeIrregularidades" />
+                            </p:submenu>
+                            <p:menuitem value="Captura de Reporte" icon="fa fa-code-fork" outcome="/portal/reportes/captura" />
+                            <p:menuitem value="Consulta de Reporte" icon="fa fa-code-fork" outcome="/portal/reportes/consulta" />
+                            <p:menuitem value="Responsables" icon="fa fa-code-fork" outcome="/portal/reportes/configuracionResponsables" />
+                            <p:submenu label="Estadisiticas" icon="fa fa-line-chart">
+                                <p:menuitem value="x TipoReporte" icon="fa fa-line-chart" outcome="/portal/reportes/estadisticas" />
+                                <p:menuitem value="x Proveedor"   icon="fa fa-line-chart" outcome="/portal/reportes/estadisticas" />
+                                <p:menuitem value="x Area"        icon="fa fa-line-chart" outcome="/portal/reportes/estadisticas" />                            
+                            </p:submenu>
+                            <p:submenu label="Comparativas" icon="fa fa-pie-chart">
+                                <p:menuitem value="x TipoReporte" icon="fa fa-pie-chart" outcome="/portal/reportes/estadisticas" />
+                                <p:menuitem value="x Proveedor"   icon="fa fa-pie-chart" outcome="/portal/reportes/estadisticas" />
+                                <p:menuitem value="x Area"        icon="fa fa-pie-chart" outcome="/portal/reportes/estadisticas" />                            
+                            </p:submenu>
+                        </p:submenu>
+                        <p:submenu  label="#{res_i18n.APP_MENU_PUBLISING}" icon="fa fa-newspaper-o">
+                            <p:submenu label="#{res_i18n.APP_MENU_PUB_COMMUNICATES}" icon="fa fa-paper-plane">
+                                <p:menuitem value="Temas Comunicados" icon="fa fa-list-ol" outcome="/portal/publicaciones/comunicados/temasComunicados" />
+                                <p:menuitem value="Publicar" icon="fa fa-list-ol" outcome="/portal/publicaciones/comunicados/publicar" />
+                                <p:menuitem value="Vigentes" icon="fa fa-list-ol" outcome="/portal/publicaciones/comunicados/vigentes" />
+                                <p:menuitem value="Seguimiento" icon="fa fa-list-ol" outcome="/portal/publicaciones/comunicados/seguimiento" />
+                            </p:submenu>
+                        </p:submenu>
+                            <p:submenu  label="#{res_i18n.APP_MENU_PROCCES}" icon="fa fa-puzzle-piece">
+							<p:menuitem value="#{res_i18n.APP_MENU_PROC_MAN}" icon="fa fa-book" outcome="/portal/procesos/manuales" />
+							<p:menuitem value="#{res_i18n.APP_MENU_PROC_INST}" icon="fa fa-hand-o-right" outcome="/portal/procesos/instrucciones" />
+							<p:menuitem value="#{res_i18n.APP_MENU_PROC_PROCEDURES}" icon="fa fa-check-square-o" outcome="/portal/procesos/procedimientos" />
+                                                        <p:menuitem value="Subir Archivo" icon="fa fa-caret-square-o-right" outcome="/portal/procesos/subirArchivo" />
+                                                        <p:menuitem value="Buscar Archivo" icon="fa fa-caret-square-o-right" outcome="/portal/procesos/buscarArchivo" />
+                        </p:submenu>
+                        <p:submenu  label="#{res_i18n.APP_MENU_GENERAL}" icon="fa fa-th">
+                            <p:submenu label="#{res_i18n.APP_MENU_GEN_STATIONS}" icon="fa fa-map-o">
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_REGIONS}" icon="fa fa-globe" outcome="/portal/generales/regiones" />	                        
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_COUNTRY}" icon="fa fa-flag-o" outcome="/portal/generales/paises" />
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_CITY_STATE}" icon="fa fa-map-marker" outcome="/portal/generales/estadoCiudad" />
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_STATIONS}" icon="fa fa-building" outcome="/portal/generales/estaciones" />
+                            </p:submenu>
+                            <p:submenu label="#{res_i18n.APP_MENU_GEN_FLIGHT}" icon="fa fa-plane">
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_COMPANIES}" icon="fa fa-copyright" outcome="/portal/generales/compania"/>
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_FLIGHT_CLASS}" icon="fa fa-diamond" outcome="/portal/generales/clases" />
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_FLIGHT_NUM}" icon="fa fa-ticket" outcome="/portal/generales/vuelos" />
+                            </p:submenu>                            
+                            <p:submenu label="#{res_i18n.APP_MENU_GEN_SAB}" icon="fa fa-ellipsis-v">
+                                <p:menuitem value="Areas de SAB" icon="fa fa-sitemap" outcome="/portal/generales/areasDeSAB" />
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_EMPLOY}" icon="fa fa-users" outcome="/portal/generales/empleados" />
+                            </p:submenu>
+                            <p:submenu label="#{res_i18n.APP_MENU_GEN_SUPPLIERS}" icon="fa fa-address-card-o">
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_SUP_TYPE}" icon="fa fa-id-badge"  outcome="/portal/generales/tipoProveedor" />
+                                <p:menuitem value="Proveedores" icon="fa fa-university" outcome="/portal/generales/proveedoresCorporativo" />
+                                <p:menuitem value="Proveedor Por Estación" icon="fa fa-user-circle-o" outcome="/portal/generales/proveedores" />
+                                <p:menuitem value="#{res_i18n.APP_MENU_GEN_CORP_CONTACT}" icon="fa fa-id-badge"  outcome="/portal/generales/contactoProveedores" />
+                            </p:submenu>
+                            <p:menuitem value="#{res_i18n.APP_MENU_SAB_USR}" icon="fa fa-user" outcome="/portal/generales/usuariosDeSAB" />
+							<p:menuitem value="#{res_i18n.APP_MENU_GEN_PARAMS}" icon="fa fa-cogs"  outcome="/portal/generales/parametros" />
+                        </p:submenu>
+                        
+                        <p:submenu  label="#{res_i18n.APP_MENU_SAB}" icon="&#xe002;">
+							<p:submenu  label="#{res_i18n.APP_MENU_SAB_PLAN}" icon="fa fa-calendar-o">
+								<p:submenu label="#{res_i18n.APP_MENU_SAB_FLEET_REL}" icon="fa fa-fighter-jet">
+									<p:menuitem value="#{res_i18n.APP_MENU_SAB_MANUF_MODEL}" icon="&#xE8D2;" outcome="/portal/sab/planeacion/relacionDeFlota/modelo" />
+									<p:menuitem value="#{res_i18n.APP_MENU_SAB_EQUIPMENT}" icon="&#xE8D2;" outcome="/portal/sab/planeacion/relacionDeFlota/tipoDeEquipo" />
+									<p:menuitem value="#{res_i18n.APP_MENU_SAB_EQUIPMENT_SYSTEM}" icon="&#xE8D2;" outcome="/portal/sab/planeacion/relacionDeFlota/sistemaDeEntretenimiento" />
+									<p:menuitem value="#{res_i18n.APP_MENU_SAB_AIRPLANE}" icon="&#xe53d;" outcome="/portal/sab/planeacion/relacionDeFlota/avion" />
+								</p:submenu>
+								<p:submenu label="#{res_i18n.APP_MENU_SAB_MATERIALS}" icon="fa fa-shopping-cart">
+									<p:menuitem value="#{res_i18n.APP_MENU_SAB_FAM_CAT}" icon="&#xE8D2;" outcome="/portal/sab/planeacion/materiales/categorias" />
+									<p:menuitem value="#{res_i18n.APP_MENU_SAB_AMX_MAT}" icon="&#xE8D2;" outcome="/portal/sab/planeacion/materiales/materiales" />
+								</p:submenu>
+								<p:menuitem value="#{res_i18n.APP_MENU_SAB_BAR_LISTS}" icon="fa fa-glass" outcome="/portal/sab/planeacion/listasDeBar" />
+								<p:menuitem value="Master" icon="fa fa-cube" outcome="/portal/sab/operaciones/masterSelect" />
+                                    <p:submenu label="#{res_i18n.APP_MENU_OPER_MATRIX}" icon="fa fa-cubes">
+                                        <p:menuitem value="#{res_i18n.APP_MENU_OPER_PRODUCTS}" icon="fa fa-stack-overflow" outcome="/portal/sab/operaciones/productos" />
+                                        <p:menuitem value="Configuración Matriz" icon="fa fa-stack-overflow" outcome="/portal/sab/operaciones/matrizConfig" />
+                                        <p:menuitem value="Consulta Matriz" icon="fa fa-stack-overflow"      outcome="/portal/sab/operaciones/matrizDetalle" />
+                                    </p:submenu>
+								<p:menuitem value="#{res_i18n.APP_MENU_OPER_TSU}" icon="fa fa-coffee" outcome="/portal/sab/operaciones/tsu" />
+								<p:menuitem value="#{res_i18n.APP_MENU_OPER_GRAPHICS}" icon="fa fa-bar-chart" outcome="/portal/sab/operaciones/graficos" />
+								<p:menuitem value="#{res_i18n.APP_MENU_OPER_ACCOMMODATE}" icon="fa fa-archive" outcome="/portal/sab/operaciones/acomodos" />
+								
+							</p:submenu>
+							<p:submenu  label="#{res_i18n.APP_MENU_DESIGN}" icon="fa fa-paint-brush">
+								<p:menuitem value="#{res_i18n.APP_MENU_DES_CYCLES}" icon="fa fa-calendar" outcome="/portal/sab/diseno/ciclos" />
+								<p:menuitem value="#{res_i18n.APP_MENU_DES_SERVICE_CODES}" icon="fa fa-qrcode" outcome="/portal/sab/diseno/codigoDeServicioSelect" />
+                                    <p:submenu  label="#{res_i18n.APP_MENU_DES_SERVICES_ASSIG}" icon="fa fa-paint-brush">
+                                        <p:menuitem value="Horarios Por Región" icon="fa fa-tasks" outcome="/portal/sab/diseno/asignacionDeServicios/HorariosPorRegion" />
+                                        <p:menuitem value="Duraciones" icon="fa fa-tasks" outcome="/portal/sab/diseno/asignacionDeServicios/duraciones" />
+                                        <p:menuitem value="Asignacion Servicios" icon="fa fa-tasks" outcome="/portal/sab/diseno/asignacionDeServicios/asignarServiciosAlimentos" />
+                                        <p:menuitem value="Consulta Servicios" icon="fa fa-tasks" outcome="/portal/sab/diseno/asignacionDeServicios/consultaServicios" />
+                                    </p:submenu>
+								
+								<p:menuitem value="#{res_i18n.APP_MENU_DES_POTENTIALS}" icon="fa fa-cutlery" outcome="/portal/sab/diseno/potenciales" />
+                                                                <p:menuitem value="#{res_i18n.APP_MENU_DES_ONBOARD_TABLES}" icon="fa fa-table" outcome="/portal/sab/diseno/tablasDeAbordamiento/consulta" />
+							</p:submenu>
+                        </p:submenu>
+                        <p:submenu  label="Guia de Servicios" icon="fa fa-paste">
+                            <p:menuitem value="Submenu" icon="fa fa-code-fork" url="#" />
+                        </p:submenu>
+                        <p:submenu  label="Directorios" icon="fa fa-address-book-o">
+                            <p:menuitem value="AMX"         icon="fa fa-plane" outcome="/portal/generales/directorioAMXUsers" />
+                            <p:menuitem value="PROVEDORES"  icon="fa fa-address-book"   outcome="/portal/generales/directorioProveedoresUsers" />
+                        </p:submenu>
+
+                    </pu:menu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{res_i18n.APP_MENU_GEN_PARAMS}</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <h1>#{res_i18n.APP_MENU_GEN_PARAMS}</h1>
+                                                                        
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="#{res_i18n.CREATE}" icon="ui-icon-create"   action="#{parametroMB.addRow}" />
+                            <h:outputText value=""/>
+
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Parametros"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+
+                        </p:panelGrid>
+                        
+                        <p:dataTable id="dataTableGrid" var="row" value="#{parametroMB.findAll()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idParametro}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+
+                            <p:column headerText="Clave de Parámetro" sortBy="#{row.clave}" filterBy="#{row.clave}" filterMatchMode="contains">
+                                <h:outputText value="#{row.clave}" />
+                            </p:column>
+                            <p:column headerText="Descripción Español" sortBy="#{row.valorEs}" filterBy="#{row.valorEs}" filterMatchMode="contains">
+                                <h:outputText value="#{row.valorEs}" />
+                            </p:column>
+                            <p:column headerText="Descripción Ingles" sortBy="#{row.valorEn}" filterBy="#{row.valorEn}" filterMatchMode="contains">
+                                <h:outputText value="#{row.valorEn}" />
+                            </p:column>
+                            <p:column headerText="Estatus" sortBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterMatchMode="contains">
+                                <h:outputText value="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" />
+                            </p:column>
+                            <p:column headerText="Modificar"> 
+                                <h:commandLink action="#{parametroMB.modifyRow(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

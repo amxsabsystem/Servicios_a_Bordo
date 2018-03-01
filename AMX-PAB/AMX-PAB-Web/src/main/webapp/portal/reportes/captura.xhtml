@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:of="http://omnifaces.org/functions"
+                >
+
+    <ui:define name="title">Registros</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <h1>Captura de Reporte</h1>
+                        
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none;">
+                            <h:outputText value="Fecha" style="float: right;"/><h:outputText id="labelFecha" value="#{capturaMB.fechaSistema}"/>
+			</p:panelGrid>
+                         <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        <h3><h:outputText value="Datos del Vuelo" style="margin: 0 auto;"/></h3>
+                        <p:panelGrid columns="6" columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2,ui-grid-col-2,ui-grid-col-5" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                               
+                            <h:outputText  value="Vuelo" style="float: right;" />
+                            <p:selectOneMenu  value="#{capturaMB.asignedVuelo}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{capturaMB.selectVuelos}" />
+                                    <p:ajax update="ruta"  listener="#{capturaMB.getRutas}" />
+                            </p:selectOneMenu>
+                            <h:outputText  value="Ruta" style="float: right;" />
+                            <p:selectOneMenu id="ruta" value="#{capturaMB.asignedRuta}" style="width: 90%;">
+                                    <f:selectItems value="#{capturaMB.selectRutas}" />
+                                    <p:ajax update="estacion,compania"  listener="#{capturaMB.setLabelEstacion}" />
+                            </p:selectOneMenu>
+                            <h:outputText  value="Estación Responsable" style="float: right;" />
+                            <h:outputText id="estacion" value="#{capturaMB.labelEstaciónResponsable}" style="float: left;" />
+                            <h:outputText  value="Compañia" style="float: right;" />
+                            <h:outputText id="compania" value="#{capturaMB.labelCompania}" style="float: left;" />
+                            <h:outputText  value="Clase" style="float: right;" />
+                            <p:selectOneMenu id="clase" value="#{capturaMB.asignedClase}" style="width: 90%;">
+                                    <f:selectItems value="#{capturaMB.selectClases}" />
+                            </p:selectOneMenu>
+                            <h:outputText  value="Fecha de Vuelo" style="float: right;" />
+                            <p:calendar showOn="button" label="Fecha de Vuelo" value="#{capturaMB.fechaDeVuelo}" styleClass="noprocess" style="width:50%;"/>
+                            
+                        </p:panelGrid>
+                        <h3><h:outputText value="Datos del Reporte" style="margin: 0 auto;"/></h3>
+                        <p:panelGrid columns="6" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-6,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                            <h:outputText value="" />
+                            <h:outputText  value="Tipo de Reporte" style="float: right;" />
+                            <h:panelGroup id="tiporeporte" styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{capturaMB.asignedTipoReporte}" style="width: 90%;">
+                                    <f:selectItems value="#{capturaMB.selectTipoReportes}" />
+                                    <p:ajax process=":form" update="file2,tiposP,tiposProducto,desc2,testar2,vacio2" listener="#{capturaMB.updateTipoReporte}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup> 
+                            <h:outputText value="" />
+                        </p:panelGrid> 
+                        <p:message for="fileUpload" id="fileUploadMsg" />
+                        
+                        <p:panelGrid id="reporte"  columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <h:panelGroup id="tiposP" ><h:outputText  value="Tipos de Producto" style="float: right;"  rendered="#{capturaMB.isInforme}"/></h:panelGroup>
+                            <h:panelGroup id="tiposProducto"><p:selectOneMenu  value="#{capturaMB.asignedTiposProducto}"  rendered="#{capturaMB.isInforme}"  style="width: 50%;">
+                                    <f:selectItems value="#{capturaMB.selectTiposProducto}" />
+                                    <p:ajax update="tiposIrregularidades,lab"  listener="#{capturaMB.putTiposIrregularidades}" />
+                            </p:selectOneMenu>
+                            </h:panelGroup>
+                        </p:panelGrid>    
+                        <h:panelGroup id="lab" >
+                            <p:repeat id="tiposIrregularidades" value="#{capturaMB.list_tiposIrregularidades}" var="rowInner" varStatus="status" >
+                                
+                                <p:panelGrid  columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                                    <h:outputText  value="#{rowInner.descripcion}" style="float: right;"  />
+                                    <p:selectOneMenu  value="#{capturaMB.asignedIrregularidades[rowInner.idTipoIrregularidad]}"  style="width: 90%;" converter="omnifaces.SelectItemsConverter">
+                                         <f:selectItems value="#{capturaMB.generateIrregularidades(rowInner.idTipoIrregularidad)}" />
+                                    </p:selectOneMenu>    
+                                </p:panelGrid>
+                            </p:repeat>
+                        </h:panelGroup>    
+                        <p:panelGrid  columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <h:panelGroup id="desc2" styleClass="md-inputfield"><h:outputText value="Descripción" style="float: right;" /></h:panelGroup>
+                            <h:panelGroup id="testar2" styleClass="md-inputfield"><h:inputTextarea rows="10" cols="95" value="#{capturaMB.textArea}" style="width: 100%;"  /></h:panelGroup>
+                            <h:panelGroup id="vacio2" styleClass="md-inputfield"><h:outputText value="" style="float: right;" /></h:panelGroup>
+                            
+                            
+                        </p:panelGrid>
+                        
+                        <h:panelGroup id="file2" styleClass="md-inputfield"><p:fileUpload id="fileUpload" 
+                            fileUploadListener="#{capturaMB.fileListener}" mode="advanced" cancelLabel="#{res_i18n.CANCEL}" uploadLabel="CARGAR"
+                            immediate="true" label="Carga o remplaza un archivo" fileLimit="5" 
+                            fileLimitMessage="La carga esta limitada a 5 archivos"  multiple="true"
+                            update=":form:fileUploadMsg" 
+                            process=":form"
+                            />
+                            </h:panelGroup>
+                        
+                   <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{capturaMB.save}" />
+                        <h:outputText value=""/>
+                    </p:panelGrid>   
+                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

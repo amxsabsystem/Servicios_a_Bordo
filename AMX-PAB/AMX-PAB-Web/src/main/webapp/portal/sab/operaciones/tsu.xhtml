@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">TSU </ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>TSU</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Nuevo" icon="ui-icon-create"   action="#{tsuMB.addRow}" />
+                            <h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Acomodos"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+                        </p:panelGrid>
+                        <p:dataTable id="dataTableGrid" var="row" value="#{tsuMB.findAll()}"
+                                     rowKey="#{row.cveTsu}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+
+                            <p:column headerText="Clave De TSU" sortBy="#{row.cveTsu}" filterBy="#{row.cveTsu}" filterMatchMode="contains">
+                                <a href="#{facesContext.externalContext.requestContextPath}/reportes/tsu/#{row.cveTsu}" target="_blank">
+                                    <h:outputText value="#{row.cveTsu}" />
+                                </a>
+                            </p:column>
+                            <p:column headerText="Imágen">
+                                <h:graphicImage value="#{row.multimedio.url}" width="30" height="30"
+                                                title="urlMultimedia=#{row.multimedio.url}, mimeType=#{row.multimedio.mimeType}"/>
+                            </p:column>
+                            <p:column headerText="Clase" sortBy="#{localeInfo.locale.language=='es'?row.clase.nombreEsp:row.clase.nombreEng}" 
+                                                         filterBy="#{localeInfo.locale.language=='es'?row.clase.nombreEsp:row.clase.nombreEng}" filterMatchMode="contains">
+                                <h:outputText    value="#{localeInfo.locale.language=='es'?row.clase.nombreEsp:row.clase.nombreEng}" />
+                            </p:column>
+                            <p:column headerText="Revisión" sortBy="#{localeInfo.locale.language=='es'?row.idRevision.valorEs:row.idRevision.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.idRevision.valorEs:row.idRevision.valorEn}" filterMatchMode="contains">
+                                <h:outputText    value="#{localeInfo.locale.language=='es'?row.idRevision.valorEs:row.idRevision.valorEn}" />
+                            </p:column>
+                            <p:column headerText="Idioma" sortBy="#{localeInfo.locale.language=='es'?row.idIdioma.valorEs:row.idIdioma.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.idIdioma.valorEs:row.idIdioma.valorEn}" filterMatchMode="contains">
+                                <h:outputText    value="#{localeInfo.locale.language=='es'?row.idIdioma.valorEs:row.idIdioma.valorEn}" />
+                            </p:column>
+                            <p:column headerText="Estatus" sortBy="#{row.status}" filterBy="#{row.status}" filterMatchMode="contains">
+                                <h:outputText value="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" />
+                            </p:column>
+                            <p:column headerText="Modificar" exportable="false"> 
+                                <h:commandLink action="#{tsuMB.modifyRow(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition> 
+
+

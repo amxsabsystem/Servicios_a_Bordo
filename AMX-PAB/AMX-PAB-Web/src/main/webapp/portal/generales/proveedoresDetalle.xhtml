@@ -1,0 +1,138 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Proveedores por Estación</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!proveedorMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{proveedorMB.modificarRegistro}" />Proveedor por Estación</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{proveedorMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid styleClass="ui-panelgrid-blank form-group" style="width:90%;">
+                        
+                        
+                        <p:row>
+                            <p:column style="text-align: left;width:10%;">
+                                <p:outputLabel for="proveedor" value="Proveedor" style="float: right;"/>
+                            </p:column>
+                            <p:column style="text-align: left;width:60%;">
+                                <h:panelGroup id="proveedor"  styleClass="md-inputfield">
+                                    <p:selectOneMenu id="comboProveedor" value="#{proveedorMB.asignedProveedor}"   style="width: 90%;">
+                                        <f:selectItems value="#{proveedorMB.selectProveedores}" />
+                                        <p:ajax listener="#{proveedorMB.updateProveedorClave}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column  rowspan="8" style="text-align: left;vertical-align:top;width:5%;">
+                                <p:outputLabel for="tipo" value="Tipo" style="float: right;"/>
+                            </p:column>
+                            <p:column rowspan="8" style="text-align: left;vertical-align:top;width:25%;">    
+                                <p:selectManyCheckbox id="tipo" value="#{proveedorMB.asignedtipos}" layout="responsive" columns="1" styleClass="form-group">
+                                    <f:selectItems value="#{proveedorMB.selectedTipos}" var="tipos" itemLabel="#{tipos.idTipoProveedor} - #{tipos.nombreEs}" itemValue="#{tipos.idTipoProveedor}" />
+                                </p:selectManyCheckbox>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="text-align: left">
+                                <p:outputLabel for="estacion" value="Estación" style="float: right;"/>
+                            </p:column>
+                            <p:column>    
+                                <h:panelGroup id="estacion"  styleClass="md-inputfield">
+                                    <p:selectOneMenu  value="#{proveedorMB.asignedEstacion}"  filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                        <f:selectItems value="#{proveedorMB.selectEstaciones}" />
+                                        <p:ajax update="pais,ciudad,region,clave"  listener="#{proveedorMB.updateLabels}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column style="text-align: left">
+                                <p:outputLabel for="razonSocial" value="Razón Social" style="float: right;"/>
+                            </p:column>
+                            <p:column>    
+                                <h:panelGroup id="razonSocial" styleClass="md-inputfield">
+                                    <p:inputText  value="#{proveedorMB.row_selected.razonSocial}" style="width:90%;" maxlength="50" required="false"  validatorMessage="Razón Social: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                        <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)?"  />
+                                    </p:inputText>
+
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column style="text-align: left">
+                                <p:outputLabel for="estatus" value="Estatus" rendered="#{proveedorMB.modificarRegistro}" style="float: right;"/>
+                            </p:column>
+                            <p:column>    
+                                <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{proveedorMB.modificarRegistro}">
+                                    <p:selectOneMenu  value="#{proveedorMB.row_selected.status}"   style="width: 90%;" >
+                                        <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                        <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column style="text-align: left">
+                                <p:outputLabel  value="Región" style="float: right;"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="region" value="#{proveedorMB.labelRegion}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="text-align: left">
+                                <p:outputLabel  value="País" style="float: right;"/>
+                            </p:column>
+                            <p:column>    
+                                <p:outputLabel id="pais" value="#{proveedorMB.labelPais}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="text-align: left">
+                                <p:outputLabel  value="Ciudad" style="float: right;"/>
+                            </p:column>
+                            <p:column>    
+                                <p:outputLabel id="ciudad" value="#{proveedorMB.labelCiudad}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="text-align: left">
+                                <p:outputLabel value="Clave" style="float: right;"/>
+                            </p:column>
+                            <p:column>    
+                                <p:outputLabel id="clave"  value="#{proveedorMB.labelClave}"/>
+                            </p:column>
+                        </p:row>
+                   </p:panelGrid>
+                    
+                    <p:spacer height="15"/>
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{proveedorMB.save}"  rendered="#{!proveedorMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{proveedorMB.update}"  rendered="#{proveedorMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

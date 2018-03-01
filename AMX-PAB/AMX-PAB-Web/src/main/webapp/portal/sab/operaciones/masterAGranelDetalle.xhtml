@@ -1,0 +1,184 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Master a Granel</ui:define>
+
+    <ui:define name="head">
+        <style>
+
+            body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon{
+
+                color:#000;
+            }
+        </style>
+
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>
+                            <h:outputText value="Alta " rendered="#{!masterMB.modificarRegistro}" />
+                            <h:outputText value="Modificación " rendered="#{masterMB.modificarRegistro}" />
+                            Master a Granel
+                        </h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{masterMB.returnMaster}"  immediate="true"/>
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-6,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="margin:0px auto;">
+                            <h:outputText value="" />
+
+                            <p:outputLabel for="noParte" value="No. Parte" style="float: right;"/>
+                            <h:panelGroup id="noParte" styleClass="md-inputfield">
+                                <h:outputText      value="#{masterMB.row_selected_kit.cveKitMaster}" rendered="#{masterMB.modificarRegistro}"/>
+                                <p:selectOneMenu   value="#{masterMB.asignedMaterial}"   filter="true" filterMatchMode="startsWith" rendered="#{!masterMB.modificarRegistro}">
+                                    <f:selectItems value="#{masterMB.selectMateriales}" />
+                                    <p:ajax update="descEsp,descEn"  listener="#{masterMB.updateLabels}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:outputText value="" />
+                        </p:panelGrid>    
+                        <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">    
+                            <p:outputLabel for="descEsp" value="Descripción Español" style="float: right;"/>
+                            <h:panelGroup id="descEsp" styleClass="md-inputfield">
+                                <h:outputText value="#{masterMB.material_Desc_Es}" />
+                            </h:panelGroup>
+                            <p:outputLabel for="descEn" value="Descripción Ingles" style="float: right;"/>
+                            <h:panelGroup id="descEn" styleClass="md-inputfield">
+                                <h:outputText value="#{masterMB.material_Desc_En}" />
+                            </h:panelGroup>
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:#7C7B7A;">
+                            <p:outputLabel for="contenedor" value="Contenedor" style="float: right;"/>
+                            <h:panelGroup id="contenedor" styleClass="md-inputfield">
+                                <p:inputText  value="#{masterMB.assignedContenedor}" style="width: 40%;" maxlength="50" required="false" requiredMessage="Contenedor: Campo requerido" validatorMessage="Contenedor: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ., ()/% ]*)$"  />
+                                </p:inputText>                         	
+                            </h:panelGroup>
+
+                            <p:outputLabel for="unidadDeMedida" value="Unidad De Medida" style="float: right;"/>
+                            <h:panelGroup id="unidadDeMedida"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{masterMB.asignedUnidad}"   style="width: 25%;">
+                                    <f:selectItems value="#{masterMB.selectUnidades}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="instEstNacionales" value="Instrucciones Estaciones Nacionaes" style="float: right;"/>
+                            <h:panelGroup id="instEstNacionales"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{masterMB.asignedEstNacional}"   style="width: 25%;">
+                                    <f:selectItems value="#{masterMB.asignedEstNacionales}" />
+
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="instEstInternacionales" value="Instrucciones Estaciones Internacionaes" style="float: right;"/>
+                            <h:panelGroup id="instEstInternacionales"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{masterMB.asignedEstInternac}"   style="width: 25%;">
+                                    <f:selectItems value="#{masterMB.asignedEstInternacionales}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="estatus" value="Estatus" rendered="#{masterMB.modificarRegistro}" style="float: right;"/>
+                            <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{masterMB.modificarRegistro}">
+                                <p:selectOneMenu  value="#{masterMB.row_selected.status}"   style="width: 50%;" >
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <p:spacer height="15"/>  
+                        </p:panelGrid> 
+
+                        <p:spacer height="15"/>
+
+                        <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank form-group">    
+                            <p:outputLabel for="cantidad" value="Cantidad"/>
+                            <h:panelGroup id="cantidad" styleClass="md-inputfield">
+                                <p:inputText  value="#{masterMB.cantidad}" maxlength="5" required="true" requiredMessage="Cantidad: Campo requerido" validatorMessage="Cantidad: Datos incorrectos, solo números ">
+                                    <f:validateRegex pattern="^[0-9]*$"  />
+                                </p:inputText>
+
+                            </h:panelGroup>
+                            <p:outputLabel for="peso" value="Peso"/>
+                            <h:panelGroup id="peso" styleClass="md-inputfield">
+                                <p:inputText  value="#{masterMB.peso}" maxlength="15" required="false"  validatorMessage="Peso: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^[0-9]*(\.[0-9]+)?$"  />
+                                </p:inputText>kg
+
+                            </h:panelGroup>
+
+
+                            <p:selectBooleanCheckbox value="#{masterMB.reciclable}" style="float: right;"/>
+                            <h:outputText value="Material Reciclable" />
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">    
+                            <p:outputLabel for="observaciones" value="Observaciones"/>
+                            <h:panelGroup id="observaciones" styleClass="md-inputfield">
+                                <p:inputText  value="#{masterMB.observaciones}" style="width: 90%;" maxlength="50" required="true" requiredMessage="Observaciones: Campo requerido" validatorMessage="Observaciones: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+
+                            </h:panelGroup>                        
+                        </p:panelGrid>    
+                        <p:spacer height="30"/>
+
+                        <p:dataTable id="dataTableGrid" var="row" value="#{masterMB.all_records_previewAgranel}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.numeroParte}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" 
+                                     rendered="#{masterMB.showPreview}"
+                                     >
+                            <p:column headerText="No de Parte">
+                                <h:outputText value="#{row.numeroParte}" />
+                            </p:column>
+                            <p:column headerText="Descripción Español" >
+                                <h:outputText value="#{row.descripcionEs}"/>
+                            </p:column>
+                            <p:column headerText="Descripción Ingles" >
+                                <h:outputText    value="#{row.descripcionEn}" />
+                            </p:column>
+                            <p:column headerText="Estaciones Nacionales" >
+                                <h:outputText    value="#{row.estacionesNac}" />
+                            </p:column>
+                            <p:column headerText="Estaciones Internacionales" >
+                                <h:outputText    value="#{row.estacionesInter}" />
+                            </p:column>
+                            <p:column headerText="um" >
+                                <h:outputText    value="#{row.um}" />
+                            </p:column>
+                            <p:column headerText="Peso" >
+                                <h:outputText value="#{row.peso}" />
+                            </p:column>
+                            <p:column headerText="Cantidad" >
+                                <h:outputText value="#{row.cantidad}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:spacer height="30"/>
+
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{masterMB.save}"  rendered="#{!masterMB.modificarRegistro}"/>
+                            <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{masterMB.update}"  rendered="#{masterMB.modificarRegistro}"/>
+                            <p:commandButton id="previewButton" value="Vista Preliminar" icon="ui-icon-preview" ajax="false" action="#{masterMB.preview}"  />
+
+                        </p:panelGrid>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

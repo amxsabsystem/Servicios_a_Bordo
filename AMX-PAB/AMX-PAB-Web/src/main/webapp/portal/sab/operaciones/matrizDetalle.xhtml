@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Matriz DETALLE</ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>Matriz Detalle</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:panelGrid    columns="2" columnClasses="iu-grid-col-3,ui-grid-col-9" layout="grid" 
+                                        styleClass="ui-panelgrid-blank form-group" 
+                                        style="margin:0px auto;width: 100%; background: transparent">
+
+                            <p:outputLabel for="cveKitMaster" value="Id de Kit / Lote" style="float: right;"/>
+                            <h:panelGroup id="cveKitMasterPnl" styleClass="md-inputfield">
+                                <p:selectOneMenu id="cveKitMaster" value="#{matrizConfigMB.kitMasterCve_view}"   
+                                                 filter="true" filterMatchMode="startsWith" style="width: 30%;">
+                                    <f:selectItems value="#{matrizConfigMB.selectKitMasterCveView}" />
+                                    <p:ajax listener="#{matrizConfigMB.kitMasterCveViewChanged}" 
+                                            update="@form"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="producto" value="Producto" style="float: right;"/>
+                            <h:panelGroup id="productoPnl" styleClass="md-inputfield">
+                                <p:selectOneMenu id="producto" value="#{matrizConfigMB.idProducto_view}"   
+                                                 filter="true" filterMatchMode="startsWith" style="width: 30%;">
+                                    <f:selectItems value="#{matrizConfigMB.selectProductoView}" />
+                                    <p:ajax listener="#{matrizConfigMB.idProducto_ViewChanged}" 
+                                            update="@form"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="tipoEquipo" value="Tipo Equipo" style="float: right;"/>
+                            <h:panelGroup id="tipoEquipoPnl" styleClass="md-inputfield">
+                                <p:selectOneMenu id="tipoEquipo" value="#{matrizConfigMB.idTipoEquipoAvion_view}"   
+                                                 filter="true" filterMatchMode="startsWith" style="width: 30%;">
+                                    <f:selectItems value="#{matrizConfigMB.selectTipoEquipoView}" />
+                                    <p:ajax listener="#{matrizConfigMB.tipoEquipoAvion_ViewChanged}" 
+                                            update="@form"/>
+                                </p:selectOneMenu>                                
+                            </h:panelGroup>
+                        </p:panelGrid>
+                        <p:panelGrid    columns="4" columnClasses="ui-grid-col-4,iu-grid-col-2,ui-grid-col-3,iu-grid-col-3" layout="grid" 
+                                        styleClass="ui-panelgrid-blank form-group" 
+                                        style="margin:0px auto; background:#CCCCCC;width: 100%">
+                            <p:spacer width="10"/>
+                            <p:commandButton id="searchButton"   value="#{res_i18n.SEARCH}"       icon="ui-icon-search"                                                
+                                             actionListener="#{matrizConfigMB.search}"
+                                             update="@form"
+                                             disabled="#{not matrizConfigMB.readyToSearch}" />
+
+                            <p:commandButton id="clearButton"   value="#{res_i18n.CLEAR}"       icon="ui-icon-trash"
+                                             actionListener="#{matrizConfigMB.cancel}"
+                                             update="@form"
+                                             disabled="#{not matrizConfigMB.readyToSearch}" />
+                            <p:spacer width="10"/>
+                        </p:panelGrid>
+                        <p:spacer width="50"/>
+                        <p:outputPanel id="matrizSearchPanel">
+                            <p:repeat value="#{matrizConfigMB.matrizSearchResultList}" var="msr">
+                                <p:fieldset>
+                                    <p:dataTable id="dataTableMatrizGrid" var="mat" value="#{msr.matrizUniqueList}" reflow="true"
+                                                 rowKey="#{mat.idMatriz}" paginator="false" 
+                                                 emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                                        <p:column headerText="IdMatriz">
+                                            <h:outputText value="#{mat.idMatriz}" />
+                                        </p:column>
+                                        <p:column headerText="CveKitMaster">
+                                            <h:outputText value="#{mat.kitMaster.cveKitMaster}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                    <p:spacer width="20"/>
+                                    <p:dataTable id="dataTableGrid" var="md" value="#{msr.matrizDetalleList}" selectionMode="single" reflow="true"
+                                                 rowKey="#{md.idMatrizDetalle}" paginator="false"
+                                                 emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+
+                                        <p:column headerText="IdMatrizDetalle">
+                                            <h:outputText value="#{md.idMatrizDetalle}" />
+                                        </p:column>
+                                        <p:column headerText="Producto">
+                                            <h:outputText value="#{md.material.numeroParte}" />
+                                        </p:column>      
+                                        <p:column headerText="Producto" >
+                                            <h:outputText value="#{mat.producto.nombre}"/>
+                                        </p:column>
+                                        <p:column headerText="Tipo Equipo" >
+                                            <h:outputText value="#{mat.tipoEquipoAvion.tipoEquipo}"/>
+                                        </p:column>
+                                        <p:column headerText="TOTAL C-J" >
+                                            <h:outputText    value="#{md.totalCantidadCj}" />
+                                        </p:column>
+                                        <p:column headerText="TOTAL C-Y" >
+                                            <h:outputText value="#{md.totalCantidadCy}" />
+                                        </p:column>
+                                        <p:column headerText="Total" >
+                                            <h:outputText value="#{md.totalCantidadCj + md.totalCantidadCy}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:fieldset>
+                            </p:repeat>
+                        </p:outputPanel>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

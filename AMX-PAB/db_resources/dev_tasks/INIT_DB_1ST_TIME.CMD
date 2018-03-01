@@ -1,0 +1,2 @@
+java -jar SQLCommander.jar -driverClass org.apache.derby.jdbc.ClientDriver -url "jdbc:derby://localhost:1527/AMX_SAB_DB_DEV;create=true" -user AMX_SAB_DEV_USR -password AMX_SAB_DEV_PWD <  ..\..\AMX-SAB-BackEnd\AMX-SAB-BackEnd-persistence\src\main\resources\sql\CREATE_SCHEMMA_DEV.DERBY.SQL
+java -jar SQLCommander.jar -driverClass org.apache.derby.jdbc.ClientDriver -url "jdbc:derby://localhost:1527/AMX_SAB_DB_DEV"             -user AMX_SAB_DEV_USR -password AMX_SAB_DEV_PWD <  ..\..\AMX-PAB-persistence\src\test\resources\sql\FIRST_DATA_SCEN_1.DERBY.SQL

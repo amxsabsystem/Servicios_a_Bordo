@@ -1,0 +1,148 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{res_i18n.APP_MENU_GEN_CORP_CONTACT}</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!contactoProveedoresMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{contactoProveedoresMB.modificarRegistro}" />#{res_i18n.APP_MENU_GEN_CORP_CONTACT}</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />        
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{contactoProveedoresMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="proveedor" value="Proveedor" style="float: right;"/>
+                        <h:panelGroup id="proveedor"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{contactoProveedoresMB.asignedProveedor}"   style="width: 90%;">
+				<f:selectItems value="#{contactoProveedoresMB.selectProveedores}" />
+                                <p:ajax listener="#{contactoProveedoresMB.updateProveedorClave}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="estacion" value="Estación" style="float: right;"/>
+                        <h:panelGroup id="estacion"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{contactoProveedoresMB.asignedEstacion}"  filter="true" filterMatchMode="startsWith" style="width: 90%;">
+				<f:selectItems value="#{contactoProveedoresMB.selectEstaciones}" />
+                                <p:ajax update="pais,clave,region,ciudad"  listener="#{contactoProveedoresMB.updateLabels}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        
+                        
+                        
+                        
+                    </p:panelGrid>
+                    <p:spacer height="5"/>
+                    
+                    <p:panelGrid columns="8" columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <h:outputText value="Clave de Proveedor" style="float: right;"/>
+                        <h:outputText id="clave" value="#{contactoProveedoresMB.labelClave}" />
+                        
+                        <p:outputLabel value="Región" style="float: right;"/> <p:outputLabel id="region" value="#{contactoProveedoresMB.labelRegion}"/>
+                        <p:outputLabel value="País" style="float: right;"/> <p:outputLabel id="pais" value="#{contactoProveedoresMB.labelPais}"/>
+                        <p:outputLabel value="Ciudad" style="float: right;"/> <p:outputLabel id="ciudad" value="#{contactoProveedoresMB.labelCiudad}"/>
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="6"  layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="nombre" value="Nombre de Contacto" style="float: right;"/>
+                        <h:panelGroup id="nombre" styleClass="md-inputfield">
+                            <p:inputText  value="#{contactoProveedoresMB.nombre}"   maxlength="50" required="true" requiredMessage="Nombre de Contacto: Campo requerido" validatorMessage="Nombre de Contacto: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>
+                        </h:panelGroup>
+                        <p:outputLabel for="apellidoPat" value="Apellido Paterno" style="float: right;"/>
+                        <h:panelGroup id="apellidoPat" styleClass="md-inputfield">
+                            <p:inputText  value="#{contactoProveedoresMB.apellidoPat}"   maxlength="50" required="true" requiredMessage="Apellido Paterno : Campo requerido" validatorMessage="Apellido Paterno : Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>
+                        </h:panelGroup>
+                        <p:outputLabel for="apellidomat" value="Apellido Materno" style="float: right;"/>
+                        <h:panelGroup id="apellidomat" styleClass="md-inputfield">
+                            <p:inputText  value="#{contactoProveedoresMB.apellidomat}"   maxlength="50" required="true" requiredMessage="Apellido Materno : Campo requerido" validatorMessage="Apellido Materno : Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>
+                            </h:panelGroup>
+                    </p:panelGrid>
+                    
+                     <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">   
+                        
+                        <p:outputLabel for="correo" value="Correo Electrónico" class="ui-grid-col-2" style="float: right;"/> 
+                        <h:panelGroup id="correo" styleClass="md-inputfield" >
+                            <p:inputText  value="#{contactoProveedoresMB.email}" style="width:95%;" maxlength="50" required="true" requiredMessage="Correo Electrónico: Campo requerido" validatorMessage="Correo Electrónico: Datos incorrectos, no corresponde con una direccción de correo electronico correcta">
+                                <f:validateRegex pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"  />
+                          </p:inputText>  
+                         	
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">   
+                        <p:outputLabel for="telefono" value="Teléfono" style="float: right;"/> 
+                        <h:panelGroup id="telefono" styleClass="md-inputfield">
+                          <p:inputText  value="#{contactoProveedoresMB.row_selected.telefono}"  maxlength="50" required="true" requiredMessage="Teléfono: Campo requerido" validatorMessage="Teléfono: Datos incorrectos, solo caracteres alfanuméricos, parentesis, guiones, comas, diagonal, puntos">
+                                <f:validateRegex pattern="^([A-Za-z0-9()-/., ]+)$"  />
+                          </p:inputText> 
+                         	
+                        </h:panelGroup>
+                        <p:outputLabel for="extension" value="Extensión" style="float: right;"/> 
+                        <h:panelGroup id="extension" styleClass="md-inputfield">
+                            <p:inputText  value="#{contactoProveedoresMB.row_selected.extension}"  maxlength="50" required="true" requiredMessage="Extensión: Campo requerido" validatorMessage="Extensión: Datos incorrectos, solo caracteres alfanuméricos, parentesis, guiones, comas, diagonal, puntos">
+                                <f:validateRegex pattern="^([A-Za-z0-9()-/., ]+)$"  />
+                          </p:inputText>
+                         	
+                        </h:panelGroup>
+                       
+                        <p:outputLabel for="puestoEs" value="Puesto/Area(Español)" style="float: right;"/> 
+                        <h:panelGroup id="puestoEs" styleClass="md-inputfield">
+                            <p:inputText  value="#{contactoProveedoresMB.row_selected.puestoAreaEs}"  maxlength="50" required="true" requiredMessage="Puesto Español: Campo requerido" validatorMessage="Puesto Español: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>
+                         	
+                        </h:panelGroup>
+                        <p:outputLabel for="puestoIng" value="Puesto/Area(Ingles)" style="float: right;"/> 
+                        <h:panelGroup id="puestoIng" styleClass="md-inputfield">
+                          <p:inputText  value="#{contactoProveedoresMB.row_selected.puestoAreaEn}"  maxlength="50" required="true" requiredMessage="Puesto Ingles: Campo requerido" validatorMessage="Puesto Ingles: Datos incorrectos, solo caracteres alfanuméricos, preferencia idioma inglés">
+                                <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)$"  />
+                          </p:inputText>
+                         	
+                        </h:panelGroup>
+                    
+                        <p:outputLabel for="estatus" value="Estatus" rendered="#{contactoProveedoresMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{contactoProveedoresMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{contactoProveedoresMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    
+                     <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank form-group"> 
+                        <h:outputText value="Agregar al Directorio SAB: " style="float: right;" />
+                        <p:selectBooleanCheckbox value="#{contactoProveedoresMB.directorioSab}" />
+                    </p:panelGrid>
+                    
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{contactoProveedoresMB.save}"  rendered="#{!contactoProveedoresMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{contactoProveedoresMB.update}"  rendered="#{contactoProveedoresMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                >
+
+    <ui:define name="title">Reportes</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <h1>Catálogo Responsables</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="#{res_i18n.CREATE}" icon="ui-icon-create"   action="#{reporteMB.addRow_Responsable}" />
+                            <h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Responsables"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+			</p:panelGrid>
+                        <p:dataTable id="dataTableGrid" var="row" value="#{reporteMB.findAll_Responsables()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.responsableProductoPK}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            <p:column headerText="Empleado" sortBy="#{row.responsableEstacion.empleado.usuario.emailUsuario}" filterBy="#{row.responsableEstacion.empleado.usuario.emailUsuario}" filterMatchMode="contains">
+                                <h:outputText value="#{row.responsableEstacion.empleado.usuario.emailUsuario}" />
+		            </p:column>
+                            <p:column headerText="Estación" sortBy="#{row.responsableEstacion.estacion.claveIata}" filterBy="#{row.responsableEstacion.estacion.claveIata}" filterMatchMode="contains">
+			       <h:outputText value="#{row.responsableEstacion.estacion.claveIata}" />
+		            </p:column>
+                            <p:column headerText="Tipo Producto" sortBy="#{row.tipoProductoReporte.descripcion}" filterBy="#{row.tipoProductoReporte.descripcion}" filterMatchMode="contains">
+			       <h:outputText value="#{row.tipoProductoReporte.descripcion}" />
+		            </p:column>
+                            <p:column headerText="Área" sortBy="#{row.responsableEstacion.area.clave}" filterBy="#{row.responsableEstacion.area.clave}" filterMatchMode="contains">
+			       <h:outputText value="#{row.responsableEstacion.area.clave}" />
+		            </p:column>
+                            <p:column headerText="Jefe" sortBy="#{row.responsableEstacion.empleadoJefe.usuario.emailUsuario}" filterBy="#{row.responsableEstacion.empleadoJefe.usuario.emailUsuario}" filterMatchMode="contains">
+			       <h:outputText value="#{row.responsableEstacion.empleadoJefe.usuario.emailUsuario}" />
+		            </p:column>
+                            <p:column headerText="Detalle"  exportable="false"> 
+                                <h:commandLink action="#{reporteMB.modifyRowResponsable(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

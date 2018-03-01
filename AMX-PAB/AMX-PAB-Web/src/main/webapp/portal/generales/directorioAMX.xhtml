@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Directorio AMX</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Directorio AMX</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white;  display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_UsuariosDeSAB"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+			</p:panelGrid>
+			
+                        <h3>Areas</h3>
+                        <p:dataTable id="dataTableGrid" var="row" value="#{directorioAMXMB.findAllAreas()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idArea}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            
+                            <p:column headerText="Área" sortBy="#{row.clave}" filterBy="#{row.clave}" filterMatchMode="contains">
+                                <h:outputText value="#{row.clave}" />
+		            </p:column>
+<<<<<<< HEAD
+                            <p:column headerText="Clave Área" sortBy="#{row.clave}" filterBy="#{row.clave}" filterMatchMode="contains">
+                                <h:outputText value="#{row.clave}" />
+		            </p:column>
+                            <p:column headerText="Nombre de Empleado" sortBy="#{row.clave}" filterBy="#{row.clave}" filterMatchMode="contains">
+                                <h:outputText value="#{row.clave}" />
+		            </p:column>
+                            <p:column headerText="Puesto" sortBy="#{row.clave}" filterBy="#{row.clave}" filterMatchMode="contains">
+                                <h:outputText value="#{row.clave}" />
+		            </p:column>
+                            <p:column headerText="Correo Electrónico" sortBy="#{row.clave}" filterBy="#{row.clave}" filterMatchMode="contains">
+                                <h:outputText value="#{row.clave}" />
+		            </p:column>
+                            <p:column headerText="Teléfono" sortBy="#{localeBean.locale.language=='es'?row.nombreEs:row.nombreEn}" filterBy="#{localeBean.locale.language=='es'?row.nombreEs:row.nombreEn}" filterMatchMode="contains">
+				<h:outputText    value="#{localeBean.locale.language=='es'?row.nombreEs:row.nombreEn}" />
+			    </p:column>
+                            <p:column headerText="Extensión" sortBy="#{localeBean.locale.language=='es'?row.nombreEs:row.nombreEn}" filterBy="#{localeBean.locale.language=='es'?row.nombreEs:row.nombreEn}" filterMatchMode="contains">
+				<h:outputText    value="#{localeBean.locale.language=='es'?row.nombreEs:row.nombreEn}" />
+=======
+                            <p:column headerText="Descripción" sortBy="#{localeInfo.locale.language=='es'?row.nombreEs:row.nombreEn}" filterBy="#{localeInfo.locale.language=='es'?row.nombreEs:row.nombreEn}" filterMatchMode="contains">
+				<h:outputText    value="#{localeInfo.locale.language=='es'?row.nombreEs:row.nombreEn}" />
+>>>>>>> 015724d5665bca2e382b00d5e65432cb6acd0a87
+			    </p:column>
+                            
+                            <p:column headerText="Consultar" exportable="false"> 
+                                <h:commandLink action="#{directorioAMXMB.findUsers(row.idArea)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-search"></i>
+                                </h:commandLink>
+                            </p:column>
+                            
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

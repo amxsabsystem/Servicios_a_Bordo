@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Materiales</ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!materialesMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{materialesMB.modificarRegistro}" />Material</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{materialesMB.returnMaster}"  immediate="true"/>
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+                        <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+
+                            <p:outputLabel for="numeroParte" value="Número de Parte" style="float: right;"/>
+                            <h:panelGroup id="numeroParte" styleClass="md-inputfield">
+                                <p:inputText  value="#{materialesMB.row_selected.numeroParte}" maxlength="50" required="true" requiredMessage="Número de Parte: Campo requerido" validatorMessage="Número de Parte: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+
+                            </h:panelGroup>
+
+                            <p:outputLabel for="categoria" value="Categoría" style="float: right;"/>
+                            <h:panelGroup id="categoria" styleClass="md-inputwrapper-filled">
+                                <p:selectOneMenu  value="#{materialesMB.asignedCategoria}"   style="width: 90%;">
+                                    <f:selectItems value="#{materialesMB.selectCategorias}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="descEsp" value="Descripción Español" style="float: right;"/>
+                            <h:panelGroup id="descEsp"  styleClass="md-inputfield">
+                                <p:inputText  value="#{materialesMB.row_selected.descripcionEs}" maxlength="50" required="true" requiredMessage="Descripción Español: Campo requerido" validatorMessage="Descripción Español: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+
+                            </h:panelGroup>
+
+                            <p:outputLabel for="descIng" value="Descripción Ingles" style="float: right;"/>
+                            <h:panelGroup id="descIng" styleClass="md-inputfield">
+                                <p:inputText  value="#{materialesMB.row_selected.descripcionEn}" maxlength="50" required="false"  validatorMessage="Descripción Ingles: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)?"  />
+                                </p:inputText>
+
+                            </h:panelGroup>
+
+                            <p:outputLabel for="tipoAbastecimiento" value="Tipo de Abastecimiento" style="float: right;"/>
+                            <h:panelGroup id="tipoAbastecimiento" styleClass="md-inputwrapper-filled">
+                                <p:selectOneMenu  value="#{materialesMB.asignedTipoAbastecimiento}"   style="width: 90%;">
+                                    <f:selectItems value="#{materialesMB.selectTipoAbastecimientos}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="peso" value="Peso" style="float: right;"/>
+                            <h:panelGroup id="peso" styleClass="md-inputfield">
+                                <p:inputText  value="#{materialesMB.peso}" maxlength="5" required="true" requiredMessage="Peso: Campo requerido" validatorMessage="Peso: Datos incorrectos, solo números ">
+                                    <f:validateRegex pattern="^[0-9. ]*$"  />
+                                </p:inputText>
+
+                            </h:panelGroup>
+
+
+
+                            <p:outputLabel for="estatus" value="Estatus" rendered="#{materialesMB.modificarRegistro}" style="float: right;"/>
+                            <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{materialesMB.modificarRegistro}">
+                                <p:selectOneMenu  value="#{materialesMB.row_selected.status}"   style="width: 90%;" >
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="archcargados" value="Archivo Cargado" style="float: right;" rendered="#{materialesMB.modificarRegistro}"/>
+                            <h:outputText id="archcargados" value="#{materialesMB.row_selected.urlMultimedia}" rendered="#{materialesMB.modificarRegistro}"/>
+
+                        </p:panelGrid>
+                        <p:spacer height="15"/> 
+
+                        <p:fileUpload id="fileUpload"
+                                      fileUploadListener="#{materialesMB.fileListener}" mode="advanced"
+                                      immediate="true" label="Carga una imagen" fileLimit="1" cancelLabel="#{res_i18n.CANCEL}" uploadLabel="CARGAR"
+                                      fileLimitMessage="La carga esta limitada a 1 archivos"  multiple="true"
+                                      invalidFileMessage="Formato incorrecto (JPG,JPEG y PNG), Por favor seleccione un archivo valido."
+                                      allowTypes="/(\.|\/)(png|jpg|jpeg)$/"
+                                      update=":form:fileUploadMsg" 
+                                      process=":form"
+                                      />
+                        <p:message for="fileUpload" id="fileUploadMsg" />
+                        <p:spacer height="15"/>        
+
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{materialesMB.save}"  rendered="#{!materialesMB.modificarRegistro}"/>
+                            <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{materialesMB.update}"  rendered="#{materialesMB.modificarRegistro}"/>
+
+                        </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition> 

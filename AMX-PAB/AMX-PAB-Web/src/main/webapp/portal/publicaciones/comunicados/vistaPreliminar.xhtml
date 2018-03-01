@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Comunicados</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title" >
+                        <h1>Vista Preliminar</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:spacer height="15"/>
+                    <h3><h:outputText value="Vista Idoma falta" /></h3>
+                    <p:panelGrid  styleClass="ui-panelgrid-blank form-group" style="background-color:#CCCCCC;width:100%;">
+                        
+                        <p:row>
+                            <p:column style="width:50%; height: 400px;">
+                                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; height: 300px;">
+                                    <h:outputText  value="Fecha" /><h:outputText  value="DD/MM/YY" />
+                                    <h:outputText  value="Referencia" /><h:outputText  value="XXXXXX" />
+                                    <h:outputText  value="Usuario" /><h:outputText  value="usuario@mail.com" />
+                                    <h:outputText  value="Referencia de otro Comunicado" /><h:outputText  value="YYYYYY" />
+                                </p:panelGrid>
+                            </p:column>
+                            <p:column style="width:50%; height: 200px;">
+                                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; height: 300px;">
+                                    <h:outputText  value="Dirigido A" /><h:outputText  value="" />
+                                    <h:outputText  value="Proveedores" /><h:outputText  value="asdsaada asdasdasdasd asdasdsdadd  asdasdd asdasdasdasda asdasdasdasds asdasdasdas asdasdasdasd asdasdasdasd asdasdasd" />
+                                    <h:outputText  value="Empleados" /><h:outputText  value="usuario@mail.com usuario@mail.com  usuario@mail.com  usuario@mail.com usuario@mail.com usuario@mail.com" />
+                                    
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="2" style="width:100%;">
+                                <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; border-width: 2px 2px 0px 2px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+                                    <h:outputText value="Tema" /> <h:outputText value="asddsdasdasdasd" />   
+                                    <h:outputText value="Titulo" /> <h:outputText value="fffgdfg" />
+                                
+                                </p:panelGrid>
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank" style="background-color:#FFF; border: 2px solid black; border-radius: 5px; border-width: 0px 2px 1px 2px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                                    <p:textEditor id="editorVistaPrevia" widgetVar="editorEspanol" value="#{comunicadosMB.textoComunicadoVistaPrevia}" height="300" style="margin-bottom:10px" 
+                                  placeholder="Ingresa el contenido en español" >
+                        <f:facet name="toolbar">
+                           
+                           
+                       </f:facet>
+                    </p:textEditor>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="background-color:#CCCCCC;">
+                        <p:outputLabel for="vigenciaDese" value="Publicar a Partir de"  style="float: right;"/>
+                        <p:calendar id="vigenciaDese" showOn="button"  value="#{tsuMB.row_selected.fechaVigenciaDe}" styleClass="noprocess" style="border-bottom: 1px solid black;"/>
+                        <p:outputLabel for="vigenciaHasta" value="Vigencia Hasta"  style="float: right;"/>
+                        <p:calendar id="vigenciaHasta" showOn="button" value="#{tsuMB.row_selected.fechaVigenciaHasta}" styleClass="noprocess" style="border-bottom: 1px solid black;"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="3" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <h:outputText value=""/>
+                        <p:commandButton id="saveButton" value="Regresar" icon="ui-icon-arrow-back" ajax="false"  />
+                        <p:commandButton id="updateButton" value="Publicar" icon="ui-icon-save" ajax="false" />
+                        
+                    </p:panelGrid>
+                    
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

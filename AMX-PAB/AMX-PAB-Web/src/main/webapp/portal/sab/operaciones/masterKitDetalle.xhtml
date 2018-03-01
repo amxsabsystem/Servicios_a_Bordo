@@ -1,0 +1,375 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Master Kit/Lote</ui:define>
+
+    <ui:define name="head"><style>
+            body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon{
+                color:#000;
+            }
+        </style></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>
+                            <h:outputText value="Alta "           rendered="#{masterKitMB.estatus_NEW_MASTER_KIT}" />
+                            <h:outputText value="Modificación "   rendered="#{masterKitMB.estatus_EDITING_MASTER_KIT}" />
+                            <h:outputText value="Master A Granel" rendered="#{masterKitMB.tipoKit_AGRANEL}" />
+                            <h:outputText value="Master Kit/Lote" rendered="#{masterKitMB.tipoKit_LOTE}" />
+                            
+                        </h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{masterKitMB.returnMaster}"  immediate="true"/>
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+                        <p:fieldset id="masterFieldSet" legend="Master" style="margin-bottom:10px" >
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-10,iu-grid-col-2" layout="grid" 
+                                         styleClass="ui-panelgrid-blank form-group" 
+                                         style="width:100%; margin:0px auto; background: transparent">
+
+                                <p:panelGrid columns="2" columnClasses="iu-grid-col-2,ui-grid-col-10" layout="grid" 
+                                             styleClass="ui-panelgrid-blank form-group" 
+                                             style="margin:0px auto;width: 100%; background: transparent">
+
+                                    <p:outputLabel for="cveKitMaster" value="Kit / LOTE" style="float: right;"/>
+                                    <h:panelGroup id="cveKitMaster" styleClass="md-inputfield">
+                                        <h:outputText value="#{masterKitMB.formDTO.cveKitMaster}" 
+                                                      rendered="#{masterKitMB.estatus_EDITING_MASTER_KIT}"/>
+                                        <p:inputText  value="#{masterKitMB.formDTO.cveKitMaster}" 
+                                                      rendered="#{masterKitMB.estatus_NEW_MASTER_KIT and masterKitMB.tipoKit_LOTE}" 
+                                                      style="width: 20%;" maxlength="10" 
+                                                      required="#{not masterKitMB.estatus_EDITING_MATERIAL_KIT}" 
+                                                      requiredMessage="kitLote: Campo requerido" 
+                                                      validatorMessage="kitLote: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^([A-Za-z0-9]+)$"  />
+                                        </p:inputText>
+                                        <p:inputText  value="#{masterKitMB.formDTO.cveKitMaster}" 
+                                                      rendered="#{masterKitMB.estatus_NEW_MASTER_KIT and masterKitMB.tipoKit_AGRANEL}" 
+                                                      style="width: 20%;" maxlength="10" 
+                                                      required="false" readonly="true">
+                                            
+                                        </p:inputText>
+                                    </h:panelGroup>
+
+                                    <p:spacer height="15"/>
+                                    <p:spacer height="15"/>
+
+                                    <p:outputLabel for="nomEsp" value="Nombre Español" style="float: right;"/>
+                                    <h:panelGroup id="nomEsp" styleClass="md-inputfield">
+                                        <p:inputText  value="#{masterKitMB.formDTO.nombreEs}" 
+                                                      style="width: 100%;" maxlength="50" 
+                                                      required="#{not masterKitMB.estatus_EDITING_MATERIAL_KIT}" 
+                                                      requiredMessage="Nombre Español: Campo requerido" validatorMessage="Nombre Español: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                        </p:inputText>
+                                    </h:panelGroup>
+                                    <p:outputLabel for="nombreIng" value="Nombre Ingles" style="float: right;"/>
+                                    <h:panelGroup id="nombreIng" styleClass="md-inputfield">
+                                        <p:inputText  value="#{masterKitMB.formDTO.nombreEn}" 
+                                                      style="width: 100%;" maxlength="50" 
+                                                      required="#{not masterKitMB.estatus_EDITING_MATERIAL_KIT}" 
+                                                      requiredMessage="Nombre Inglés: Campo requerido" validatorMessage="Nombre Inglés: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)$"  />
+                                        </p:inputText>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="contenedor" value="Contenedor" style="float: right;"/>
+                                    <h:panelGroup id="contenedor" styleClass="md-inputfield">
+                                        <p:inputText  value="#{masterKitMB.formDTO.contenedor}" 
+                                                      style="width: 70%;" maxlength="50" 
+                                                      required="false"  
+                                                      requiredMessage="Contenedor: Campo requerido" validatorMessage="Descripción Español: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]*)$"  />
+                                        </p:inputText>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="unidadDeMedida" value="Unidad De Medida" style="float: right;"/>
+                                    <h:panelGroup id="unidadDeMedida"  styleClass="md-inputfield">                                        
+                                        <p:selectOneMenu  value="#{masterKitMB.formDTO.idUnidadMedida}"
+                                                          style="width: 40%;">
+                                            <f:selectItems value="#{masterKitMB.selectUnidades}" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="instruccionesNacionales" value="Instrucciones Nacionales"  style="float: right;"/>
+                                    <h:panelGroup id="instruccionesNacionales"  styleClass="md-inputfield">
+                                        
+                                        <p:selectOneMenu  value="#{masterKitMB.formDTO.idInstruccionesNacionales}"  style="width: 25%;">
+                                            <f:selectItems value="#{masterKitMB.selectInstNacionales}" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="instruccionesInternac" value="Instrucciones Internacionaes" style="float: right;"/>
+                                    <h:panelGroup id="instruccionesInternac"  styleClass="md-inputfield">
+                                        
+                                        <p:selectOneMenu  value="#{masterKitMB.formDTO.idInstruccionesInternac}"   style="width: 25%;">
+                                            <f:selectItems value="#{masterKitMB.selectInstInternac}" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="estatus" value="Estatus"            style="float: right;"/>
+                                    <h:panelGroup id="estatus"  styleClass="md-inputfield"  >
+                                        
+                                        <p:selectOneMenu value="#{masterKitMB.formDTO.estatus}"                    style="width: 25%;" >
+                                            <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}"     itemValue="true" />
+                                            <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="false" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+
+                                    <p:spacer height="15"/>
+                                    <p:spacer height="15"/>
+                                </p:panelGrid> 
+
+                                <p:outputPanel>
+                                    <p:panelGrid columns="1" layout="grid" 
+                                                 id="imgPnl"
+                                                 style="width:100%; background: transparent;">
+
+                                        <p:fileUpload id="fileUpload"
+                                                      rendered="#{(masterKitMB.estatus_EDITING_MASTER_KIT_PICTURE or masterKitMB.estatus_NEW_MASTER_KIT_PICTURE)}"
+                                                      fileUploadListener="#{masterKitMB.fileListener}" mode="advanced"
+                                                      immediate="true" label="Carga una imagen" fileLimit="1" 
+                                                      fileLimitMessage="La carga esta limitada a 1 archivos"  multiple="true"
+                                                      invalidFileMessage="Formato incorrecto (GIF, JPG,JPEG y PNG), Por favor seleccione un archivo valido."
+                                                      allowTypes="/(\.|\/)(gif|png|jpg|jpeg)$/"
+                                                      update="imgPnl" 
+                                                      process="imgPnl" />
+
+                                        <p:message for="fileUpload" id="fileUploadMsg" />
+
+                                        <p:commandButton value="CAMBIAR IMAGEN"
+                                                         rendered="#{(masterKitMB.estatus_EDITING_MASTER_KIT or masterKitMB.estatus_NEW_MASTER_KIT) and not empty masterKitMB.formDTO.urlMultimedia}"
+                                                         immediate="true"
+                                                         actionListener="#{masterKitMB.changePic()}"
+                                                         update="imgPnl"/>
+                                        <p:commandButton value="AGREGAR IMAGEN"
+                                                         rendered="#{(masterKitMB.estatus_NEW_MASTER_KIT or masterKitMB.estatus_NEW_MASTER_KIT) and empty masterKitMB.formDTO.urlMultimedia}"
+                                                         immediate="true"
+                                                         actionListener="#{masterKitMB.addPic()}"
+                                                         update="imgPnl"/>
+                                        <p:commandButton value="CANCELAR" styleClass="secondary"
+                                                         rendered="#{(masterKitMB.estatus_EDITING_MASTER_KIT_PICTURE or masterKitMB.estatus_NEW_MASTER_KIT_PICTURE)}"
+                                                         immediate="true"
+                                                         actionListener="#{masterKitMB.cancelChangePic()}"
+                                                         update="imgPnl"/>
+
+                                        <h:graphicImage   id="imgObj" value="#{masterKitMB.formDTO.urlMultimedia}" 
+                                                          rendered="#{not empty masterKitMB.formDTO.urlMultimedia and not empty masterKitMB.formDTO.mimeType}"
+                                                          title="urlMultimedia=#{masterKitMB.formDTO.urlMultimedia}, mimeType=#{masterKitMB.formDTO.mimeType}"
+                                                          width="200px"
+                                                          height="200px"/>
+
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:panelGrid>
+                        </p:fieldset>    
+
+                        <p:outputPanel id="materialKitSelected">
+
+                            <p:fieldset id="materialKitSelectedFieldSet" legend="Material-Kit" style="margin-bottom:10px" >
+
+                                <p:panelGrid columns="2" columnClasses="iu-grid-col-2,ui-grid-col-10" layout="grid" 
+                                             styleClass="ui-panelgrid-blank form-group" 
+                                             style="margin:0px auto; background:#CCCCCC;">
+
+                                    <p:outputLabel for="noParte" value="No. Parte"  style="float: right;"/>
+                                    <h:panelGroup id="noParte" styleClass="md-inputfield">
+                                        <p:selectOneMenu id="select_noParte" value="#{masterKitMB.formDTO.mkm_numeroParte}"   
+                                                         filter="true" filterMatchMode="startsWith" style="width: 70%;"
+                                                         rendered="#{masterKitMB.canAddMaterial}">
+                                            <f:selectItems value="#{masterKitMB.selectMateriales}" />
+                                            <p:ajax listener="#{masterKitMB.materialChanged}"
+                                                    process="@form"
+                                                    update="@form"/>
+                                        </p:selectOneMenu>
+                                        <h:outputText value="#{masterKitMB.formDTO.mkm_numeroParte}" 
+                                                      rendered="#{not masterKitMB.canAddMaterial and not masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                        <h:outputText value="---" 
+                                                      rendered="#{not masterKitMB.canAddMaterial and masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="descEsp" value="Descripción Español" style="float: right;"/>
+                                    <h:panelGroup id="descEsp" styleClass="md-inputfield">
+                                        <h:outputText value="#{masterKitMB.formDTO.m_descripcionEs}" 
+                                                      rendered="#{not masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                        <h:outputText value="---" rendered="#{masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="descEn" value="Descripción Ingles" style="float: right;"/>
+                                    <h:panelGroup id="descEn" styleClass="md-inputfield">
+                                        <h:outputText value="#{masterKitMB.formDTO.m_descripcionEn}"
+                                                      rendered="#{not masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                        <h:outputText value="---" rendered="#{masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="peso" value="Peso"  style="float: right;"/>
+                                    <h:panelGroup id="peso" styleClass="md-inputfield">
+                                        <h:outputText value="#{masterKitMB.formDTO.m_peso} KG."
+                                                      rendered="#{not masterKitMB.formDTO.MKMSR_INITAL}">
+                                            <f:convertNumber pattern="###,##0.0000"/>
+                                        </h:outputText>                                        
+                                        <h:outputText value="---" rendered="#{masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                </p:panelGrid>
+                                
+                                <h:outputText value="estatus:[#{masterKitMB.estatus},#{masterKitMB.formDTO.mkm_status_record}]"/>
+                                
+                                <p:panelGrid columns="2" columnClasses="iu-grid-col-2,ui-grid-col-10" layout="grid" 
+                                             styleClass="ui-panelgrid-blank form-group" 
+                                             style="margin:0px auto; background:#f0f0f0">    
+                                    
+                                    <p:outputLabel for="reciclable" value="Material Reciclable"  style="float: right;"/>
+                                    <h:panelGroup id="reciclablePanel" styleClass="md-inputfield">
+										<p:inputSwitch id="reciclable" 
+                                                       rendered="#{ not masterKitMB.formDTO.MKMSR_INITAL}" 
+													   value="#{masterKitMB.formDTO.mkm_reciclable}"
+													   offLabel="NO" onLabel="SI"
+													   style="float: left;">
+											<p:ajax update="reciclablePanel" />
+										</p:inputSwitch>
+										<p:spacer width="10"/>
+										<h:outputText class="fa fa-recycle" 
+													  rendered="#{masterKitMB.formDTO.mkm_reciclable and not masterKitMB.formDTO.MKMSR_INITAL}" />
+										<h:outputText class="fa fa-trash" 
+													  rendered="#{not masterKitMB.formDTO.mkm_reciclable and not masterKitMB.formDTO.MKMSR_INITAL}" />
+										
+										
+										
+                                        <h:outputText value="---" rendered="#{masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="observaciones" value="Observaciones"  style="float: right;"/>
+                                    <h:panelGroup id="observaciones" styleClass="md-inputfield">
+                                        <p:inputText  value="#{masterKitMB.formDTO.mkm_observaciones}" style="width: 70%;" maxlength="50" 
+                                                      required="false" 
+                                                      rendered="#{not masterKitMB.formDTO.MKMSR_INITAL}"
+                                                      requiredMessage="Observaciones: Campo requerido" 
+                                                      validatorMessage="Observaciones: Datos incorrectos, solo caracteres alfanuméricos">
+                                            
+                                        </p:inputText>
+                                        <h:outputText value="---" rendered="#{masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="cantidad" value="Cantidad"  style="float: right;"/>
+                                    <h:panelGroup id="cantidad" styleClass="md-inputfield">
+                                        <p:inputText  value="#{masterKitMB.formDTO.mkm_cantidad}" style="width: 10%;" maxlength="3" 
+                                                      required="#{masterKitMB.estatus_EDITING_MASTER_KIT}" 
+                                                      rendered="#{not masterKitMB.formDTO.MKMSR_INITAL}"
+                                                      requiredMessage="Cantidad: Campo requerido" validatorMessage="Cantidad: Datos incorrectos">
+                                            <f:convertNumber pattern="#####0"/>
+											<f:validateLongRange minimum="1" maximum="99"/>
+                                        </p:inputText>
+                                        <h:outputText value="---" rendered="#{masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="mkm_unidadDeMedida" value="Unidad De Medida" style="float: right;"/>
+                                    <h:panelGroup id="mkm_unidadDeMedida"  styleClass="md-inputfield">
+                                        <p:selectOneMenu  value="#{masterKitMB.formDTO.mkm_idUnidadMedida}"
+                                                          rendered="#{not masterKitMB.formDTO.MKMSR_INITAL}"
+                                                          style="width: 30%;">
+                                            <f:selectItems value="#{masterKitMB.selectUnidades}" />
+                                        </p:selectOneMenu>
+                                        <h:outputText value="---" rendered="#{masterKitMB.formDTO.MKMSR_INITAL}"/>
+                                    </h:panelGroup>
+
+                                </p:panelGrid>
+                                
+                                <p:commandButton id="updateMMK" value="ACTUALIZAR" icon="ui-icon-update"
+                                                 rendered="#{masterKitMB.estatus_EDITING_MATERIAL_KIT and masterKitMB.formDTO.MKMSR_EDITING}"
+                                                 actionListener="#{masterKitMB.updateMaterial}"
+                                                 update="@form"/>
+                                <p:commandButton id="addMMK" value="AGREGAR" icon="ui-icon-add"
+                                                 rendered="#{masterKitMB.estatus_EDITING_MATERIAL_KIT and masterKitMB.formDTO.MKMSR_NEW and masterKitMB.tipoKit_LOTE}"
+                                                 actionListener="#{masterKitMB.addMaterial}"
+                                                 update="@form"/>
+                                <p:commandButton id="add1MMK" value="AGREGAR UNICO" icon="ui-icon-add"
+                                                 rendered="#{masterKitMB.estatus_EDITING_MATERIAL_KIT and masterKitMB.formDTO.MKMSR_NEW and masterKitMB.tipoKit_AGRANEL and masterKitMB.canAddMaterial}"
+                                                 actionListener="#{masterKitMB.addMaterial}"
+                                                 update="@form"/>
+                                <p:spacer width="100" rendered="#{masterKitMB.estatus_EDITING_MATERIAL_KIT}"/>
+                                <p:commandButton id="cancelMMK" value="CANCELAR" icon="ui-icon-close"
+                                                 rendered="#{masterKitMB.estatus_EDITING_MATERIAL_KIT}"
+                                                 immediate="true"
+                                                 actionListener="#{masterKitMB.cancelMaterial}"
+                                                 update="@form"/>
+                            </p:fieldset>
+
+                        </p:outputPanel>
+
+                        <p:outputPanel id="materialKitsTable">
+                            <p:dataTable id="dataTableGrid" var="row" value="#{masterKitMB.mkm_list}" selectionMode="single" reflow="true"
+                                         rowKey="#{row.materialKitMasterPK.numeroParte}" paginator="true" rows="10" 
+                                         emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                                <p:column headerText="No de Parte">
+                                    <h:outputText value="#{row.materialKitMasterPK.numeroParte}" />
+                                </p:column>                            
+                                <p:column headerText="Descripción Español" >
+                                    <h:outputText value="#{row.material.descripcionEs}"/>
+                                </p:column>
+                                <p:column headerText="Descripción Ingles" >
+                                    <h:outputText    value="#{row.material.descripcionEn}" />
+                                </p:column>
+                                <p:column headerText="Peso" >
+                                    <h:outputText value="#{row.material.peso}" />
+                                </p:column>
+                                
+                                <p:column headerText="Observaciones" >
+                                    <h:outputText    value="#{row.observaciones}" />
+                                </p:column>
+                                <p:column headerText="Cantidad" >
+                                    <h:outputText value="#{row.cantidad}" />
+                                </p:column>
+                                <p:column headerText="Reciclable" >                                    
+									<h:outputText class="fa fa-recycle" rendered="#{row.reciclable eq 1}" title="#{row.reciclable}"/>
+									<h:outputText class="fa fa-trash"   rendered="#{row.reciclable eq 0}" title="#{row.reciclable}"/>									
+                                </p:column>
+                                <p:column headerText="um" >
+                                    <h:outputText    value="#{row.idUnidadMedida.valorEs}" />
+                                </p:column>
+
+                                <p:column headerText="" >
+                                    <p:commandLink actionListener="#{masterKitMB.modifyRowMaterial}" style="margin-left: 25%;" 
+                                                   update="@form"
+                                                   process="@this"
+                                                   ajax="true"
+                                                   immediate="true">
+                                        <f:param name="numeroParte" value="#{row.materialKitMasterPK.numeroParte}" />                                    
+                                        <i class="ui-icon ui-icon-pencil"></i>
+                                    </p:commandLink>
+                                    <p:commandLink actionListener="#{masterKitMB.deleteRowMaterial}" style="margin-left: 25%;" 
+                                                   update=":form"
+                                                   rendered="#{masterKitMB.tipoKit_LOTE}"
+                                                   process="@this"
+                                                   ajax="true"
+                                                   immediate="true">
+                                        <f:param name="numeroParte" value="#{row.materialKitMasterPK.numeroParte}" />                                    
+                                        <i class="ui-icon ui-icon-close"></i>
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:outputPanel>
+                        <p:spacer height="30"/>
+
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton id="saveButton"   value="#{res_i18n.SAVE}"   icon="ui-icon-save"   ajax="false" action="#{masterKitMB.saveKit}"    rendered="#{masterKitMB.estatus_NEW_MASTER_KIT}"/>
+                            <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{masterKitMB.updateKit}"  rendered="#{masterKitMB.estatus_EDITING_MASTER_KIT}"/>
+                        </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

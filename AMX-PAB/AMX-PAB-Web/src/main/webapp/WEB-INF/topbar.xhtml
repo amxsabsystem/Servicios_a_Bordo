@@ -1,0 +1,124 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima">
+
+<style type="text/css">
+    
+.ui-selectonemenu {
+    display: block;
+}    
+
+.layout-wrapper .topbar .topbar-left {
+background-color: #003262;
+
+}
+
+.layout-wrapper.menu-layout-horizontal .topbar .topbar-left {
+background-color: #003262;
+}
+      
+
+.botonExportar{
+/*position: relative;*/
+    left: 400px;
+    background-color: #3F51B5;
+    font-size: 14px;
+    height: 30px;
+    /*padding: 0 14px;*/
+        color: #ffffff;
+            overflow: hidden;
+            border: 0 none;
+            /*padding-left: 25px;*/
+            border-radius: 3px;
+            width: 90px;
+    height: 30px;
+    text-align: right;
+}
+
+.botonExportar:hover {
+
+    background-color: #283593;
+}
+.iconoExportar{
+position: relative;
+    left: 308px;
+    color: #ffffff !important;
+        top: 4px;
+}
+
+
+    </style>
+
+ <div class="topbar clearfix">
+        <div class="topbar-left">            
+            <a href="#{facesContext.externalContext.requestContextPath}/portal/home.jsf">
+				<div class="logo" style="height: 40px;"></div>
+			</a>
+        </div>
+        
+        <div class="topbar-right">
+            <a id="menu-button" href="#">
+                <i></i>
+            </a>
+            
+            <a id="topbar-menu-button" href="#">
+                <i class="material-icons">&#xE5D4;</i>
+            </a>
+            
+            <a href="#" class="rightpanel-btn">
+                <i class="material-icons">&#xE5D2;</i>
+            </a>
+            
+            <ul class="topbar-items fadeInDown animated">
+                <ui:fragment >
+                    <li class="profile-item" style="filter: invert(90%);">
+                        <a href="#">                            
+                            <div class="profile-image"></div>
+                            <span class="topbar-item-name">Usuario</span>
+                        </a>
+                        
+                        <ul class="ultima-menu animated">
+                            <li role="menuitem">
+                                <a href="#">
+                                    <i class="material-icons">&#xE7FD;</i>
+                                    <span><h:outputText value="#{request.getUserPrincipal()}" /></span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href="#">                                    
+                                    <a href="#{facesContext.externalContext.requestContextPath}/logout">
+                                        <i class="material-icons">&#xE8AC;</i>
+                                        <span>Logout</span>
+                                    </a>                                    
+                                </a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+                </ui:fragment>
+                <li>
+                    <a href="#">
+                        <i class="topbar-icon material-icons">&#xE8B8;</i>
+                        <span class="topbar-item-name">Settings</span>
+                    </a>
+                    <ul class="ultima-menu animated">
+                        <li role="menuitem">
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/changeLocale.jsf">
+                                <i class="material-icons">&#xE40A;</i>
+                                <span>Change Language</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </li>                
+            </ul>
+        </div>
+    </div>
+
+
+</ui:composition>

@@ -1,0 +1,155 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{res_i18n.APP_MENU_GEN_EMPLOY}</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!empleadosMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{empleadosMB.modificarRegistro}" />Empleado</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" /> 
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{empleadosMB.returnMaster}" immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="6"  layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="nombre" value="Nombre de Empleado" style="float: right;"/>
+                        <h:panelGroup id="nombre" styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.nombre}"   maxlength="50" required="true" requiredMessage="Nombre de Empleado : Campo requerido" validatorMessage="Nombre de Empleado : Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>
+                        </h:panelGroup>
+                        <p:outputLabel for="apellidoPat" value="Apellido Paterno" style="float: right;"/>
+                        <h:panelGroup id="apellidoPat" styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.apellidoPat}"   maxlength="50" required="true" requiredMessage="Apellido Paterno : Campo requerido" validatorMessage="Apellido Paterno : Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>
+                        </h:panelGroup>
+                        <p:outputLabel for="apellidomat" value="Apellido Materno" style="float: right;"/>
+                        <h:panelGroup id="apellidomat" styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.apellidomat}"   maxlength="50" required="true" requiredMessage="Apellido Materno : Campo requerido" validatorMessage="Apellido Materno : Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>
+                            </h:panelGroup>
+                    </p:panelGrid>            
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">                        	
+                        
+                        <p:outputLabel for="correo" value="Correo Electrónico" style="float: right;"/>
+                        <h:panelGroup id="correo" styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.email}" style="width:50%;" maxlength="50" required="true" requiredMessage="Correo Electrónico: Campo requerido" validatorMessage="Area Electrónico: Datos incorrectos, no corresponde con una direccción de correo electronico correcta">
+                                <f:validateRegex pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"  />
+                          </p:inputText>
+                         	
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>    
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-4,ui-grid-col-8,ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank form-group">    
+                        <p:outputLabel for="telefono" value="Teléfono" style="float: right;"/>
+                        <h:panelGroup id="telefono"  styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.row_selected.telefono}" maxlength="50" required="false"  validatorMessage="Teléfono: Datos incorrectos, solo caracteres alfanuméricos, parentesis, guiones, comas, diagonal, puntos">
+                                <f:validateRegex pattern="^([A-Za-z0-9()-/., ]+)?"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        <p:outputLabel for="extension" value="Extensión" style="float: right;"/>
+                        <h:panelGroup id="extension"  styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.row_selected.extension}" maxlength="50" required="false"  validatorMessage="Extensión: Datos incorrectos, solo caracteres alfanuméricos, parentesis, guiones, comas, diagonal, puntos">
+                                <f:validateRegex pattern="^([A-Za-z0-9()-/., ]+)?"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="puestoEsp" value="Puesto Español" style="float: right;"/>
+                        <h:panelGroup id="puestoEsp"  styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.row_selected.puestoEs}" maxlength="50" required="true" requiredMessage="Puesto Español: Campo requerido" validatorMessage="Puesto Español: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        <p:outputLabel for="puestoIng" value="Puesto Ingles" style="float: right;"/>
+                        <h:panelGroup id="puestoIng"  styleClass="md-inputfield">
+                            <p:inputText  value="#{empleadosMB.row_selected.puestoEn}" maxlength="50" required="true" requiredMessage="Puesto Inglés: Campo requerido" validatorMessage="Puesto Inglés: Datos incorrectos, solo caracteres alfanuméricos, preferencia idioma inglés">
+                                <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)$"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="area" value="Área" style="float: right;"/>
+                        <h:panelGroup id="area"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{empleadosMB.asignedArea}"   style="width: 90%;">
+                                <f:selectItems value="#{empleadosMB.selectAreas}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="compania" value="Compañia " style="float: right;"/>
+                        <h:panelGroup id="compania"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{empleadosMB.asignedCompania}"   style="width: 90%;">
+                                <f:selectItems value="#{empleadosMB.selectCompanias}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+
+                    <p:outputLabel for="estatus" value="Estatus" rendered="#{empleadosMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{empleadosMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{empleadosMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                            
+                           
+                            
+                        </h:panelGroup>
+                    
+                    <h:outputText value="" rendered="#{empleadosMB.modificarRegistro}" />
+                         <h:outputText value="" rendered="#{empleadosMB.modificarRegistro}" />
+                         
+                         <h:outputText value=""  />
+                         <h:outputText value=""  />
+                        
+                    </p:panelGrid>
+                   <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">     
+                    
+                    <p:outputLabel for="estacion" value="Estación a la que pertenece " style="float: right;"/>
+                        <h:panelGroup id="estacion"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{empleadosMB.asignedEstacion}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                <f:selectItems value="#{empleadosMB.selectEstaciones}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                    
+                    </p:panelGrid>
+                    
+                    <p:spacer height="15"/>
+                    
+                    <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank form-group"> 
+                        <h:outputText value="Agregar al Directorio SAB: " style="float: right;" />
+                        <p:selectBooleanCheckbox value="#{empleadosMB.directorioSab}" />
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{empleadosMB.save}"  rendered="#{!empleadosMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{empleadosMB.update}"  rendered="#{empleadosMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

@@ -1,0 +1,3 @@
+java -Dfile.encoding=UTF-8 -jar AMX-PAB-DBEngine.jar org.apache.derby.jdbc.ClientDriver "jdbc:derby://localhost:1527/AMX_PAB_DB_DEV" AMX_SAB_DEV_USR AMX_SAB_DEV_PWD
+java -Dfile.encoding=UTF-8 -jar SQLCommander.jar -driverClass org.apache.derby.jdbc.ClientDriver -url "jdbc:derby://localhost:1527/AMX_SAB_DB_DEV" -user AMX_SAB_DEV_USR -password AMX_SAB_DEV_PWD <  ..\..\AMX-SAB-BackEnd\AMX-SAB-BackEnd-persistence\src\main\resources\sql\CREATE_SCHEMMA_DEV.DERBY.SQL
+java -Dfile.encoding=UTF-8 -jar SQLCommander.jar -driverClass org.apache.derby.jdbc.ClientDriver -url "jdbc:derby://localhost:1527/AMX_SAB_DB_DEV" -user AMX_SAB_DEV_USR -password AMX_SAB_DEV_PWD <  ..\..\AMX-PAB-persistence\src\test\resources\sql\FIRST_DATA_SCEN_1.DERBY.SQL

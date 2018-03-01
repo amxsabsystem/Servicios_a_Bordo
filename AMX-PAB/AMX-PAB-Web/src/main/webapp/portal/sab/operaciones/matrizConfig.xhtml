@@ -1,0 +1,162 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Matriz </ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>Configuración Matriz</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+
+                        <p:panelGrid    columns="2" columnClasses="iu-grid-col-3,ui-grid-col-9" layout="grid" 
+                                        styleClass="ui-panelgrid-blank form-group" 
+                                        style="margin:0px auto;width: 100%; background: transparent">
+
+                            <p:outputLabel for="idMatriz" value="ID Matriz" style="float: right;"/>
+                            <h:panelGroup >
+                                <h:outputText id="idMatriz" value="#{matrizConfigMB.matrizSelected.idMatriz}" 
+                                               rendered="#{not empty matrizConfigMB.matrizSelected}"/>
+                                <h:outputText id="idMatriz_null" value="---" 
+                                               rendered="#{empty matrizConfigMB.matrizSelected}"/>
+                            </h:panelGroup>
+                            <p:outputLabel for="cveKitMaster" value="Id de Kit / Lote" style="float: right;"/>
+                            <h:panelGroup id="cveKitMasterPnl" styleClass="md-inputfield">
+                                <p:selectOneMenu id="cveKitMaster" value="#{matrizConfigMB.kitMasterCve_selected}"   
+                                                 filter="true" filterMatchMode="startsWith" style="width: 35%;"
+                                                 >
+                                    <f:selectItems value="#{matrizConfigMB.selectKitMasterCve}" />
+                                    <p:ajax listener="#{matrizConfigMB.kitMasterCveChanged}" 
+                                            update="@form"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="producto" value="Producto" style="float: right;"/>
+                            <h:panelGroup id="productoPnl" styleClass="md-inputfield">
+                                <p:selectOneMenu id="producto" value="#{matrizConfigMB.idProducto_selected}"   
+                                                 filter="true" filterMatchMode="startsWith" style="width: 35%;">
+                                    <f:selectItems value="#{matrizConfigMB.selectProducto}" />
+                                    <p:ajax listener="#{matrizConfigMB.idProductoChanged}" 
+                                            update="@form"/>
+                                </p:selectOneMenu>                                
+                            </h:panelGroup>
+
+                            <p:outputLabel for="tipoEquipo" value="Tipo Equipo" style="float: right;"/>
+                            <h:panelGroup id="tipoEquipoPnl" styleClass="md-inputfield">
+                                <p:selectOneMenu id="tipoEquipo" value="#{matrizConfigMB.idTipoEquipoAvion_selected}"   
+                                                 filter="true" filterMatchMode="startsWith" style="width: 35%;">
+                                    <f:selectItems value="#{matrizConfigMB.selectTipoEquipo}" />
+                                    <p:ajax listener="#{matrizConfigMB.tipoEquipoAvionChanged}" 
+                                            update="@form"/>
+                                </p:selectOneMenu>                                
+                            </h:panelGroup>
+
+                            <p:outputLabel for="cantidadCJ" value="Cantidad C-J"  style="float: right;"/>
+                            <h:panelGroup id="cantidadCJ" styleClass="md-inputfield">
+                                <p:inputText  value="#{matrizConfigMB.cj}" maxlength="3" size="3"
+                                              required="true"
+                                              rendered="#{matrizConfigMB.radyToEdit_CJ_CY}"
+                                              requiredMessage="Cantidad CJ: Campo requerido" 
+                                              validatorMessage="Cantidad CJ: Datos incorrectos">
+                                    <f:convertNumber pattern="##0"/>
+                                    <f:validateLongRange minimum="0" maximum="99"/>
+                                </p:inputText>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="cantidadCY" value="Cantidad C-Y"  style="float: right;"/>
+                            <h:panelGroup id="cantidadCY" styleClass="md-inputfield">
+                                <p:inputText  value="#{matrizConfigMB.cy}" maxlength="3" size="3"
+                                              required="true"
+                                              rendered="#{matrizConfigMB.radyToEdit_CJ_CY}"
+                                              requiredMessage="Cantidad CY: Campo requerido" 
+                                              validatorMessage="Cantidad CY: Datos incorrectos">
+                                    <f:convertNumber pattern="##0"/>
+                                    <f:validateLongRange minimum="0" maximum="99"/>
+                                </p:inputText>
+
+                            </h:panelGroup>
+
+                        </p:panelGrid>
+                        <p:panelGrid    columns="4" columnClasses="ui-grid-col-4,iu-grid-col-2,ui-grid-col-3,iu-grid-col-3" layout="grid" 
+                                        styleClass="ui-panelgrid-blank form-group" 
+                                        style="margin:0px auto; background:#CCCCCC;width: 100%">
+                            
+                            <p:spacer width="10"/>
+                            <p:commandButton id="saveButton"   value="#{res_i18n.SAVE}"       icon="ui-icon-save"                                                
+                                             actionListener="#{matrizConfigMB.save}"
+                                             update="@form"
+                                             rendered="#{matrizConfigMB.radyToEdit_CJ_CY and empty matrizConfigMB.matrizSelected}"
+                                             />
+
+                            <p:commandButton id="updateButton"   value="#{res_i18n.UPDATE}"   icon="ui-icon-save"   
+                                             actionListener="#{matrizConfigMB.update}"
+                                             update="matrizTable"
+                                             rendered="#{matrizConfigMB.radyToEdit_CJ_CY and not empty matrizConfigMB.matrizSelected}"
+                                             />
+                            
+                            <p:commandButton id="cancelButton"   value="#{res_i18n.CANCEL}"   icon="ui-icon-close"   
+                                             actionListener="#{matrizConfigMB.cancel}"
+                                             update="@form"
+                                             rendered="#{matrizConfigMB.radyToEdit_CJ_CY}"/>
+                            
+                        </p:panelGrid>
+                        <p:outputPanel id="matrizTable">
+                            <p:dataTable id="dataTableGrid" var="row" value="#{matrizConfigMB.matrizDTOList}" selectionMode="single" reflow="true"
+                                         rowKey="#{row.idMatriz}" paginator="true" rows="10" 
+                                         emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                                <p:column headerText="IdMatriz">
+                                    <h:outputText value="#{row.idMatriz}" />
+                                </p:column>
+                                <p:column headerText="Producto">
+                                    <h:outputText value="#{row.producto_nombre}" />
+                                </p:column>      
+                                <p:column headerText="Tipo Equipo" >
+                                    <h:outputText value="#{row.tipoEquipoAvion_tipoEquipo}"/>
+                                </p:column>
+                                <p:column headerText="C-J" >
+                                    <h:outputText    value="#{row.cantidadCj}" />
+                                </p:column>
+                                <p:column headerText="C-Y" >
+                                    <h:outputText value="#{row.cantidadCy}" />
+                                </p:column>
+                                <p:column headerText="Total" >
+                                    <h:outputText value="#{row.cantidadCj + row.cantidadCy}" />
+                                </p:column>
+
+                                <p:column headerText="" >
+                                    <p:commandLink actionListener="#{matrizConfigMB.modifyRowMatriz}" style="margin-left: 25%;" 
+                                                   update="@form"
+                                                   process="@this"
+                                                   ajax="true"
+                                                   immediate="true">
+                                        <f:param name="idMatriz" value="#{row.idMatriz}" />
+                                        <i class="ui-icon ui-icon-pencil"></i>
+                                    </p:commandLink>
+                                    <p:commandLink actionListener="#{matrizConfigMB.deleteRowMatriz}" style="margin-left: 25%;" 
+                                                   update=":form"                                                   
+                                                   process="@this"
+                                                   ajax="true"
+                                                   immediate="true">
+                                        <f:param name="idMatriz" value="#{row.idMatriz}" />
+                                        <i class="ui-icon ui-icon-close"></i>
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:outputPanel>
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

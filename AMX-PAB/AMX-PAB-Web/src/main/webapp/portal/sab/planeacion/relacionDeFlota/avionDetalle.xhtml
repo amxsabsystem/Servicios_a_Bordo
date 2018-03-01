@@ -1,0 +1,314 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Avión</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta Avión" rendered="#{!avionMB.modificarRegistro}" /><h:outputText value="Modificación Avión" rendered="#{avionMB.modificarRegistro}" /></h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{avionMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <p:outputLabel for="modelo" value="Modelo" style="float: right;"/>
+                        <h:panelGroup id="modelo"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{avionMB.asignedModelo}"   style="width: 90%;">
+				<f:selectItems value="#{avionMB.selectModelos}" />
+                                <p:ajax update="tipoDeEquipo,labelcompania"  listener="#{avionMB.getTiposDeEquipo}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="tipoDeEquipo" value="Tipo de Equipo" style="float: right;"/>
+                        <h:panelGroup id="tipoDeEquipo"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{avionMB.asignedTipoEquipo}"   style="width: 90%;">
+				<f:selectItems value="#{avionMB.selectTipoEquipos}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                    
+                        <h:outputText value="Compañía:" style="float: right;"/><h:outputText id="labelcompania" value="#{avionMB.labelCompania}"/>
+                        
+                        
+                        <p:outputLabel for="matr" value="Matrícula" style="float: right;"/>
+                        <h:panelGroup id="matr"  styleClass="md-inputfield" >
+                        <p:inputText  value="#{avionMB.row_selected.matricula}" maxlength="50" required="true" requiredMessage="Matrícula: Campo requerido" validatorMessage="Matrícula: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                        </h:panelGroup>
+                        <p:outputLabel for="matrc" value="Matrícula Corta" style="float: right;"/>
+                        <h:panelGroup id="matrc"  styleClass="md-inputfield" >
+                        <p:inputText style="float:left;" value="#{avionMB.row_selected.matriculaCorta}" maxlength="50" required="true" requiredMessage="Matrícula Corta: Campo requerido" validatorMessage="Matrícula Corta: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="estatus" value="Estatus" rendered="#{avionMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{avionMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{avionMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                         
+                        
+                    </p:panelGrid>
+                    
+                    <h3>Capacidad de Pasajeros</h3>
+                    <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel  value="Premier" style="float: right;"/>
+                        <p:inputText  value="#{avionMB.cantidadPremier}" style="border-bottom-color:#000; " size="5" maxlength="5" required="false" requiredMessage="Capacidad Premier: Campo requerido" validatorMessage="Capacidad Premier: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([0-9]+)?"  />
+                                </p:inputText>
+                        
+                        <p:outputLabel  value="Turista" style="float: right;"/>
+                        <p:inputText  value="#{avionMB.cantidadTurista}" style="border-bottom-color:#000; " size="5"  maxlength="5" required="false" requiredMessage="Capacidad Turista: Campo requerido" validatorMessage="Capacidad Turista: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^([0-9]+)?"  />
+                                </p:inputText>
+                        
+                        <h:outputText value="Turista AM Plus"  style="float: right;"/>
+                        <p:selectBooleanCheckbox value="#{avionMB.isTuristaAMPlus}" />
+                        
+                    </p:panelGrid>
+                    
+                    
+                    <p:spacer height="15"/>
+                    <h3>Tipo de Conectividad</h3>
+                    
+                    <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <p:selectOneRadio  value="#{avionMB.asignedConect}" columns="3" style="width:95%">
+                            <f:selectItems value="#{avionMB.selectConectividades}"  />
+                        </p:selectOneRadio>
+                        
+                        <!--h:outputText value="WIFI"  style="float: right;"/>
+                        <p:selectBooleanCheckbox value="avionMB.istcWIFI" />
+                        
+                        <h:outputText value="Gogo 2K"  style="float: right;"/>
+                        <p:selectBooleanCheckbox value="avionMB.istcGOGO2k" />
+                        
+                        <h:outputText value="NA"  style="float: right;"/>
+                        <p:selectBooleanCheckbox value="avionMB.istcNA" /-->
+                        
+                    </p:panelGrid>
+                    
+                    <p:spacer height="15"/>
+                    <h3>Audífonos</h3>
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel value="Premier" style="font-weight: bold; float: right;"/>
+                                <p:selectOneMenu  value="#{avionMB.asignedAudifonoPremier}"   style="width: 90%;">
+                                                    <f:selectItems value="#{avionMB.selectAudifonos}" />
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Turista" style="font-weight: bold; float: right;"/>
+                                <p:selectOneMenu  value="#{avionMB.asignedAudifonoTurista}"   style="width: 90%;">
+						<f:selectItems value="#{avionMB.selectAudifonos}" />
+                                </p:selectOneMenu>
+                    </p:panelGrid>
+                    
+                    
+                    <p:spacer height="40"/>
+                       
+                    <h3>Sistema de Entretenimiento</h3>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-5,ui-grid-col-1,ui-grid-col-4,ui-grid-col-1" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        
+                        
+                            
+                                <p:selectOneMenu id="sistEnt" value="#{avionMB.asignedSistemaEntretenimiento}"   style="width: 90%; float: right;">
+                                                        <f:selectItems value="#{avionMB.selectSistemaEntretenimiento}" />
+                                    </p:selectOneMenu>
+                            
+                            <p:commandButton id="addSistema" value="Agregar" icon="ui-icon-add" ajax="true" action="#{avionMB.agregarSistema}" update="listboxSistemas" process="addSistema sistEnt"/>
+                        
+                                <p:selectOneListbox id="listboxSistemas" value="#{avionMB.selectedSistemaEntretenimiento}" style="width: 90%; float: right;">
+                                    <f:selectItems value="#{avionMB.selectedSistemasEntretenimiento}" />
+                                </p:selectOneListbox>
+                                <p:commandButton  id="deleteSistema" value="Delete" icon="ui-icon-close"  ajax="true" action="#{avionMB.quitarSistema}" update="listboxSistemas" process="deleteSistema listboxSistemas"/>
+                        
+                    </p:panelGrid>
+                    
+                    <p:spacer height="30"/>
+                    <h3>Equipamiento Semi Fijo</h3>
+                    <p:spacer height="5"/>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" >
+                        
+                            
+                            
+                        <p:outputLabel for="noParte" value="No. Parte" style="float: right;"/>
+                        <h:panelGroup id="noParte" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{avionMB.asignedMaterial}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                <f:selectItems value="#{avionMB.selectMateriales}" />
+                                <p:ajax update="descEsp,descIng,peso"  listener="#{avionMB.updateLabels}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                           
+                        <h:outputText value=""/>
+                        <h:outputText value=""/>
+                            
+                        <p:outputLabel for="peso" value="Peso" style="float: right;"/>
+                        <h:panelGroup id="peso" styleClass="md-inputfield">
+                            <p:inputText  value="#{avionMB.peso}" maxlength="5" required="false"  validatorMessage="Peso: Datos incorrectos, solo números ">
+                               <f:validateRegex pattern="^[0-9. ]*?"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        
+                            <p:outputLabel for="cantidad" value="Cantidad" style="float: right;"/>
+                            <h:panelGroup id="cantidad" styleClass="md-inputfield">
+                                <p:inputText  value="#{avionMB.cantidad}" maxlength="50" required="false"  validatorMessage="Cantidad: Datos incorrectos, solo números">
+                                    <f:validateRegex pattern="^[0-9]*?"  />
+                                </p:inputText>
+                            </h:panelGroup>
+                       
+                        
+                        <p:outputLabel for="descEsp" value="Descripción Español" style="float: right;"/>
+                        <h:panelGroup id="descEsp"  styleClass="md-inputfield">
+                            <p:inputText  value="#{avionMB.descripcionEs}" maxlength="50" required="false" validatorMessage="Descripción Español: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)?"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="descIng" value="Descripción Ingles" style="float: right;"/>
+                        <h:panelGroup id="descIng" styleClass="md-inputfield">
+                            <p:inputText  value="#{avionMB.descripcionEn}" maxlength="50" required="false"  validatorMessage="Descripción Ingles: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)?"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" >    
+                            
+                            <p:outputLabel for="observaciones" value="Observaciones"/>
+                            <h:panelGroup id="observaciones" styleClass="md-inputfield">
+                                <p:inputText  value="#{avionMB.observaciones}" style="width: 90%;" maxlength="50" required="false"  validatorMessage="Observaciones: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)?"  />
+                                </p:inputText>
+                                    
+                            </h:panelGroup>
+                            
+                        </p:panelGrid>
+                    <p:spacer height="5"/>
+                    <p:commandButton id="addButtonTable" value="Agregar" icon="ui-icon-add" ajax="true" action="#{avionMB.agregarMaterial}" update="dataTableGrid" process="addButtonTable noParte observaciones peso cantidad" />
+                    <p:spacer height="30"/>
+                    
+                    
+                    <p:dataTable id="dataTableGrid" var="row" value="#{avionMB.all_records_EquipamientoComisariato}" selectionMode="single" reflow="true"
+                                 rowKey="#{row.numeroParte}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            <p:column headerText="No de Parte">
+			       <h:outputText value="#{row.numeroParte}" />
+		            </p:column>
+                            <p:column headerText="Descripción Español" >
+                                <h:outputText value="#{row.nombreEs}"/>
+			    </p:column>
+                            <p:column headerText="Descripción Ingles" >
+                                <h:outputText    value="#{row.nombreEn}" />
+			    </p:column>
+                            <p:column headerText="Observaciones" >
+                                <h:outputText    value="#{row.observaciones}" />
+			    </p:column>
+                            <p:column headerText="Cantidad" >
+                                <h:outputText    value="#{row.cantidad}" />
+			    </p:column>
+                            <p:column headerText="Peso" >
+                                <h:outputText value="#{row.peso}" />
+                            </p:column>
+                        <p:column headerText="Eliminar" > 
+                            <h:commandLink action="#{avionMB.quitarMaterial(row.numeroParte,row.nombreEn)}" style="margin-left: 50%;"  immediate="true">
+                                    <i class="ui-icon ui-icon-close"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    
+                    
+                   
+                    
+                    <p:spacer height="30"/>
+                    <h3>Equipamiento Fijo</h3>
+                    <p:spacer height="5"/>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" >
+                        
+                        <p:outputLabel for="descEspEF" value="Descripción Español" style="float: right;"/>
+                        <h:panelGroup id="descEspEF"  styleClass="md-inputfield">
+                            <p:inputText  value="#{avionMB.descripcionEsEF}" maxlength="50" required="false" validatorMessage="Descripción Español: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)?"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="descIngEF" value="Descripción Ingles" style="float: right;"/>
+                        <h:panelGroup id="descIngEF" styleClass="md-inputfield">
+                            <p:inputText  value="#{avionMB.descripcionEnEF}" maxlength="50" required="false"  validatorMessage="Descripción Ingles: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-.,()/% ]+)?"  />
+                            </p:inputText>
+                            
+                        </h:panelGroup>
+                        
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" >    
+                            
+                            <p:outputLabel for="observacionesEF" value="Observaciones"/>
+                            <h:panelGroup id="observacionesEF" styleClass="md-inputfield">
+                                <p:inputText  value="#{avionMB.observacionesEF}" style="width: 90%;" maxlength="50" required="false"  validatorMessage="Observaciones: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)?"  />
+                                </p:inputText>
+                                    
+                            </h:panelGroup>
+                            
+                        </p:panelGrid>
+                    <p:spacer height="5"/>
+                    <p:commandButton id="addButtonTableEF" value="Agregar" icon="ui-icon-add" ajax="true" action="#{avionMB.agregarMaterialEF}" update="dataTableGridEF" process="addButtonTableEF observacionesEF descEspEF descIngEF" />
+                    <p:spacer height="30"/>
+                    
+                    
+                    <p:dataTable id="dataTableGridEF" var="row" value="#{avionMB.all_records_EquipamientoComisariatoEF}" selectionMode="single" reflow="true"
+                                 rowKey="#{row.nombreEs}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            
+                            <p:column headerText="Descripción Español" >
+                                <h:outputText value="#{row.nombreEs}"/>
+			    </p:column>
+                            <p:column headerText="Descripción Ingles" >
+                                <h:outputText    value="#{row.nombreEn}" />
+			    </p:column>
+                            <p:column headerText="Observaciones" >
+                                <h:outputText    value="#{row.observaciones}" />
+			    </p:column>
+                            
+                        <p:column headerText="Eliminar" > 
+                            <h:commandLink action="#{avionMB.quitarMaterialEF(row.nombreEs)}" style="margin-left: 50%;"  immediate="true" >
+                                    <i class="ui-icon ui-icon-close"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    
+                    
+                    
+                 
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{avionMB.save}"  rendered="#{!avionMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{avionMB.update}"  rendered="#{avionMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition> 

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.aeromexico.pab</groupId>
+    <artifactId>AMX-PAB</artifactId>
+    <version>2.0.2</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+		
+        <maven.build.timestamp.format>yyyy/MM/dd_HH:mm</maven.build.timestamp.format>
+        <maven_build_timestamp>${maven.build.timestamp}</maven_build_timestamp>
+        <!--
+        DEVE    DEVELOPMENT, LOCAL IDE
+        CINT    SERVER WITH CONTINOUS INTEGRATION
+        QUAS    QUALITY ASURANCE SERVER
+        PROD    PRODUCTION CONFIGURATION
+        -->
+        <environment.stage>DEVE</environment.stage>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <environment.log4j.rootLogger>INFO</environment.log4j.rootLogger>
+        <environment.log4j.appendersList>stdout</environment.log4j.appendersList>
+    </properties>
+	
+    <inceptionYear>2017</inceptionYear>
+
+    <organization>
+        <name>AeroMexico</name>
+        <url>http://aeromexico.com</url>
+    </organization>
+
+    
+    <scm>
+        <connection>scm:git:git://git@git.gonet.us:Aeromexico/Servicios_a_Bordo.git</connection>
+    </scm>
+	
+    
+    <developers>
+        <developer>
+            <id>alfredo.estrada</id>
+            <name>Alfredo Estrada Gonzalez</name>
+            <email>alfredo.estrada@gonet.us</email>
+            <organization>gonet</organization>
+            <organizationUrl>http://gonet.us</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+                <role>Deployer</role>
+            </roles>
+            <timezone>-6</timezone>
+        </developer>
+        <developer>
+            <id>erick.diaz</id>
+            <name>Erick Diaz Lara</name>
+            <email>erick.diaz@gonet.us</email>
+            <organization>gonet</organization>
+            <organizationUrl>http://gonet.us</organizationUrl>
+            <roles>
+                <role>Developer</role>
+                <role>Deployer</role>
+            </roles>
+            <timezone>-6</timezone>
+        </developer>
+    </developers>
+    
+    <modules>
+        <module>AMX-PAB-persistence</module>
+        <module>AMX-PAB-remote</module>
+        <!--
+        <module>AMX-PAB-local</module>
+        -->
+        <module>AMX-PAB-BackEnd</module>
+		
+        <module>AMX-PAB-DBEngine</module>
+        <module>AMX-PAB-Primefaces-Ultima</module>
+        <module>AMX-PAB-Web</module>
+        <module>AMX-PAB-reportes</module>
+    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>validate_create_exec1</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                    <!-- NO FUNCIONAN -->
+                    <execution>
+                        <id>validate_create-timestamp_exec2</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>create-timestamp</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>validate_create_exec3</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>create-metadata</goal>
+                        </goals>
+                    </execution>
+
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <profiles> 
+        <profile>
+            <id>cint-build</id>
+            <properties>
+                <environment.stage>CINT</environment.stage>
+                <environment.log4j.rootLogger>INFO</environment.log4j.rootLogger>
+                <environment.log4j.appendersList>file,stdout</environment.log4j.appendersList>
+            </properties>
+        
+            <build>                            
+            </build>
+        </profile>
+        
+        <profile>
+            <id>qua-build</id>
+            <properties>
+                <environment.stage>QUAS</environment.stage>
+                <environment.log4j.rootLogger>INFO</environment.log4j.rootLogger>
+                <environment.log4j.appendersList>file,stdout</environment.log4j.appendersList>
+            </properties>
+        
+            <build>                            
+            </build>
+        </profile>
+        
+        <profile>
+            <id>uat-build</id>
+            <properties>
+                <environment.stage>USAT</environment.stage>
+                <environment.log4j.rootLogger>INFO</environment.log4j.rootLogger>
+                <environment.log4j.appendersList>file,stdout</environment.log4j.appendersList>
+            </properties>
+        
+            <build>                            
+            </build>
+        </profile>
+    </profiles>    
+</project>

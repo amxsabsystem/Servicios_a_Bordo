@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<project name="AMX_PAB_DB_TASKS" basedir="." default="HELP_4ARCHITECT">
+
+	<!-- properties for override by -Dderby.dbroot.user=xxx  -Dderby.dbroot.password=yyyy  -->
+	<property name="admin.db.user"         value="AMX_PAB_DEV_USR"/>
+	<property name="admin.db.password"     value="AMX_PAB_DEV_PWD"/>
+	<property name="derby.system.home"     value="${user.home}/DERBY_DATABASES"/>
+	
+	<property name="sql"      value="model/sql"/>
+    <property name="res_i18n" value="../AMX-PAB-persistence/src/main/resources"/>
+    
+	<property name="pJPA"     value="com.aeromexico.pab.entity"/>
+    
+	<property name="pr4I"     value="com.aeromexico.pab.backend.remote"/>
+	<property name="pl4I"     value="com.aeromexico.pab.backend.local"/>
+    
+    <property name="pr6"      value="com.aeromexico.pab.backend.remote.ejb"/>
+    <property name="pl6"      value="com.aeromexico.pab.backend.local.ejb"/>
+    
+	<property name="sJPA"     value="../AMX-PAB-persistence/src/main/java"/>
+    
+	<property name="sr4I"     value="../AMX-PAB-remote/src/main/java"/>
+	<property name="sl4I"     value="../AMX-PAB-local/src/main/java"/>
+    
+	<property name="sEJB"     value="../AMX-PAB-BackEnd/AMX-PAB-BackEnd-ejb/src/main/java"/>
+
+	<path id="mvn_aeromexico_utils_classpath">
+		<fileset dir="${user.home}/.m2/repository/com/tracktopell/dbutil/SQLCommander/1.29/">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${user.home}/.m2/repository/com/tracktopell/jpa-builder/1.15.2/">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${user.home}/.m2/repository/org/apache/derby/derby/10.13.1.1">
+			<include name="**/derby-10.*.jar"/>
+		</fileset>
+	</path>	
+	
+	<path id="local_aeromexico_utils_classpath">
+		<fileset dir="${basedir}/lib/">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${basedir}/lib/dependency-jars">
+			<include name="*.jar"/>
+		</fileset>
+
+	</path>
+
+	<target name="HELP_4ARCHITECT">
+		<echo message="   ant GENERATE_ALL_SQL" />
+		<echo message="   ant GENERATE_SRC_MVN" />
+		<echo message="   ant GENERATE_SRC" />
+		<echo message="   ant 1STD_DEV" />
+		 
+		<echo message="   ant INIT_DB_DEV   -Dadmin.db.user=AMX_PAB_DEV_USR -Dadmin.db.password=AMX_PAB_DEV_PWD" />
+		 
+		<echo message="   ant INIT_DB_DEV   -Dadmin.db.user=${admin.db.user}  -Dadmin.db.password=${admin.db.password}" />
+		<echo message="   ant CHECK_UTIL_CP -Dadmin.db.user=${admin.db.user}  -Dadmin.db.password=${admin.db.password}" />
+		<echo message="   ant X_DERBY_DB    -Dadmin.db.user=${admin.db.user}  -Dadmin.db.password=${admin.db.password}" />
+		<echo message="   ant X_DERBY_DEV" />		 
+	</target>	
+	
+	<target name="CHECK_UTIL_CP">
+		<echo message="-->>CHECK_UTIL_CP: USER=${admin.db.user}, PASSWORD=${admin.db.password}" />	
+         
+		<java fork="true" failonerror="false" classname="com.tracktopell.dbutil.sqlcommander.Main"              
+			   classpathref="local_aeromexico_utils_classpath">
+		</java>
+		<java fork="true" failonerror="false" classname="com.tracktopell.dao.builder.dbschema.VPModel2SQL"
+			   classpathref="local_aeromexico_utils_classpath">
+		</java>
+	</target>
+
+	
+	<target name="GENERATE_SQL_DEV">
+		<java fork="true" failonerror="yes" classname="com.tracktopell.dao.builder.dbschema.VPModel2SQL">
+			<arg line="model/exported/project.xml derby AMX_PAB_DB_DEV ${sql}/CREATE_SCHEMMA_DEV.DERBY.SQL ${sql}/DROP_SCHEMMA_DEV.DERBY.SQL ${sql}/DD.csv {all}"/>
+			<classpath refid="mvn_aeromexico_utils_classpath"/>
+		</java>
+	  
+		<java fork="true" failonerror="yes" classname="com.tracktopell.dao.builder.dbschema.VPModel2SQL">
+			<arg line="model/exported/project.xml mssqlserver AMX_PAB_DB_DEV ${sql}/CREATE_SCHEMMA_DEV.MSSQLSERVER.SQL ${sql}/DROP_SCHEMMA_DEV.MSSQLSERVER.SQL ${sql}/DD.csv {all}"/>		 
+			<classpath refid="mvn_aeromexico_utils_classpath"/>
+		</java>
+	  
+	</target>
+
+	<target name="GENERATE_ALL_SCHEMAS_SQL" depends="GENERATE_SQL_DEV">
+		<echo message="------- GENERATING SQL ALL SCHEMMAS: USER=${admin.db.user}, PASSWORD=${admin.db.password}" />
+	</target>
+    
+	<target name="CLEAN_GEN_SRC_MVN">
+		<!--
+		<delete includeemptydirs="true">
+		   <fileset dir="${s1}" includes="**/*.java" />
+		   <fileset dir="${s2}" includes="**/*.java" />
+		   <fileset dir="${sJPA}" includes="**/*.java" />
+		   <fileset dir="${sr4I}" includes="**/*.java" />
+		   <fileset dir="${sl4I}" includes="**/*.java" />
+		</delete>
+		-->
+		<!--
+		<mkdir   dir="${s1}"/>
+		<mkdir   dir="${s2}"/>
+		<mkdir   dir="${sJPA}"/>
+		<mkdir   dir="${sr4I}"/>
+		<mkdir   dir="${sl4I}"/>
+		-->
+	</target>	
+
+	<target name="GENERATE_SRC_JPA_MVN" depends="CLEAN_GEN_SRC_MVN" >
+
+		<java fork="true" failonerror="yes" classname="com.tracktopell.dao.builder.ejb3.VPModel2JPA">
+			<arg line="model/exported/project.xml AMX_PAB_DEV_USR ${pJPA} ${sJPA} {all} DEFAULT"/>
+			<classpath refid="mvn_aeromexico_utils_classpath"/>
+		</java>				
+	</target>
+    
+	<target name="GENERATE_SRC_REJB_MVN" depends="GENERATE_SRC_JPA_MVN" >
+
+		<java fork="true" failonerror="yes" classname="com.tracktopell.dao.builder.ejb3.VPModel2JPAEJB">
+			<arg line="model/exported/project.xml AMX_PAB_DB_DEV ${pJPA} ${pr4I} ${pr6} ${sJPA} ${sr4I} ${sEJB} AMX_PAB_PU @Remote {all}"/>
+			<classpath refid="mvn_aeromexico_utils_classpath"/>
+		</java>
+
+
+    </target>
+	<target name="GENERATE_SRC_LEJB_MVN" depends="GENERATE_SRC_JPA_MVN" >
+        
+		<java fork="true" failonerror="yes" classname="com.tracktopell.dao.builder.ejb3.VPModel2JPAEJB">
+			<arg line="model/exported/project.xml AMX_PAB_DB_DEV ${pJPA} ${pl4I} ${pl6} ${sJPA} ${sl4I} ${sEJB} AMX_PAB_PU @Local {all}"/>
+			<classpath refid="mvn_aeromexico_utils_classpath"/>
+		</java>
+        
+    </target>
+	
+	<target name="GENERATE_I18N_LOCAL_MVN" depends="CLEAN_GEN_SRC_MVN" >
+
+		<java fork="true" failonerror="yes" classname="com.tracktopell.dao.builder.ejb3.UpdateResourceBoundleForBeans">
+			<arg line="model/exported/project.xml ${res_i18n} CATALOGO {all}"/>
+			<classpath refid="mvn_aeromexico_utils_classpath"/>
+		</java>
+				
+	</target>
+    
+    <target name="RE_GENERATE_ALL" depends="GENERATE_I18N_LOCAL_MVN,GENERATE_SRC_REJB_MVN,GENERATE_ALL_SCHEMAS_SQL" >
+        
+	</target>
+</project>

@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Master </ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>#{res_i18n.APP_MENU_OPER_MASTER}</h1>
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+
+                            <h:outputText value="KIT/LOTE " />
+                            <p:selectBooleanCheckbox value="1" >   
+                                <p:ajax event="change" listener="#{masterMB.checkboxChangedMasterKit}"/>
+                            </p:selectBooleanCheckbox>
+
+                            <h:outputText value="Artículo a Granel " />
+                            <p:selectBooleanCheckbox value="0"  >  
+                                <p:ajax event="change" listener="#{masterMB.checkboxChangedMasterAGranel}"/>
+                            </p:selectBooleanCheckbox>
+
+                        </p:panelGrid>
+
+                        <p:dataTable id="dataTableGrid" value="#{masterMB.findAll()}" var="row">
+                            <f:facet name="header">
+                                KIT_MASTER
+                            </f:facet>
+
+                            <p:column headerText="_CVE_">
+                                <h:outputText value="#{row.cveKitMaster}"/>
+                            </p:column>
+                            
+                            <p:column headerText="MATERIAL">
+                            
+                                <p:repeat value="#{masterMB.findAllKit(row.cveKitMaster)}" var="rowInner"  >
+                                    [#{rowInner.materialKitMasterPK.numeroParte},#{rowInner.materialKitMasterPK.numeroParte}]
+                                </p:repeat>
+                            
+                            </p:column>
+                            
+                        </p:dataTable>
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

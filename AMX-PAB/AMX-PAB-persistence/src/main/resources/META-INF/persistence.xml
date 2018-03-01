@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+	<persistence-unit name="AMX_PAB_PU" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property name="javax.persistence.jdbc.driver"     value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.url"        value="jdbc:derby:memory:AMX_PAB_DB_DEV;create=true" />
+			<property name="javax.persistence.jdbc.user"       value="AMX_PAB_DEV_USR"/>
+			<property name="javax.persistence.jdbc.password"   value="AMX_PAB_DEV_PWD"/>
+
+            <!--
+            ${hibernate_show_sql}
+            ${hibernate_format_sql}
+            -->
+			<property name="hibernate.show_sql"                value="${hibernate_show_sql}"/>
+			<property name="hibernate.format_sql"              value="${hibernate_format_sql}"/>
+			<property name="hibernate.flushMode"               value="FLUSH_AUTO" />			
+			<property name="hibernate.archive.autodetection"   value="class" />
+			<property name="hibernate.dialect"                 value="org.hibernate.dialect.DerbyDialect" />
+			
+			<property name="hibernate.hbm2ddl.auto"            value="create" />
+			<property name="hibernate.hbm2ddl.import_files"    value="/sql/FIRST_DATA_TEST_1.DERBY.SQL"/>
+			
+		</properties>
+	</persistence-unit>		
+	
+</persistence>

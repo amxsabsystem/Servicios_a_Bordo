@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Código De Servicios </ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <h1>Código De Servicios</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{codigoDeServiciosMB.returnMaster('CY')}"  immediate="true"/>
+                            <p:commandButton value="#{res_i18n.CREATE}" icon="ui-icon-create"   action="#{codigoDeServiciosMB.addRowTurista}" />
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="pdf" target="dataTableGridAlimentos" fileName="reportExcel_Ciclos"  encoding="ISO-8859-1" />
+                            </h:commandButton>
+			</p:panelGrid>
+                        <p:spacer height="15" />
+                         <h1>Clase Turista</h1>
+                        <p:dataTable id="dataTableGridAlimentos" var="row" value="#{codigoDeServiciosMB.findAll('CY')}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idCodigoServicio}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+
+                            <p:column headerText="Codigo de Servicios Alimentos" sortBy="#{row.cveCodigoServicio}" filterBy="#{row.cveCodigoServicio}" filterMatchMode="contains" >
+                                <h:outputText value="#{row.cveCodigoServicio}" />
+		            </p:column>
+                            <p:column headerText="Descripción" sortBy="#{row.descripcion}" filterBy="#{row.descripcion}" filterMatchMode="contains" >
+                                <h:outputText value="#{row.descripcion}" />
+		            </p:column>
+                            <p:column headerText="Tipo de Ciclo" sortBy="#{localeInfo.locale.language=='es'?row.idTipoCiclo.valorEs:row.idTipoCiclo.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.idTipoCiclo.valorEs:row.idTipoCiclo.valorEn}" filterMatchMode="contains" >
+                                <h:outputText value="#{localeInfo.locale.language=='es'?row.idTipoCiclo.valorEs:row.idTipoCiclo.valorEn}" />
+		            </p:column>
+                            <p:column headerText="Estatus" sortBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterMatchMode="contains">
+                                <h:outputText value="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" />
+                            </p:column>
+                            <p:column headerText="Modificar"  exportable="false"> 
+                                <h:commandLink action="#{codigoDeServiciosMB.modifyRowAlimentos(row,'CY')}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                         <p:spacer height="15" /> 
+                         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="pdf" target="dataTableComplementarios" fileName="reportExcel_CiclosComplementarios"  encoding="ISO-8859-1" />
+                            </h:commandButton>
+			</p:panelGrid>
+                         <p:spacer height="15" />
+                         <h1>Código de Servicios Adicionales</h1>
+                        <p:dataTable id="dataTableComplementarios" var="row" value="#{codigoDeServiciosMB.findAllComplementarios('CY')}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idCodigoServicio}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                           
+                           <p:column headerText="Codigo de Servicios Adicionales" sortBy="#{row.cveCodigoServicio}" filterBy="#{row.cveCodigoServicio}" filterMatchMode="contains" >
+                                <h:outputText value="#{row.cveCodigoServicio}" />
+		            </p:column>
+                            <p:column headerText="Descripción" sortBy="#{row.descripcion}" filterBy="#{row.descripcion}" filterMatchMode="contains" >
+                                <h:outputText value="#{row.descripcion}" />
+		            </p:column>
+                            <p:column headerText="Tipo de Ciclo" sortBy="#{localeInfo.locale.language=='es'?row.idTipoCiclo.valorEs:row.idTipoCiclo.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.idTipoCiclo.valorEs:row.idTipoCiclo.valorEn}" filterMatchMode="contains" >
+                                <h:outputText value="#{localeInfo.locale.language=='es'?row.idTipoCiclo.valorEs:row.idTipoCiclo.valorEn}" />
+		            </p:column>
+                            <p:column headerText="Estatus" sortBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterMatchMode="contains">
+                                <h:outputText value="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" />
+                            </p:column>
+                            <p:column headerText="Modificar"  exportable="false"> 
+                                <h:commandLink action="#{codigoDeServiciosMB.modifyRowComplementarios(row,'CY')}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

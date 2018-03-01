@@ -1,0 +1,292 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+   
+
+    <ui:define name="title">Asignación de Servicios</ui:define>
+
+    <ui:define name="head">
+        <style>
+            /* DivTable.com */
+.divTable{
+	display: table;
+	width: 97%;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+        
+}
+.divTableCell2{
+        border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;}
+
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+.table_header{ background-color: #4F81BD; text-align: center; font-weight: bold;}
+
+.imagenDiv{
+    position: relative;
+    height: 80px;
+    top: 40px;
+    width: 80px;
+    background-color: white;
+}
+            
+   /** fin estilos tabla ***/
+            body .ui-dialog .ui-dialog-titlebar {
+    background-color: #06c;
+    color: #fff;
+    padding: 10px 16px;
+}
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon {
+    color: #fff;
+}
+
+body .ui-selectmanycheckbox.ui-widget label, body .ui-selectoneradio.ui-widget label {
+    position: inherit !important;
+}
+        </style>
+
+        
+    </ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h5>
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/HorariosPorRegion.xhtml"> Horarios Región / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/duraciones.xhtml"> Duración Vuelos / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/asignarServiciosAlimentos.xhtml"> Consulta de Servicios / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/consultaServicios.xhtml"> Consulta </a> 
+                             </h5>
+                        <h1>Consulta de Servicios</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:spacer height="15"/>
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group"  rendered="#{asignacionDeServiciosMB.isasigHorDur}">
+                        <h:panelGroup id="origenLabel"  styleClass="md-inputfield"><h:outputText value="Origen" style="float: right;" rendered="#{asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="origen"  styleClass="md-inputfield" style="width:95%">
+                            <p:selectOneRadio  value="#{asignacionDeServiciosMB.asignedOrigen}" rendered="#{asignacionDeServiciosMB.isasigHorDur}" columns="2" style="width:95%">
+                            <f:selectItems value="#{asignacionDeServiciosMB.selectOrigenes}"  />
+                        </p:selectOneRadio>
+                            </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" rendered="#{asignacionDeServiciosMB.isasigHorDur}">
+                        
+                        <h:panelGroup id="modeloLabel"  styleClass="md-inputfield"><h:outputText value="Modelo de Avión" style="float: right;" rendered="#{asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="modelo"  styleClass="md-inputfield" >
+                            <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedModelo}"   style="width: 90%;position: inherit !important;" rendered="#{asignacionDeServiciosMB.isasigHorDur}">
+				<f:selectItems value="#{asignacionDeServiciosMB.selectModelos}" />
+                                <p:ajax update="labelCompania"  listener="#{asignacionDeServiciosMB.updateLabels}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id="claseLabel"  styleClass="md-inputfield"><h:outputText value="Clase" style="float: right;" rendered="#{asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="clase"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedClase}"   style="width: 90%;" rendered="#{asignacionDeServiciosMB.isasigHorDur}">
+				<f:selectItems value="#{asignacionDeServiciosMB.selectClases}" />
+                                
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id="regionLabel"  styleClass="md-inputfield"><h:outputText value="Región" style="float: right;" rendered="#{asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="region"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedRegion}"   style="width: 90%;" rendered="#{asignacionDeServiciosMB.isasigHorDur}">
+				<f:selectItems value="#{asignacionDeServiciosMB.selectRegiones}" />
+                                
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id="compania"  styleClass="md-inputfield"><h:outputText value="Compañia " style="float: right;"  rendered="#{asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="labelCompania"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.labelCompania}"  rendered="#{asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        
+                    
+                        <h:panelGroup id="saveButton"  styleClass="md-inputfield">
+                    <p:commandButton  value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" 
+                                     action="#{asignacionDeServiciosMB.saveEncabezado}" 
+                                     rendered="#{asignacionDeServiciosMB.isasigHorDur}" 
+                                     update="repeatValores,origenLabel,origen,modeloLabel,modelo,claseLabel,clase,regionLabel,region,compania,labelCompania" 
+                                     process=":form" />
+                        </h:panelGroup>
+                    
+                    </p:panelGrid>
+                    
+                    
+                    <h3><h:panelGroup id="label1a"  styleClass="md-inputfield"><h:outputText value="Encabezado" rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup></h3>
+                    
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-1,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank form-group" >
+                        <h:panelGroup id="label1"  styleClass="md-inputfield"><h:outputText value="Origen " rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="label3"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.saliendoDe}" rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="label2"  styleClass="md-inputfield"><h:outputText value="Clase " rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="label4"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.clase}" rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-1,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank form-group" >
+                        <h:panelGroup id="label5"  styleClass="md-inputfield"><h:outputText value="Región " rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="label6"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.regiondesc}" rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="label7"  styleClass="md-inputfield"><h:outputText value="Modelo " rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        <h:panelGroup id="label8"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.modelo}" rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup>
+                        
+                    </p:panelGrid>
+                    
+                    <h3><h:panelGroup id="label1b"  styleClass="md-inputfield"><h:outputText value="Asignación de Servicios" rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/></h:panelGroup></h3>
+                    <p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <h:panelGroup id="label9"  styleClass="md-inputfield">
+                        <p:repeat id="repeatValores" value="#{asignacionDeServiciosMB.row_as.horarioRegionDuracion}" var="rowInner"  rendered="#{!asignacionDeServiciosMB.isasigHorDur}" >
+                            <p:panelGrid columns="5" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-4,ui-grid-col-3" layout="grid" styleClass="form-group" style="border-bottom: 1px solid #CCCCCC;">
+                        
+                        <h:outputText value="Horario " style="font-weight: bold;" />
+                        <h:outputText value="#{rowInner.horarioRegion.horaInicio} - #{rowInner.horarioRegion.horaFin}" />
+                        <h:outputText value="Duración " style="font-weight: bold;"/>
+                        
+                            <p:selectOneMenu  value="#{rowInner.idDuraciones}"   style="width: 60%;">
+				<f:selectItems value="#{asignacionDeServiciosMB.selectDuraciones}" />
+                                
+                            </p:selectOneMenu>
+                        
+
+                        <p:commandButton  value="Asignar Servicios" icon="ui-icon-save" ajax="false" 
+                                         action="#{asignacionDeServiciosMB.asignarServicios(
+                                                       asignacionDeServiciosMB.row_as.idModeloAvion
+                                                     , asignacionDeServiciosMB.row_as.idClase
+                                                     , asignacionDeServiciosMB.row_as.idOrigen
+                                                     , asignacionDeServiciosMB.row_as.idRegion
+                                                     , rowInner.horarioRegion.idHorarioRegion
+                                                     , rowInner.idDuraciones )}"   />
+                        
+                        
+                        </p:panelGrid>
+                    </p:repeat>
+                            </h:panelGroup>
+                    </p:panelGrid>
+                    
+                    <p:dialog id="agregarSecuenciadialog" header="Agregar Secuencia de Codigos de Servicio" widgetVar="agregarSecuencia" modal="true" height="550" width="900" responsive="true">
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:panelGrid columns="4" layout="grid"  styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:#CCCCCC;" >
+                            <h:panelGroup id="label10"  styleClass="md-inputfield"><h:outputText value="Horario" style="font-weight: bold;"/></h:panelGroup>
+                            <h:panelGroup id="label11"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.horarioregionSelectServ}"/></h:panelGroup>
+                            <h:panelGroup id="label12"  styleClass="md-inputfield"><h:outputText value="Duracion" style="font-weight: bold;"/></h:panelGroup>
+                            <h:panelGroup id="label13"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.duracionesSelectServ}"/></h:panelGroup>
+                            
+                        </p:panelGrid>
+                        <h:panelGroup id="listaSecuencia"  styleClass="md-inputfield">
+                            
+                        <!--p:repeat value="{asignacionDeServiciosMB.lista_secuencias}" var="row"  >
+                        Secuencia {row.idSecuencia} : 
+                            <c:forEach items="{row.codigos_Servicio}" var="block">
+                                <p:column>
+                                    <h:outputLabel value="{block.cveCodigoServicio}"/>                     
+                                </p:column>
+                            </c:forEach>
+                        </p:repeat-->    
+                            
+                       
+                            </h:panelGroup>
+                        
+                        <h:panelGroup id="codigoServ"  styleClass="md-inputfield">
+                            <h4>Servicios Alimentos</h4> 
+                            <p:selectManyCheckbox  value="#{asignacionDeServiciosMB.asignedCodigos}" layout="responsive" columns="9" styleClass="form-group">
+                                        <f:selectItems value="#{asignacionDeServiciosMB.selectedCodigos}" var="codigo" itemLabel="#{codigo.cveCodigoServicio}" itemValue="#{codigo.idCodigoServicio}" />
+                            </p:selectManyCheckbox>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id="codigoServComple"  styleClass="md-inputfield" style="border-top: 1px solid #CCCCCC;">
+                            <h4>Servicios Complementarios</h4>
+                            <p:selectManyCheckbox  value="#{asignacionDeServiciosMB.asignedCodigoComples}" layout="responsive" columns="9" styleClass="form-group">
+                                        <f:selectItems value="#{asignacionDeServiciosMB.selectedCodigosComple}" var="codigo" itemLabel="#{codigo.cveCodigoServicio}" itemValue="#{codigo.idCodigoServicio}" />
+                            </p:selectManyCheckbox>
+                        </h:panelGroup>
+                        
+                        
+                        <p:panelGrid columns="3"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="addCodigo" value="Agregar a Secuencia Actual" icon="ui-icon-add" ajax="true" action="#{asignacionDeServiciosMB.agregarCodigo}" update="tablaCodigo,codigoServ,codigoServComple" process="addCodigo codigoServ codigoServComple"/>
+                            <h:outputText value=""/>
+                            <p:commandButton id="agregarOtraSecuencia" value="Crear otra Secuencia" icon="ui-icon-save" ajax="true" action="#{asignacionDeServiciosMB.agregarOtraSecuencia}"  update="tablaCodigo,codigoServ,listaSecuencia,codigoServComple" process=":form"/>
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-1,ui-grid-col-10,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <h:outputText value=""/>
+                            <p:orderList id="tablaCodigo" value="#{asignacionDeServiciosMB.codigos_Servicio}" 
+                                     var="row" controlsLocation="right" responsive="true"
+                                     itemValue="#{row}" style="width:100%">
+                                <p:column style="width:50%">
+                                    <h:outputText value="#{row.cveCodigoServicio}" />
+                                </p:column>
+                                <p:column style="width:50%" > 
+                                    
+                                    <p:commandButton update="tablaCodigo" process="tablaCodigo @this" ajax="true"
+                                        icon="ui-icon ui-icon-delete" actionListener="#{asignacionDeServiciosMB.quitarCodigoServicio()}">
+                                        <f:param name="selectedElement" value="#{row.idCodigoServicio}" />  
+                                    </p:commandButton>
+                                 </p:column>
+                            </p:orderList>
+                            <h:outputText value=""/>
+                        </p:panelGrid>
+    
+                        <p:spacer height="30"/>
+                        <p:panelGrid columns="3"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="regresarAll" value="Cancelar" icon="ui-icon-arrow-back" ajax="true"   action="#{asignacionDeServiciosMB.regeresarHorariosEncabezado}" update="tablaCodigo,codigoServ,listaSecuencia,codigoServComple" process=":form"/>
+                            <h:outputText value=""/>
+                            <p:commandButton id="saveAll" value="Salvar" icon="ui-icon-save" ajax="true" action="#{asignacionDeServiciosMB.save}" update="origenLabel,origen,modeloLabel,modelo,claseLabel,clase,regionLabel,region,compania,labelCompania,agregarSecuenciadialog,saveButton,repeatValores,label1,label1a,label1b,label2,label3,label4,label5,label6,label7,label8,label9,tablaCodigo,codigoServ,listaSecuencia,codigoServComple,dataTableGridAsignados" process=":form"/>
+                            
+                        </p:panelGrid>
+                    </p:dialog> 
+                    
+                   <p:dataTable id="dataTableGridAsignados" var="row" value="#{asignacionDeServiciosMB.asignados()}" selectionMode="single" reflow="true"
+                                rowKey="#{row.asignacionServicio.idAsignacionServicio}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            <p:column headerText="Horario Región" >
+                                <h:outputText value="#{row.horarioRegion.horaInicio} - #{row.horarioRegion.horaFin}" />
+		            </p:column>
+                            <p:column headerText="Duración" >
+                                <h:outputText value="#{row.duracionVuelos.tiempoInicio} - #{row.duracionVuelos.tiempoFin}" />
+		            </p:column>
+                            <p:column headerText="Secuencias" >
+                                <h:outputText value="#{row.secuencia}" />
+		            </p:column>
+                            
+                    </p:dataTable>
+                        
+                    <p:spacer height="30"/>
+                        <p:panelGrid columns="3"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="terminar" value="Terminar" icon="ui-icon-arrow-back" ajax="true"   action="#{asignacionDeServiciosMB.terminar}" update=":form" process=":form" rendered="#{!asignacionDeServiciosMB.isasigHorDur}"/>
+                            
+                        </p:panelGrid>
+                    
+                    
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

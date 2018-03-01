@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreparedStatements>
+    <NativePreparedStatementList>
+        <NativePreparedStatement id="QUERY_ALL_MATRIZ_DETALLE">
+            <StatementParameters></StatementParameters>
+            <SQLQuery><![CDATA[
+SELECT
+        M.ID_MATRIZ,
+        M.CVE_KIT_MASTER,
+        MD.ID_MATRIZ_DETALLE,
+        M.ID_PRODUCTO,
+        P.NOMBRE AS PRODUCTO_NOMBRE,
+        M.ID_TIPO_EQUIPO_AVION,
+        TEA.TIPO_EQUIPO AS TIPO_EQUIPO_AVION,
+        MD.TOTAL_CANTIDAD_CJ,
+        MD.TOTAL_CANTIDAD_CY 
+FROM
+        MATRIZ_DETALLE MD,
+        MATRIZ M,
+        PRODUCTO P,
+        TIPO_EQUIPO_AVION TEA 
+WHERE
+        1=1
+        AND MD.ID_MATRIZ           = M.ID_MATRIZ 
+        AND M.ID_PRODUCTO          = P.ID_PRODUCTO 
+        AND M.ID_TIPO_EQUIPO_AVION = TEA.ID_TIPO_EQUIPO_AVION 
+ORDER BY
+        MD.ID_MATRIZ,
+        MD.ID_MATRIZ_DETALLE 
+        ]]></SQLQuery>
+        </NativePreparedStatement>
+
+        <NativePreparedStatement id="QUERY_ALL_ANIOS">
+            <StatementParameters/>
+            <SQLQuery><![CDATA[
+SELECT YEAR(R.FECHA_MODIFICO) ANIO
+FROM   REPORTE R
+WHERE  1=1
+GROUP BY YEAR(R.FECHA_MODIFICO)
+        ]]></SQLQuery>
+        </NativePreparedStatement>
+
+
+        <NativePreparedStatement id="QUERY_TIPO_REP_X_ANIO">
+            <StatementParameters>
+                <StatementParameter paranName="anio"       javaClass="java.lang.Integer" posParam="1"/>
+            </StatementParameters>
+            <SQLQuery><![CDATA[
+SELECT COUNT(R.ID_REPORTE),MONTH(R.FECHA_MODIFICO),R.ID_TIPO_REPORTE
+FROM   REPORTE R
+WHERE  1=1
+AND    YEAR(R.FECHA_MODIFICO) =  :anio 
+GROUP BY MONTH(R.FECHA_MODIFICO), R.ID_TIPO_REPORTE
+        ]]></SQLQuery>
+        </NativePreparedStatement>
+
+        <NativePreparedStatement id="QUERY_TIPO_REP_X_ANIO_ESTACION">
+            <StatementParameters>
+                <StatementParameter paranName="anio"       javaClass="java.lang.Integer" posParam="1"/>
+                <StatementParameter paranName="idEstacion" javaClass="java.lang.Integer" posParam="2"/>
+            </StatementParameters>
+            <SQLQuery><![CDATA[
+SELECT COUNT(R.ID_REPORTE),MONTH(R.FECHA_MODIFICO),R.ID_TIPO_REPORTE
+FROM   REPORTE R,VUELO V
+WHERE  1=1
+AND    YEAR(R.FECHA_MODIFICO) = :anio 
+AND    R.ID_VUELO = V.ID_VUELO
+AND    V.ID_ESTACION_ORIGEN = :idEstacionOrigen
+GROUP BY MONTH(R.FECHA_MODIFICO), R.ID_TIPO_REPORTE
+        ]]></SQLQuery>
+        </NativePreparedStatement>
+    </NativePreparedStatementList>
+</PreparedStatements>

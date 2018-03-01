@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                >
+
+    <ui:define name="title">Estadisiticas</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>Estadisticas</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />                        
+                                                                        
+                        <p:chart id="bar" type="bar" model="#{estadisiticasMB.barModel_Estacion}" style="height:300px" rendered="true"/>
+                        
+                        <p:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-6" 
+                                     layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+
+                            <h:outputText  value="Año:" style="float: right;" />
+                            <p:selectOneMenu id="selectedAnio" value="#{estadisiticasMB.anio}" style="width: 80%;">
+                                <f:selectItems value="#{estadisiticasMB.selectAnios}" />
+                                <p:ajax listener="#{estadisiticasMB.anioSelected}" />
+                            </p:selectOneMenu>
+                            
+                            <h:outputText  value="Estación Origen:" style="float: right;" />
+                            <p:selectOneMenu id="selectedEstacion" value="#{estadisiticasMB.idEstacionSelected}" style="width: 100%;"
+                                             filter="true" filterMatchMode="startsWith">
+                                <f:selectItems value="#{estadisiticasMB.selectEstaciones}" />
+                                <p:ajax listener="#{estadisiticasMB.estacionSelected()}" />
+                            </p:selectOneMenu>
+                            
+                            <p:spacer width="10"/>
+                            <p:spacer width="10"/>
+                            <p:commandButton actionListener="#{estadisiticasMB.actualizar}" value="ACTUALIZAR" update="bar" />
+                        </p:panelGrid>
+                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

@@ -1,0 +1,152 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                >
+
+    <ui:define name="title">Master</ui:define>
+
+    <ui:define name="head">
+        <style>
+             /* DivTable.com */
+.divTable{
+	display: table;
+	width: 97%;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+        
+}
+.divTableCell2{
+        border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;}
+
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+.table_header{ background-color: #4F81BD; text-align: center; font-weight: bold;}
+
+.imagenDiv{
+    position: relative;
+    height: 80px;
+    top: 40px;
+    width: 80px;
+    background-color: white;
+}
+            
+   
+        </style>
+        
+    </ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Master</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Nuevo" icon="ui-icon-create"   action="#{masterMB.addRow}" /><h:outputText value=""/>
+                            
+			</p:panelGrid>
+                        
+                        <p:dataList id="dataTableGrid" value="#{masterMB.findAll()}" var="row" paginatorPosition="bottom" 
+                            type="unordered" itemType="none" paginator="true" rows="10" emptyMessage="No se encontraron registros."   styleClass="cars-datalist">
+                            
+                            <div class="divTable clearfix" style="border: 1px solid #000;" >
+                                <div class="divTableBody">
+                                    <div class="divTableRow">
+                                        <div class="divTableCell table_header" style="width: 2%;" >Imagen</div>
+                                        <div class="divTableCell table_header" style="width: 13%;">Lote Kit</div>
+                                        <div class="divTableCell table_header" style="width: 20%;">Descripción</div>
+                                        <div class="divTableCell table_header" style="width: 20%;">Contenedor</div>
+                                        <div class="divTableCell table_header" style="width: 5%;">UM</div>
+                                        <div class="divTableCell table_header" style="width: 20%;">Estaciones<br/>Nacionales</div>
+                                        <div class="divTableCell table_header" style="width: 10%;">Estaciones<br/>Internacionales</div>
+                                        <div class="divTableCell table_header" style="width: 10%;"></div>
+                                    </div>
+
+                                    <div class="divTableRow">
+                                        <div class="divimagen" style="width: 5%;">
+                                            <a href="#{of:graphicImageURL('imageView.getBytesImage(row.kitMaster.urlMultimedia)')}" target="_blank">
+                                                <o:graphicImage value="#{imageView.getBytesImage(row.kitMaster.urlMultimedia)}" width="30" height="30" style="padding-left: 40%;" class="imagenDiv"/>
+                                            </a>
+                                            
+                                            </div>
+                                        <div class="divTableCell" style="width: 10%;">#{row.kitMaster.idKitMaster}</div>
+                                        <div class="divTableCell" style="width: 20%;">#{row.kitMaster.nombreEs}</div>
+                                        <div class="divTableCell" style="width: 20%;">#{row.kitMaster.contenedor}</div>
+                                        
+                                        <div class="divTableCell" style="width: 5%;">#{row.idUnidadMedida.valorEs}</div>
+                                        <div class="divTableCell" style="width: 20%;">#{row.instNac.valorEs}</div>
+                                        <div class="divTableCell" style="width: 10%;">#{row.instInt.valorEs}</div>
+                                        <div class="divTableCell" style="width: 10%;">
+                                                    <h:commandLink action="#{clasesMB.modifyRow(row)}" style="margin:24px 24px 0 0" >
+                                                        <i class="ui-icon ui-icon-create"></i>
+                                                    </h:commandLink>
+                                        </div>
+                                    </div>
+                                    <div class="divTableRow">
+                                        <div class="divTableCell" style="width: 5%;"></div>
+                                        <div class="divTableCell2 table_header" style="width: 20%;">Articulo</div>
+                                        <div class="divTableCell2 table_header" style="width: 20%;">Articulos Fijos</div>
+                                        <div class="divTableCell2 table_header" style="width: 10%;">Cantidad</div>
+                                        
+                                        <div class="divTableCell2" style="width: 5%;"></div>
+                                        <div class="divTableCell2" style="width: 20%;"></div>
+                                        <div class="divTableCell2" style="width: 10%;"></div>
+                                        <div class="divTableCell2" style="width: 10%;"></div>
+                                    </div>
+                                    
+                                    <p:repeat value="#{masterMB.findAllKit(row.kitMaster.idKitMaster)}" var="rowInner"  >
+                                     <div class="divTableRow">   
+                                            <div class="divTableCell" style="width: 5%;"></div>
+                                            <div class="divTableCell" style="width: 20%; ">#{rowInner.material.numeroParte}</div>
+                                            <div class="divTableCell" style="width: 20%;">#{rowInner.material.descripcionEs}</div>
+                                            <div class="divTableCell" style="width: 10%;">#{rowInner.cantidad}</div>
+
+                                            <div class="divTableCell" style="width: 5%;">#{row.idUnidadMedida.valorEs}</div>
+                                            <div class="divTableCell" style="width: 20%;">#{row.instNac.valorEs}</div>
+                                            <div class="divTableCell" style="width: 10%;">#{row.instInt.valorEs}</div>
+                                            <div class="divTableCell" style="width: 10%;"></div>
+                                     </div>   
+                                    </p:repeat>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </p:dataList>
+                        
+                                                
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

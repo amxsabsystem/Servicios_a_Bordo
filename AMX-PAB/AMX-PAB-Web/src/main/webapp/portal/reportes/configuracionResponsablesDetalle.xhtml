@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Reportes</ui:define>
+
+    <ui:define name="head">
+        <style>
+            body .ui-selectmanycheckbox.ui-widget label, body .ui-selectoneradio.ui-widget label {
+                position: inherit !important;
+            }
+        </style>
+        
+    </ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!reporteMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{reporteMB.modificarRegistro}" /> Responsable</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{reporteMB.returnMaster_Responsable}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <p:outputLabel for="empleado" value="Empleado" style="float: right;" />
+                        <h:panelGroup id="empleado"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{reporteMB.asignedEmpleado}"   style="width: 90%;" filter="true" filterMatchMode="startsWith">
+				<f:selectItems value="#{reporteMB.selectEmpleados}" />
+                                <p:ajax update="area"  listener="#{reporteMB.updateAreaDesc}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <h:outputText  value="Área" style="float: right;"/>
+                        <h:outputText id="area" value="#{reporteMB.areaDesc}" />
+                        
+                        <p:outputLabel for="estacion" value="Estación" style="float: right;"/>
+                        <h:panelGroup id="estacion"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{reporteMB.asignedEstacion}"   style="width: 90%;" filter="true" filterMatchMode="startsWith">
+				<f:selectItems value="#{reporteMB.selectEstaciones}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="jefe" value="Empleado Jefe" style="float: right;"/>
+                        <h:panelGroup id="jefe"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{reporteMB.asignedEmpleadoJefe}"   style="width: 90%;" filter="true" filterMatchMode="startsWith">
+				<f:selectItems value="#{reporteMB.selectEmpleados}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="tipoProducto" value="Tipo Producto" style="float: right;"/>
+                        <h:panelGroup id="tipoProducto"  styleClass="md-inputfield">
+                            <p:selectManyCheckbox  value="#{reporteMB.asignedtipos}" layout="responsive" columns="2" styleClass="form-group">
+                                    <f:selectItems value="#{reporteMB.selectTiposProductos}" var="tipos" itemLabel="#{tipos.descripcion}" itemValue="#{tipos.idTipoProductoReporte}" />
+                            </p:selectManyCheckbox>
+                        </h:panelGroup>
+                        
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{reporteMB.saveResponsable}"  rendered="#{!reporteMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{reporteMB.updateResponsable}"  rendered="#{reporteMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">HOME</ui:define>
+
+    <ui:define name="content">
+		<div class="ui-g-12">
+			<h:form>
+				<h:selectOneMenu value="#{localeInfo.language}" onchange="submit()">
+					<f:selectItem itemValue="__" itemLabel="--" />
+					<f:selectItem itemValue="en" itemLabel="#{res_i18n.SYS_LOCALE_EN}" />
+					<f:selectItem itemValue="es" itemLabel="#{res_i18n.SYS_LOCALE_ES}" />
+                    
+				</h:selectOneMenu>
+			</h:form>
+			<p><h:outputText value="#{res_i18n.APP_GREATTING}" /></p>
+            <p><h:outputText value="selected=#{localeInfo.language_localized}" /></p>			
+		</div>		
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Comunicados</ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>Temas Comunicados</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{comunicadosMB.returnPublicar}"  immediate="true"/>
+		    </p:panelGrid>
+                        <p:spacer height="15"/>
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                            <p:outputLabel for="descripcion" value="Descripción Español" style="float: right;"/>
+                            <h:panelGroup id="descripcion" styleClass="md-inputfield" >
+                                <p:inputText  value="#{comunicadosMB.row_selected_tc.temaEspaniol}" style="width: 90%" maxlength="20" required="true" requiredMessage="Descripción Español: Campo requerido" validatorMessage="Descripción Español: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                            </h:panelGroup>
+                            <p:outputLabel for="descripcionIng" value="Descripción Ingles" style="float: right;"/>
+                            <h:panelGroup id="descripcionIng" styleClass="md-inputfield" >
+                                <p:inputText  value="#{comunicadosMB.row_selected_tc.temaIngles}" style="width: 90%" maxlength="20" required="true" requiredMessage="Descripción Ingles: Campo requerido" validatorMessage="Descripción Ingles: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                </p:inputText>
+                            </h:panelGroup>
+                            <p:outputLabel for="estatus" value="Estatus" rendered="#{comunicadosMB.modificarRegistro}" style="float: right;"/>
+                            <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{comunicadosMB.modificarRegistro}">
+                                <p:selectOneMenu  value="#{comunicadosMB.row_selected_tc.status}"   style="width: 90%;" >
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-5,ui-grid-col-2,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                            <h:outputText value="" />
+                            <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{comunicadosMB.saveTC}"  rendered="#{!comunicadosMB.modificarRegistro}" update="dataTableGrid" process="saveButton"/>
+                            <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{comunicadosMB.updateTC}"  rendered="#{comunicadosMB.modificarRegistro}" update="dataTableGrid" process="updateButton"/>
+                            <h:outputText value="" />
+                    <p:spacer height="30"/>
+                        </p:panelGrid>  
+
+                        <p:dataTable id="dataTableGrid" var="row" value="#{comunicadosMB.findAllTC()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idTemaComunicado}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            <p:column headerText="Descripción Español" sortBy="#{row.temaEspaniol}" filterBy="#{row.temaEspaniol}" filterMatchMode="contains">
+                                <h:outputText    value="#{row.temaEspaniol}" />
+                            </p:column>
+                            <p:column headerText="Descripción Ingles" sortBy="#{row.temaIngles}" filterBy="#{row.temaIngles}" filterMatchMode="contains">
+                                <h:outputText    value="#{row.temaIngles}" />
+                            </p:column>
+                            <p:column headerText="Estatus" sortBy="#{row.status}" filterBy="#{row.status}" filterMatchMode="contains">
+                                <h:outputText value="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" />
+                            </p:column>
+                            <p:column headerText="Modificar" exportable="false"> 
+                                <h:commandLink action="#{comunicadosMB.modifyRowTC(row) }" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

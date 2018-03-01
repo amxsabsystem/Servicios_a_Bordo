@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Asignacion de Servicios</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Asignación</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:spacer height="15"/>
+                    
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <h:outputText value="Origen"  style="float: right;"/>
+                        <h:outputText value="#{localeInfo.locale.language=='es'? asignacionDeServiciosMB.row_selected.idOrigen.valorEs:asignacionDeServiciosMB.row_selected.idOrigen.valorEn}" />
+                        
+                        <h:outputText value="Clase"  style="float: right;"/>
+                        <h:outputText value="#{localeInfo.locale.language=='es'? asignacionDeServiciosMB.row_selected.clase.nombreEsp:asignacionDeServiciosMB.row_selected.clase.nombreEng}" />
+                        
+                        <h:outputText value="Región"  style="float: right;"/>
+                        <h:outputText value="#{asignacionDeServiciosMB.row_selected.region.nombre}" />
+                        
+                        <h:outputText value="" />
+                        <h:outputText value="" />
+                        
+                        <h:outputText value="Modelo de Avón"  style="float: right;"/>
+                        <h:outputText value="#{asignacionDeServiciosMB.row_selected.modeloAvion.modelo}, #{asignacionDeServiciosMB.row_selected.modeloAvion.compania.nombre}" />
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        
+                    
+                        
+                    </p:panelGrid>
+                    
+                   
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Acomodos </ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!acomodosMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{acomodosMB.modificarRegistro}" />Acomodo</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{acomodosMB.returnMaster}" immediate="true"/>
+
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+                        <p:panelGrid columns="6" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-1,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1"   layout="grid" styleClass="ui-panelgrid-blank form-group">
+                            <p:outputLabel for="tipoEquipo" value="Modelo de Avión" style="float: right;"/>
+                            <h:panelGroup id="tipoEquipo"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{acomodosMB.asignedModeloAvion}"   style="width: 90%;">
+                                    <f:selectItems value="#{acomodosMB.selectTipoEquipos}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+
+
+                            <p:outputLabel for="revision" value="Revisión" style="float: right;"/>
+                            <h:panelGroup id="revision" styleClass="md-inputfield">
+                                <p:inputText  value="#{acomodosMB.norev}"  style="width:75%" maxlength="4" required="true" requiredMessage="Revisión: Campo requerido" validatorMessage="Revisión: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^[0-9]*$"  />
+                                </p:inputText>
+
+                            </h:panelGroup>
+                            <p:outputLabel for="aniorev" value="Año" style="float: right;"/>
+                            <h:panelGroup id="aniorev" styleClass="md-inputfield">
+                                <p:inputText  value="#{acomodosMB.aniorev}"  style="width:75%" maxlength="4" required="true" requiredMessage="Año: Campo requerido" validatorMessage="Año: Datos incorrectos, solo caracteres alfanuméricos">
+                                    <f:validateRegex pattern="^[0-9]*$"  />
+                                </p:inputText>
+
+                            </h:panelGroup>
+
+
+
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="4" columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-1,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                            <p:outputLabel for="rutaOrigen" value="Origen" style="float: right;"/>
+                            <h:panelGroup id="rutaOrigen"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{acomodosMB.asignedOrigen}"   style="width: 90%;">
+                                    <f:selectItems value="#{acomodosMB.selectOrigenes}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <p:outputLabel for="rutaDestino" value="Destino" style="float: right;"/>
+                            <h:panelGroup id="rutaDestino"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{acomodosMB.asignedDestino}"   style="width: 90%;">
+                                    <f:selectItems value="#{acomodosMB.selectDestinos}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <p:outputLabel for="productos" value="Productos" style="float: right;"/>
+                            <p:selectManyMenu  id="productos" value="#{acomodosMB.asignedProductos}"   style="width: 90%;" >
+                                <f:selectItems value="#{acomodosMB.selectProductos}" />
+                            </p:selectManyMenu>
+
+
+                            <p:outputLabel for="archcargados" value="Archivo Cargado" style="float: right;" rendered="#{acomodosMB.modificarRegistro}"/>
+                            <h:outputText id="archcargados" value="#{acomodosMB.row_selected.acomodoDetalle.urlAcomodo}" rendered="#{acomodosMB.modificarRegistro}"/>
+
+                            
+                                <h:outputText   value="Idioma" style="float: right;" rendered="#{!comunicadosMB.idiomaIngles}"/>
+                        <h:panelGroup id="idioma" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{acomodosMB.asignedIdioma}"   style="width: 90%;">
+                                <f:selectItems value="#{acomodosMB.selectIdiomas}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                            
+                            <p:outputLabel for="estatus" value="Estatus" rendered="#{acomodosMB.modificarRegistro}" style="float: right;"/>
+                            <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{acomodosMB.modificarRegistro}">
+                                <p:selectOneMenu  value="#{acomodosMB.row_selected.status}"   style="width: 90%;" >
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                    <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                        </p:panelGrid>
+
+
+
+                        <p:spacer height="15"/>
+
+                        <p:fileUpload id="fileUpload"
+                                      fileUploadListener="#{acomodosMB.fileListener}" mode="advanced"
+                                      immediate="true" label="Carga o remplaza un archivo" fileLimit="1" 
+                                      fileLimitMessage="La carga esta limitada a 1 archivos"  multiple="true"
+                                      invalidFileMessage="Formato incorrecto (pdf|PDF), Por favor seleccione un archivo valido."
+
+                                      allowTypes="/(\.|\/)(pdf|PDF)$/"
+                                      update=":form:fileUploadMsg" 
+                                      process=":form"
+                                      />
+                        <p:message for="fileUpload" id="fileUploadMsg" />
+                        <p:spacer height="15"/>
+
+
+
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{acomodosMB.save}"  rendered="#{!acomodosMB.modificarRegistro}"/>
+                            <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{acomodosMB.update}"  rendered="#{acomodosMB.modificarRegistro}"/>
+
+                        </p:panelGrid>                      
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

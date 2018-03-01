@@ -1,0 +1,117 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                >
+
+    <ui:define name="title">Comunicados</ui:define>
+
+    <ui:define name="head">
+    <style>
+            body .ui-dialog .ui-dialog-titlebar {
+    background-color: #06c;
+    color: #fff;
+    padding: 10px 16px;
+}
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon {
+    color: #fff;
+}
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Seguimiento</h1>
+                         <p:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            
+                            <h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Vigentes"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+			</p:panelGrid>
+				    
+                        <p:dataTable id="dataTableGrid" var="row" value="#{comunicadosMB.findAllVigentes()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idComunicado}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                            <p:column headerText="Referencia" sortBy="#{row.referencia}" filterBy="#{row.referencia}" filterMatchMode="contains" width="180">
+			       
+                               <h:commandLink action="#{comunicadosMB.seguimiento(row)}" >
+                                    <h:outputText value="#{row.referencia}" />
+                                </h:commandLink>
+		            </p:column>
+                            <p:column headerText="Area" sortBy="#{row.area.clave}" filterBy="#{row.area.clave}" filterMatchMode="contains">
+                                <h:outputText    value="#{row.area.clave}" />
+			    </p:column>
+                            <p:column headerText="Tema" sortBy="#{localeInfo.locale.language=='es'?row.idTema.temaEspaniol:row.idTema.temaIngles}" filterBy="#{localeInfo.locale.language=='es'?row.idTema.temaEspaniol:row.idTema.temaIngles}" filterMatchMode="contains">
+				<h:outputText    value="#{localeInfo.locale.language=='es'?row.idTema.temaEspaniol:row.idTema.temaIngles}" />
+			    </p:column>
+                            <p:column headerText="Título" sortBy="#{row.titulo}" filterBy="#{row.titulo}" filterMatchMode="contains">
+                                <h:outputText value="#{row.titulo}" />
+                            </p:column>
+                            <p:column headerText="Autor" sortBy="#{row.empleado.usuario.emailUsuario}" filterBy="#{row.empleado.usuario.emailUsuario}" filterMatchMode="contains">
+                                <h:outputText value="#{row.empleado.usuario.emailUsuario}" />
+                            </p:column>
+                            <p:column headerText="Fecha Publicacion" sortBy="#{row.fechaInicioPublicacion} #{row.fechaFinPublicacion}" filterBy="#{row.fechaInicioPublicacion} #{row.fechaFinPublicacion}" filterMatchMode="contains">
+                                <h:outputText value="#{row.fechaInicioPublicacion} - #{row.fechaFinPublicacion}" >
+                                   </h:outputText>    
+                            </p:column>
+                            <p:column headerText="Revisión" sortBy="#{row.noRevision}" filterBy="#{row.noRevision}" filterMatchMode="contains">
+                                <h:outputText value="#{row.noRevision}" />
+                            </p:column>
+                        </p:dataTable>
+                        
+                        <p:dialog header="Seguimiento" widgetVar="seguimientoDialog" modal="true" 
+                                  height="480" width="800" responsive="true">
+                                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank form-group" style="background-color:#CCCCCC;width:100%;" >
+                                    <h:outputText value="Comunicado" style="float: right;"/>
+                                    <h:outputText value="#{comunicadosMB.referencia}" />
+                                    <h:outputText value="Fecha de Envío" style="float: right;"/>
+                                    <h:outputText value="#{comunicadosMB.fecha_vp}" />
+                                    
+                                </p:panelGrid>
+                                <p:panelGrid columns="4" styleClass="ui-panelgrid-blank form-group" style="background-color:#CCCCCC;width:100%;" >
+                                        <h:outputText value="Título" style="float: right;"/>
+                                        <h:outputText value="#{comunicadosMB.titulo}" />
+                                        <h:outputText value="Dirigido a" style="float: right;"/>
+                                        <h:outputText value="#{comunicadosMB.proveedores}" />
+                                </p:panelGrid>
+                            
+                            
+                            <h5>Leidos: #{comunicadosMB.contadorLeidos} de #{comunicadosMB.contadorTotalesLeidos} faltantes #{comunicadosMB.calculo_leidos} </h5>
+                            <p:dataTable id="dataTableGridLeidos" var="row" value="#{comunicadosMB.all_records_bitacoraLeidos}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idBitacora}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                                <p:column headerText="Proveedor Estación" >
+                                    <h:outputText    value="#{row.proveedorEstacion.claveProveedorEstacion}" />
+                                </p:column>
+                                <p:column headerText="Contacto" >
+                                    <h:outputText    value="#{row.contactoProveedorEstacion.nombre} #{row.contactoProveedorEstacion.apellidoPaterno} #{row.contactoProveedorEstacion.apellidoMaterno}" />
+                                </p:column>
+                                <p:column headerText="Fecha Lectura" >
+                                    <h:outputText    value="#{row.fecha}" />
+                                </p:column>
+                             </p:dataTable>
+                            
+                            
+                                <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                                    <p:commandButton id="cerrarDialogButton" value="CERRAR" icon="ui-icon-close" ajax="false" action="#{comunicadosMB.closedialogSeguimiento}"  />
+                                    <h:outputText value=""/>
+                                </p:panelGrid>
+                        </p:dialog>
+                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

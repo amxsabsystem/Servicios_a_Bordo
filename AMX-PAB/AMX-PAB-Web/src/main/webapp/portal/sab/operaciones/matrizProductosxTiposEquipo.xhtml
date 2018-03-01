@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="title">Master </ui:define>
+
+    <ui:define name="head">        <style>
+             /* DivTable.com */
+.divTable{
+	display: table;
+	width: 97%;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+        
+}
+.divTableCell2{
+        border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;}
+
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+.table_header{ background-color: #4F81BD; text-align: center; font-weight: bold;}
+
+.imagenDiv{
+    position: relative;
+    height: 80px;
+    top: 40px;
+    width: 80px;
+    background-color: white;
+}
+            
+   
+        </style></ui:define>
+    
+    <ui:define name="content">
+<h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Matriz</h1>
+                        
+                        
+                        <div class="divTable clearfix" style="border: 1px solid #000;" >
+                                <div class="divTableBody">
+                                    <div class="divTableRow">
+                                        <div class="divTableCell table_header" style="width: 5%;" >Tipo Equipo</div>
+                                        <p:repeat value="#{matrizMB.findAll(row.idTipoEquipoAvion)}" var="rowInner"  >
+                                            <div class="divTableCell table_header" style="width: 10%; ">#{rowInner.producto.nombre}</div>
+                                         </p:repeat>
+                                        
+                                    </div>
+                        
+                                        <p:dataList id="dataTableGrid" value="#{matrizMB.findAllTiposDeEquipo()}" var="row" paginatorPosition="bottom" 
+                                            type="unordered" itemType="none" paginator="true" rows="20" emptyMessage="No se encontraron registros."   styleClass="cars-datalist">
+                                            <div class="divTableRow"> 
+                                                        <div class="divTableCell" style="width: 5%;">#{row.tipoEquipo}</div>
+                                                        <p:repeat value="#{matrizMB.findAll(row.idTipoEquipoAvion)}" var="rowInner"  >
+                                                            <div class="divTableCell" style="width: 10%;"><p:selectBooleanCheckbox value="#{rowInner.isChecked}" /></div>
+                                                        </p:repeat>
+                                            </div>   
+                                            
+                                        </p:dataList>
+                               </div>     
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Modelo Avión</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta Modelo Avión" rendered="#{!modeloMB.modificarRegistro}" /><h:outputText value="Modificación Modelo Avión" rendered="#{modeloMB.modificarRegistro}" /></h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{modeloMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <p:outputLabel for="compania" value="Compañía" style="float: right;"/>
+                        <h:panelGroup id="compania"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{modeloMB.asignedCompania}"   style="width: 90%;">
+				<f:selectItems value="#{modeloMB.selectCompanias}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="fabricante" value="Fabricante" style="float: right;"/>
+                        <h:panelGroup id="fabricante"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{modeloMB.asignedFabricante}"   style="width: 90%;">
+				<f:selectItems value="#{modeloMB.selectFabricantes}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                    
+                        
+                        <p:outputLabel for="modelo" value="Nombre de Modelo" style="float: right;"/>
+                        <h:panelGroup id="modelo" styleClass="md-inputfield">
+                            <p:inputText  value="#{modeloMB.row_selected.modelo}" maxlength="50" required="true" requiredMessage="Nombre de Modelo: Campo requerido" validatorMessage="Nombre de Modelo: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                            </p:inputText>
+                         	
+                        </h:panelGroup>
+                    
+                        <p:outputLabel for="cabina" value="Cabina" style="float: right;"/>
+                        <h:panelGroup id="cabina"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{modeloMB.asignedCabina}"   style="width: 90%;">
+				<f:selectItems value="#{modeloMB.selectCabinas}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                         <p:outputLabel for="estatus" value="Estatus" rendered="#{modeloMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{modeloMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{modeloMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="descripcion" value="Descripción" style="float: right;"/>
+                        <h:panelGroup id="descripcion" styleClass="md-inputfield">
+                            <p:inputText  value="#{modeloMB.row_selected.descripcion}" maxlength="50" required="false"  validatorMessage="Descripción: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)?"  />
+                            </p:inputText>
+                         	
+                        </h:panelGroup>
+                        
+                        
+                    </p:panelGrid>
+
+	            <p:spacer height="15"/>        
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{modeloMB.save}"  rendered="#{!modeloMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{modeloMB.update}"  rendered="#{modeloMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition> 

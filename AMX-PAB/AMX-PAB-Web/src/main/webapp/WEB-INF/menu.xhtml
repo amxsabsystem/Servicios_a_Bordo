@@ -1,0 +1,98 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima">
+
+    <h:form id="menuform"> 
+        <div class="layout-menu">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <pu:menu widgetVar="me">
+
+                        <p:submenu  label="#{res_i18n.APP_MENU_REPORTS}" icon="fa fa-newspaper-o">
+                            <p:menuitem value="Tipificación de Reportes" icon="&#xE868;" url="#" />
+                            <p:menuitem value="Registro" icon="&#xe871;" url="#" />
+                            <p:menuitem value="Reportes de Sobrecrago" icon="&#xe53d;" url="#" />
+                            <p:menuitem value="Seguimiento" icon="&#xe3c8;" url="#" />
+                            <p:menuitem value="Estadisticas" icon="&#xE1b8;" url="#" />
+                        </p:submenu>
+                        <p:submenu  label="Publicaciones" icon="&#xE85D;">
+                            <p:menuitem value="Comunicados" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Temas Comunicados" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Documentos" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Categorias de Documentos" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Directorio AMX" icon="&#xe563;" url="#" />
+                            <p:menuitem value="Directorio Proveedores" icon="&#xe563;" url="#" />
+                        </p:submenu>
+                        <p:submenu  label="Procesos" icon="&#xe8b8;">
+                            <p:menuitem value="Manuales" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Instrucciones" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Guia de Entretenimiento" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Procedimientos" icon="&#xE8D2;" url="#" />
+                        </p:submenu>
+                        <p:submenu  label="Generales" icon="&#xE5C3;">
+                            <p:menuitem value="Area de SAB" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Empleados" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Proveedores" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Regiones" icon="&#xE8D2;" url="#" />	                        
+                            <p:menuitem value="Paises" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Ciudades/Estados" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Compañias" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Estaciones" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Horarios" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Parametros" icon="&#xE8D2;"  outcome="/portal/generales/parametros" />
+                            <p:menuitem value="No. de Vuelos" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Rutas" icon="&#xE8D2;" url="#" />
+                            <p:menuitem value="Estatus" icon="&#xE8D2;" url="#" />
+                        </p:submenu>
+
+                        <p:submenu  label="SAB" icon="&#xe002;">
+                            <p:submenu  label="Planeación" icon="&#xe002;">
+                                <p:submenu label="Relación de Flota" icon="&#xE8D2;">
+                                    <p:menuitem value="Modelo fabricante" icon="&#xE8D2;" url="#" />
+                                    <p:menuitem value="Equipo" icon="&#xE8D2;" url="#" />
+                                    <p:menuitem value="Sistema Entretenimiento" icon="&#xE8D2;" url="#" />
+                                    <p:menuitem value="Avión" icon="&#xe53d;" url="#" />
+                                </p:submenu>
+                                <p:submenu label="Matreriales" icon="&#xE8D2;">
+                                    <p:menuitem value="Familia Categorias" icon="&#xE8D2;" url="#" />
+                                    <p:menuitem value="Materiales AMX" icon="&#xE8D2;" url="#" />
+                                </p:submenu>
+                                <p:menuitem value="Listas de Bar" icon="&#xE8D2;" url="#" />
+                            </p:submenu>
+                            <p:submenu  label="Operaciones" icon="&#xE5D2;">
+                                <p:menuitem value="Master" icon="&#xE8D2;" url="#" />
+                                <p:menuitem value="TSU" icon="&#xE8D2;" url="#" />
+                                <p:menuitem value="Graficos" icon="&#xE8D2;" url="#" />
+                                <p:menuitem value="Acomodos" icon="&#xE8D2;" url="#" />
+                                <p:submenu label="Productos" icon="&#xE8D2;">
+                                    <p:menuitem value="Matriz" icon="&#xE8D2;" url="#" />
+                                    <p:menuitem value="Configuración de Matriz" icon="&#xE8D2;" url="#" />
+                                </p:submenu>
+                            </p:submenu>
+                            <p:submenu  label="Diseño" icon="&#xE56C;">
+                                <p:menuitem value="Ciclos" icon="&#xE028;" url="#" />
+                                <p:menuitem value="Código de Servicios" icon="&#xE86D;" url="#" />
+                                <p:menuitem value="Asignación de Servicios" icon="&#xE862;" url="#" />
+                                <p:menuitem value="Tablas de Abordamiento" icon="&#xE85D;" url="#" />
+                                <p:submenu label="Catálogo de Platillos" icon="&#xE561;">
+                                    <p:menuitem value="Potenciales" icon="&#xE8D2;" url="#" />
+
+                                </p:submenu>
+                            </p:submenu>
+
+                        </p:submenu>
+
+
+
+
+
+                    </pu:menu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{res_i18n.APP_MENU_GEN_CITY_STATE}</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!estadoCiudadMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{estadoCiudadMB.modificarRegistro}" />Ciudad o Estado</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{estadoCiudadMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="region" value="Clave de Región" style="float: right;"/>
+                        <h:panelGroup id="region"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{estadoCiudadMB.asignedRegion}"   style="width: 90%;">
+                                    <f:selectItems value="#{estadoCiudadMB.selectRegiones}" />
+                                    <p:ajax update="pais"  listener="#{estadoCiudadMB.getPaises}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="pais" value="Nombre de País" style="float: right;"/>
+                        <h:panelGroup id="pais"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{estadoCiudadMB.asignedPais}"   style="width: 90%;">
+                                    <f:selectItems value="#{estadoCiudadMB.selectPaises}" />
+				</p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:outputText value=""/>
+                        <h:outputText value=""/>
+                        <h:outputText value=""/>
+                        <h:outputText value=""/>
+                        
+                        <p:outputLabel for="estadoCiudad" value="Nombre de Ciudad o Estado" style="float: right;"/>
+                        <h:panelGroup id="estadoCiudad" styleClass="md-inputfield">
+                            <p:inputText  value="#{estadoCiudadMB.row_selected.nombre}" maxlength="50" required="true" requiredMessage="Nombre de Ciudad o Estado: Campo requerido" validatorMessage="Nombre de Ciudad o Estado: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                            </p:inputText>
+                         
+                        </h:panelGroup>
+                        
+                    
+                    <p:outputLabel for="estatus" value="Estatus" rendered="#{estadoCiudadMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{estadoCiudadMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{estadoCiudadMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{estadoCiudadMB.save}"  rendered="#{!estadoCiudadMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{estadoCiudadMB.update}"  rendered="#{estadoCiudadMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

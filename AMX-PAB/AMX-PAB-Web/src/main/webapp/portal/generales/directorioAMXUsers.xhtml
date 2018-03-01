@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Directorio AMX</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Directorio AMX</h1>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white;  display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_DirectorioAMX"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+			</p:panelGrid>
+				    
+                        <p:dataTable id="dataTableGrid" var="row" value="#{directorioAMXMB.findAllUsers()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idEmpleado}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            
+                            
+                            <p:column headerText="Área" sortBy="#{localeBean.locale.language=='es'?row.area.nombreEs:row.area.nombreEn}" 
+                                      filterBy="#{localeBean.locale.language=='es'?row.area.nombreEs:row.area.nombreEn}" filterMatchMode="contains">
+                                <h:outputText value="#{localeBean.locale.language=='es'?row.area.nombreEs:row.area.nombreEn}" />
+		            </p:column>
+                            <p:column headerText="Clave de Area" sortBy="#{row.area.clave}" filterBy="#{row.area.clave}" filterMatchMode="contains">
+				<h:outputText    value="#{row.area.clave}" />
+			    </p:column>
+                            <p:column headerText="Nombre de Empleado" sortBy="#{row.usuario.nombre} #{row.usuario.apellidoPaterno} #{row.usuario.apellidoMaterno}" filterBy="#{row.usuario.nombre} #{row.usuario.apellidoPaterno} #{row.usuario.apellidoMaterno}" filterMatchMode="contains">
+                                <h:outputText value="#{row.usuario.nombre} #{row.usuario.apellidoPaterno} #{row.usuario.apellidoMaterno}" />
+		            </p:column>
+                            <p:column headerText="Puesto" sortBy="#{localeBean.locale.language=='es'?puestoEsp:puestoEng}" filterBy="#{localeBean.locale.language=='es'?puestoEsp:puestoEng}" filterMatchMode="contains">
+				<h:outputText    value="#{localeBean.locale.language=='es'?puestoEsp:puestoEng}" />
+			    </p:column>
+                            <p:column headerText="Correo Electrónico" sortBy="#{row.usuario.emailUsuario}" filterBy="#{row.usuario.emailUsuario}" filterMatchMode="contains">
+				<h:outputText    value="#{row.usuario.emailUsuario}" />
+			    </p:column>
+                            <p:column headerText="Teléfono" sortBy="#{row.telefono}" filterBy="#{row.telefono}" filterMatchMode="contains">
+				<h:outputText    value="#{row.telefono}" />
+			    </p:column>
+                            <p:column headerText="Extensión" sortBy="#{row.extension}" filterBy="#{row.extension}" filterMatchMode="contains">
+				<h:outputText    value="#{row.extension}" />
+			    </p:column>
+                            
+                            
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

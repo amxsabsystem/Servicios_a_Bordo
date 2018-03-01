@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                >
+
+    <ui:define name="title">Reportes</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Consulta</h1>
+                         <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <h:outputText value=""/>
+                            <h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Reportes"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+			</p:panelGrid>
+				    
+                        <p:dataTable id="dataTableGrid" var="row" value="#{reporteMB.findAll()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idReporte}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            <p:column headerText="Id Reporte" sortBy="#{row.claveReporte}" filterBy="#{row.claveReporte}" filterMatchMode="contains">
+                                <h:commandLink action="#{reporteMB.detalle(row)}"  >
+                                    <h:outputText value="#{row.claveReporte}" />
+                                </h:commandLink>
+		            </p:column>
+                            <p:column headerText="Tipo" sortBy="#{localeInfo.locale.language=='es'?row.tipoReporte.valorEs:row.tipoReporte.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.tipoReporte.valorEs:row.tipoReporte.valorEn}" filterMatchMode="contains" >
+                                <h:outputText value="#{localeInfo.locale.language=='es'?row.tipoReporte.valorEs:row.tipoReporte.valorEn}" />
+		            </p:column>
+                            <p:column headerText="Fecha Emisión" sortBy="#{row.fechaCreo}" filterBy="#{row.fechaCreo}" filterMatchMode="contains" >
+                                <h:outputText value="#{row.fechaCreo}" />
+		            </p:column>
+                            <p:column headerText="Fecha actualización" sortBy="#{row.fechaModifico}" filterBy="#{row.fechaModifico}" filterMatchMode="contains" >
+                                <h:outputText value="#{row.fechaModifico}" />
+		            </p:column>
+                            <p:column headerText="Responsable" sortBy="#{row.idResponsableAmx.empleado.usuario.emailUsuario} #{row.idResponsableProveedorEstacion!=null?row.idResponsableProveedorEstacion.claveProveedorEstacion:''}" filterBy="#{row.idResponsableAmx.empleado.usuario.emailUsuario} #{row.idResponsableProveedorEstacion!=null?row.idResponsableProveedorEstacion.claveProveedorEstacion:''}" filterMatchMode="contains" >
+                                <h:outputText value="#{row.idResponsableAmx.empleado.usuario.emailUsuario} #{row.idResponsableProveedorEstacion!=null?row.idResponsableProveedorEstacion.claveProveedorEstacion:''}" />
+		            </p:column>
+                            <p:column headerText="Estatus" sortBy="#{localeInfo.locale.language=='es'?row.idEstatusReporteActual.valorEs:row.idEstatusReporteActual.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.idEstatusReporteActual.valorEs:row.idEstatusReporteActual.valorEn}" filterMatchMode="contains" >
+                                <h:outputText value="#{localeInfo.locale.language=='es'?row.idEstatusReporteActual.valorEs:row.idEstatusReporteActual.valorEn}" />
+		            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

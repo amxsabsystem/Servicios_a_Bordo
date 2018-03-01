@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{res_i18n.APP_MENU_GEN_FLIGHT_NUM}</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!vuelosMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{vuelosMB.modificarRegistro}" />Vuelo</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{vuelosMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <p:outputLabel for="numVuelo" value="No. Vuelo" style="float: right;"/>
+                        <h:panelGroup id="numVuelo" styleClass="md-inputfield">
+                            <p:inputText  value="#{vuelosMB.row_selected.numeroVuelo}" maxlength="50" required="true" requiredMessage="No. Vuelo: Campo requerido" validatorMessage="No. Vuelo: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                            </p:inputText>
+                         	
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:panelGrid columns="4"  layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="cabina" value="Cabina" style="float: right;"/>
+                        <h:panelGroup id="cabina"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{vuelosMB.asignedCabina}"   style="width: 90%;">
+					<f:selectItems value="#{vuelosMB.selectCabinas}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="compania" value="Compañia" style="float: right;"/>
+                        <h:panelGroup id="compania"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{vuelosMB.asignedCompania}"   style="width: 90%;">
+					<f:selectItems value="#{vuelosMB.selectCompanias}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="clase" value="Clase" style="float: right;"/>
+                        <h:panelGroup id="clase"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{vuelosMB.asignedClase}"   style="width: 90%;">
+					<f:selectItems value="#{vuelosMB.selectClases}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <p:outputLabel for="tipoVuelo" value="Tipo de Vuelo" style="float: right;"/>
+                        <h:panelGroup id="tipoVuelo"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{vuelosMB.asignedTipoVuelo}"   style="width: 90%;">
+					<f:selectItems value="#{vuelosMB.selectTipoVuelos}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel for="estacionOrigen" value="Estacion Origen" style="float: right;"/> 
+                        <h:panelGroup id="estacionOrigen" styleClass="md-inputfield">
+                            <p:inputText  value="#{vuelosMB.row_selected.ruta.estacionOrigen}" style="width:90%;" maxlength="50" required="true" requiredMessage="Estacion Origen: Campo requerido" validatorMessage="Nombre: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>   
+                         	
+                        </h:panelGroup>
+                        <p:outputLabel for="estacionDestino" value="Estacion Destino" style="float: right;"/> 
+                        <h:panelGroup id="estacionDestino" styleClass="md-inputfield">
+                            <p:inputText  value="#{vuelosMB.row_selected.ruta.estacionDestino}" style="width:90%;" maxlength="50" required="true" requiredMessage="Estacion Destino: Campo requerido" validatorMessage="Nombre: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                          </p:inputText>   
+                         	
+                        </h:panelGroup>
+                   
+                    <p:outputLabel for="estatus" value="Estatus" rendered="#{vuelosMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{vuelosMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{vuelosMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="Activo" itemValue="1" />
+                                <f:selectItem itemLabel="Inactivo" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false"   rendered="#{!vuelosMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{vuelosMB.update}"  rendered="#{vuelosMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

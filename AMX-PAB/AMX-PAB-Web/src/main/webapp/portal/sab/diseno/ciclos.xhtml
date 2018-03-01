@@ -1,0 +1,328 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Ciclos</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title">
+                        <h1>Ciclos</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="#{res_i18n.CREATE}" icon="ui-icon-create"   action="#{ciclosMB.addRow}" immediate="true"/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Ciclos"  encoding="ISO-8859-1"/>
+                            </h:commandButton>
+			</p:panelGrid>
+                        <p:spacer height="15" /> 
+                        <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                            
+                            <h:outputText value="Proveedor"/>
+                       
+                            <p:selectOneMenu  value="#{ciclosMB.asignedProveedor}"   style="width: 90%;">
+				<f:selectItems value="#{ciclosMB.selectProveedores}" />
+                                
+                            </p:selectOneMenu>
+                            <p:outputLabel for="Anio" value="Año :"/>
+                            <h:panelGroup id="Anio" styleClass="md-inputfield">
+                                <p:inputText  value="#{ciclosMB.asignedAnio}" maxlength="50"  >
+                                </p:inputText>
+                            </h:panelGroup>
+                            <p:commandButton value="Buscar" icon="ui-icon-search" ajax="false"  action="#{ciclosMB.search}" update=":form" process=":form"/>
+                            
+                            <h:outputText value=""/>
+
+			</p:panelGrid>
+                        <p:spacer height="15" /> 
+                        <p:dataTable id="dataTableGrid" var="row" value="#{ciclosMB.all_records_Mes}"  reflow="true"
+                                     rowKey="#{row.idCiclo}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column rowspan="2" headerText="Proveedor" style="background-color:#7C7B7A;"/>
+                                    <p:column rowspan="2" headerText="Región" style="background-color:#7C7B7A;"/>
+                                    <p:column rowspan="2" headerText="Estación" style="background-color:#7C7B7A;"/>
+                                    <p:column colspan="13" headerText="Rotación de Ciclo Mensual Año #{ciclosMB.asignedAnio}" style="background-color:#B8CCE4;"/>
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Enero" />   
+                                    <p:column headerText="Febrero" /> 
+                                    <p:column headerText="Marzo" />   
+                                    <p:column headerText="Abril" />   
+                                    <p:column headerText="Mayo" />    
+                                    <p:column headerText="Junio" />   
+                                    <p:column headerText="Julio"/>
+                                    <p:column headerText="Agosto"/>
+                                    <p:column headerText="Septiembre"/> 
+                                    <p:column headerText="Octubre"/> 
+                                    <p:column headerText="Noviembre"/>
+                                    <p:column headerText="Diciembre"/>
+                                    <p:column headerText=""/>
+                                </p:row>
+                            </p:columnGroup>
+                            
+                            <p:column headerText="Proveedor" sortBy="#{row.proveedor.claveProveedor}" filterBy="#{row.proveedor.claveProveedor}" filterMatchMode="contains" > 
+			       <h:outputText value="#{row.proveedor.claveProveedor}" />
+		           </p:column>
+                            <p:column headerText="Region" sortBy="#{row.region.cveRegion}" filterBy="#{row.region.cveRegion}" filterMatchMode="contains" >
+			       <h:outputText value="#{row.region.cveRegion}" />
+		           </p:column>
+                            <p:column headerText="Estacion" sortBy="#{row.estacion.claveIata}" filterBy="#{row.estacion.claveIata}" filterMatchMode="contains" >
+			       <h:outputText value="#{row.estacion.claveIata}" />
+		           </p:column> 
+                           
+                           <p:column headerText="Enero" >
+                               <h:outputText value="#{row.cicloEnero.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Febrero" >
+                               <h:outputText value="#{row.cicloFebrero.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Marzo" >
+                               <h:outputText value="#{row.cicloMarzo.idNociclo.valorEs}" />
+		           </p:column> 
+                           <p:column headerText="Abril" >
+                               <h:outputText value="#{row.cicloAbril.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Mayo" >
+                               <h:outputText value="#{row.cicloMayo.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Junio" >
+                               <h:outputText value="#{row.cicloJunio.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Julio" >
+                               <h:outputText value="#{row.cicloJulio.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Agosto" >
+                               <h:outputText value="#{row.cicloAgosto.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Septiembre" >
+                               <h:outputText value="#{row.cicloSeptiembre.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Octubre" >
+                               <h:outputText value="#{row.cicloOctubre.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Noviembre" >
+                               <h:outputText value="#{row.cicloNoviembre.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Diciembre" >
+                               <h:outputText value="#{row.cicloDiciembre.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Modificar"  exportable="false"> 
+                                <h:commandLink action="#{ciclosMB.modifyRowMes(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column> 
+ 
+                        </p:dataTable>
+                    <p:spacer height="30px" />  
+                    
+                    <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGridQuincenal" fileName="reportExcel_Ciclos"  encoding="ISO-8859-1"/>
+                            </h:commandButton>
+                    </p:panelGrid>
+                        <p:spacer height="15" /> 
+                    <p:dataTable id="dataTableGridQuincenal" var="row" value="#{ciclosMB.all_records_Quincena}"  reflow="true"
+                                     rowKey="#{row.idCiclo}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column rowspan="3" headerText="Proveedor" style="background-color:#7C7B7A;"/>
+                                    <p:column rowspan="3" headerText="Región" style="background-color:#7C7B7A;"/>
+                                    <p:column rowspan="3" headerText="Estación" style="background-color:#7C7B7A;"/>
+                                    <p:column colspan="26" headerText="Rotación de Ciclo Quincenal Año #{ciclosMB.asignedAnio}" style="background-color:#B8CCE4;"/>
+                                </p:row>
+                                <p:row>
+                                    
+                                    <p:column colspan="2" headerText="Enero" />   
+                                    <p:column colspan="2" headerText="Febrero" /> 
+                                    <p:column colspan="2" headerText="Marzo" />   
+                                    <p:column colspan="2" headerText="Abril" />   
+                                    <p:column colspan="2" headerText="Mayo" />    
+                                    <p:column colspan="2" headerText="Junio" />   
+                                    <p:column colspan="2" headerText="Julio"/>
+                                    <p:column colspan="2" headerText="Agosto"/>
+                                    <p:column colspan="2" headerText="Septiembre"/> 
+                                    <p:column colspan="2" headerText="Octubre"/> 
+                                    <p:column colspan="2" headerText="Noviembre"/>
+                                    <p:column colspan="2" headerText="Diciembre"/>
+                                    <p:column headerText=""/>
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Q1" />   <p:column headerText="Q1"/>
+                                    <p:column headerText="Q2" /> <p:column headerText="Q2"/>
+                                    <p:column headerText="Q1" />   <p:column headerText="Q1"/> 
+                                    <p:column headerText="Q2" />   <p:column headerText="Q2"/> 
+                                    <p:column headerText="Q1" />    <p:column headerText="Q1"/>
+                                    <p:column headerText="Q2" />   <p:column headerText="Q2"/>
+                                    <p:column headerText="Q1" />   <p:column headerText="Q1"/>
+                                    <p:column headerText="Q2" /> <p:column headerText="Q2"/>
+                                    <p:column headerText="Q1" />   <p:column headerText="Q1"/> 
+                                    <p:column headerText="Q2" />   <p:column headerText="Q2"/> 
+                                    <p:column headerText="Q1" />    <p:column headerText="Q1"/>
+                                    <p:column headerText="Q2" />   <p:column headerText="Q2"/>
+                                    <p:column headerText=""/> <p:column headerText=""/>
+                                </p:row>
+                            </p:columnGroup>
+                            
+                            <p:column headerText="Proveedor" sortBy="#{row.proveedor.claveProveedor}" filterBy="#{row.proveedor.claveProveedor}" filterMatchMode="contains" > 
+			       <h:outputText value="#{row.proveedor.claveProveedor}" />
+		           </p:column>
+                        <p:column headerText="Region" sortBy="#{row.region.cveRegion}" filterBy="#{row.region.cveRegion}" filterMatchMode="contains" >
+			       <h:outputText value="#{row.region.cveRegion}" />
+		           </p:column>
+                        <p:column headerText="Estacion" sortBy="#{row.estacion.claveIata}" filterBy="#{row.estacion.claveIata}" filterMatchMode="contains" >
+			       <h:outputText value="#{row.estacion.claveIata}" />
+		           </p:column> 
+                           
+                           <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloEneroQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloEneroQ2.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloFebreroQ1.idNociclo.valorEs}" />
+		           </p:column> 
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloFebreroQ2.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloMarzoQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloMarzoQ2.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloAbrilQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloAbrilQ2.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloMayoQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloMayoQ2.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloJunioQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloJunioQ2.idNociclo.valorEs}" />
+		           </p:column>
+                        <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloJulioQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloJulioQ2.idNociclo.valorEs}" />
+		           </p:column>
+                        <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloAgostoQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloAgostoQ2.idNociclo.valorEs}" />
+		           </p:column>
+                        <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloSeptiembreQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloSeptiembreQ2.idNociclo.valorEs}" />
+		           </p:column>
+                        <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloOctubreQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloOctubreQ2.idNociclo.valorEs}" />
+		           </p:column>
+                        <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloNoviembreQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloNoviembreQ2.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q1" >
+                               <h:outputText value="#{row.cicloDiciembreQ1.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Q2" >
+                               <h:outputText value="#{row.cicloDiciembreQ2.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Modificar"  exportable="false"> 
+                                <h:commandLink action="#{ciclosMB.modifyRowQuincena(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                           </p:column> 
+ 
+                        </p:dataTable> 
+                        
+                        <p:spacer height="30px" />
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGridEstaciones" fileName="reportExcel_Ciclos"  encoding="ISO-8859-1"/>
+                            </h:commandButton>
+                        </p:panelGrid>
+                        <p:spacer height="15" />
+                        <p:dataTable id="dataTableGridEstaciones" var="row" value="#{ciclosMB.all_records_Temporada}"  reflow="true"
+                                     rowKey="#{row.idCiclo}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column rowspan="2" headerText="Proveedor" style="background-color:#7C7B7A;"/>
+                                    <p:column rowspan="2" headerText="Región" style="background-color:#7C7B7A;"/>
+                                    <p:column rowspan="2" headerText="Estación" style="background-color:#7C7B7A;"/>
+                                    <p:column colspan="5" headerText="Rotación de Ciclo Por Temporada Año #{ciclosMB.asignedAnio}" style="background-color:#B8CCE4;"/>
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Invierno" />  
+                                    <p:column headerText="Primavera" />   
+                                    <p:column headerText="Verano"/>
+                                    <p:column headerText="Otoño"/>
+                                    <p:column headerText=""/>
+                                </p:row>
+                            </p:columnGroup>
+                            
+                            <p:column headerText="Proveedor" sortBy="#{row.proveedor.claveProveedor}" filterBy="#{row.proveedor.claveProveedor}" filterMatchMode="contains" > 
+			       <h:outputText value="#{row.proveedor.claveProveedor}" />
+		           </p:column>
+                            <p:column headerText="Region" sortBy="#{row.region.cveRegion}" filterBy="#{row.region.cveRegion}" filterMatchMode="contains" >
+			       <h:outputText value="#{row.region.cveRegion}" />
+		           </p:column>
+                           <p:column headerText="Estacion" sortBy="#{row.estacion.claveIata}" filterBy="#{row.estacion.claveIata}" filterMatchMode="contains" >
+			       <h:outputText value="#{row.estacion.claveIata}" />
+		           </p:column> 
+                           
+                           <p:column headerText="Invierno" >
+                               <h:outputText value="#{row.cicloInviernoInicio.idNociclo.valorEs} - #{row.cicloInviernoFin.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Primavera" >
+                               <h:outputText value="#{row.cicloPrimaveraInicio.idNociclo.valorEs} - #{row.cicloPrimaveraFin.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Verano" >
+                               <h:outputText value="#{row.cicloVeranoInicio.idNociclo.valorEs} - #{row.cicloVeranoFin.idNociclo.valorEs}" />
+		           </p:column> 
+                           <p:column headerText="Otoño" >
+                               <h:outputText value="#{row.cicloOtonoInicio.idNociclo.valorEs} - #{row.cicloOtonoFin.idNociclo.valorEs}" />
+		           </p:column>
+                           <p:column headerText="Modificar"  exportable="false"> 
+                                <h:commandLink action="#{ciclosMB.modifyRowTemporada(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                           </p:column> 
+                        </p:dataTable>                        
+                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

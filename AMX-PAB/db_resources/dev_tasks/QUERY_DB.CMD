@@ -1,0 +1,1 @@
+java -Dfile.encoding=UTF-8 -jar SQLCommander.jar -driverClass org.apache.derby.jdbc.ClientDriver -url "jdbc:derby://localhost:1527/AMX_SAB_DB_DEV" -user AMX_SAB_DEV_USR -password AMX_SAB_DEV_PWD

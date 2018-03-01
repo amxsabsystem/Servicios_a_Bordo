@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Directorio Proveedores</ui:define>
+
+    <ui:define name="head"> </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Directorio Proveedores</h1>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white;  display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_DirectorioProveedores"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+			</p:panelGrid>
+				    
+                        <p:dataTable id="dataTableGrid" var="row" value="#{directorioProveedoresMB.findAllProveedores()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idContactoProveedorEstacion}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            
+                            
+                            <p:column headerText="Región" sortBy="#{row.estacion.ciudad.pais.region.cveRegion}" filterBy="#{row.estacion.ciudad.pais.region.cveRegion}" filterMatchMode="contains">
+				<h:outputText    value="#{row.estacion.ciudad.pais.region.cveRegion}" />
+			    </p:column>
+                            <p:column headerText="Estación" sortBy="#{row.estacion.claveIata}" filterBy="#{row.estacion.claveIata}" filterMatchMode="contains">
+				<h:outputText    value="#{row.estacion.claveIata}" />
+			    </p:column>
+                            
+                            <p:column headerText="Nombre de Proveedor" sortBy="#{row.proveedor.nombre}" filterBy="#{row.proveedor.nombre}" filterMatchMode="contains">
+                                <h:outputText value="#{row.proveedor.nombre} " />
+		            </p:column>
+                            
+                            <p:column headerText="Tipo de Proveedor" sortBy="#{directorioProveedoresMB.listaTiposProveedor(row.proveedorEstacion.idProveedorEstacion)}" filterBy="#{directorioProveedoresMB.listaTiposProveedor(row.proveedorEstacion.idProveedorEstacion)}" filterMatchMode="contains">
+                                <h:outputText value="#{directorioProveedoresMB.listaTiposProveedor(row.proveedorEstacion.idProveedorEstacion)} " />
+		            </p:column>
+                            
+                            <p:column headerText="Nombre de Contacto" sortBy="#{row.nombre} #{row.apellidoPaterno} #{row.apellidoMaterno}" filterBy="#{row.nombre} #{row.apellidoPaterno} #{row.apellidoMaterno}" filterMatchMode="contains">
+				<h:outputText    value="#{row.nombre} #{row.apellidoPaterno} #{row.apellidoMaterno}" />
+			    </p:column>
+                            <p:column headerText="Correo Electrónico" sortBy="#{row.usuario.emailUsuario}" filterBy="#{row.usuario.emailUsuario}" filterMatchMode="contains">
+				<h:outputText    value="#{row.usuario.emailUsuario}" />
+			    </p:column>
+                            <p:column headerText="Telefono y Extensión" sortBy="#{row.telefono}" filterBy="#{row.telefono}" filterMatchMode="contains">
+				<h:outputText    value="#{row.telefono}" />
+			    </p:column>
+                            <p:column headerText="Extensión" sortBy="#{row.extension}" filterBy="#{row.extension}" filterMatchMode="contains">
+				<h:outputText    value="#{row.extension}" />
+			    </p:column>
+                            
+                            
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

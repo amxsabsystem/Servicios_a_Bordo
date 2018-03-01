@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Master</ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1>Master</h1>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{paisesMB.returnMaster}"  ajax="false"/>
+                            <h:outputText value="" />
+                        </p:panelGrid>
+                        <br/>
+                        <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                            <p:outputLabel for="region" value="Region"/>
+                            <h:panelGroup id="region"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="Seleccione Uno"   style="width: 90%; margin-left: 5%;">
+                                    <f:selectItem itemValue="1" itemLabel="" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <p:outputLabel for="pais" value="País"/>
+                            <h:panelGroup id="pais" styleClass="md-inputfield">
+                                <p:inputText  />
+                                <label>País</label>
+                            </h:panelGroup>
+                            <p:outputLabel for="nombre" value="Nombre"/>
+                            <h:panelGroup id="nombre" styleClass="md-inputfield">
+                                <p:inputText  />
+                                <label>Nombre</label>
+                            </h:panelGroup>
+                            <br/><br/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Agregar" icon="ui-icon-save" type="button"/>
+                            <br/>
+                        </p:panelGrid>                         
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">#{res_i18n.APP_MENU_GEN_FLIGHT_NUM}</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h5><a href="#{facesContext.externalContext.requestContextPath}/portal/generales/compania.xhtml"> #{res_i18n.APP_MENU_GEN_COMPANIES}</a> -
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/generales/clases.xhtml">#{res_i18n.APP_MENU_GEN_FLIGHT_CLASS}</a> > 
+                            #{res_i18n.APP_MENU_GEN_FLIGHT_NUM}</h5>
+                        <h1>#{res_i18n.APP_MENU_GEN_FLIGHT_NUM}</h1>
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="#{res_i18n.CREATE}" icon="ui-icon-create"   action="#{vuelosMB.addRow}" /><h:outputText value=""/>
+                            <h:commandButton value="Exportar"  styleClass="botonExportar" >
+                                    <span class="ui-button-icon-left ui-icon ui-c ui-icon-file-download" style="color: white; margin-left: 4px; display: block; margin-top: -24px;" ></span>
+                                    <p:dataExporter type="xls" target="dataTableGrid" fileName="reportExcel_Vuelos"  encoding="ISO-8859-1" postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+                            </h:commandButton>
+			</p:panelGrid>
+				    
+                        <p:dataTable id="dataTableGrid" var="row" value="#{vuelosMB.findAll()}" selectionMode="single" reflow="true"
+                                     rowKey="#{row.idVuelo}" paginator="true" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                            
+                                                    
+                            
+                            <p:column headerText="Numero Vuelo" sortBy="#{row.numeroVuelo}" filterBy="#{row.numeroVuelo}" filterMatchMode="contains">
+			       <h:outputText value="#{row.numeroVuelo}" />
+		            </p:column>
+                            <p:column headerText="Origen" sortBy="#{row.ruta.estacionOrigen}" filterBy="#{row.ruta.estacionOrigen}" filterMatchMode="contains">
+				<h:outputText    value="#{row.ruta.estacionOrigen}" />
+			    </p:column>
+                            <p:column headerText="Destino" sortBy="#{row.ruta.estacionDestino}" filterBy="#{row.ruta.estacionDestino}" filterMatchMode="contains" >
+				<h:outputText    value="#{row.ruta.estacionDestino}" />
+			    </p:column>
+                            <p:column headerText="Compañía" sortBy="#{row.compania.nombre}" filterBy="#{row.compania.nombre}" filterMatchMode="contains">
+				<h:outputText    value="#{row.compania.nombre}" />
+			    </p:column>
+                            <p:column headerText="Cabina" sortBy="#{localeInfo.locale.language=='es'?row.tipoCabina.valorEs:row.tipoCabina.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.tipoCabina.valorEs:row.tipoCabina.valorEn}" filterMatchMode="contains">
+				<h:outputText    value="#{localeInfo.locale.language=='es'?row.tipoCabina.valorEs:row.tipoCabina.valorEn}" />
+			    </p:column>
+                            <p:column headerText="Clase" sortBy="#{localeInfo.locale.language=='es'?row.clase.nombreEsp:row.clase.nombreEng}" filterBy="#{localeInfo.locale.language=='es'?row.clase.nombreEsp:row.clase.nombreEng}" filterMatchMode="contains">
+				<h:outputText    value="#{localeInfo.locale.language=='es'?row.clase.nombreEsp:row.clase.nombreEng}" />
+			    </p:column>
+                            <p:column headerText="Tipo de Vuelo" sortBy="#{localeInfo.locale.language=='es'?row.tipoVuelo.valorEs:row.tipoVuelo.valorEn}" filterBy="#{localeInfo.locale.language=='es'?row.tipoVuelo.valorEs:row.tipoVuelo.valorEn}" filterMatchMode="contains">
+				<h:outputText    value="#{localeInfo.locale.language=='es'?row.tipoVuelo.valorEs:row.tipoVuelo.valorEn}" />
+			    </p:column>
+                            <p:column headerText="Estatus" sortBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterBy="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" filterMatchMode="contains">
+                                <h:outputText value="#{row.status ==1?localeInfo.locale.language=='es'?'Activo':'Active': localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" />
+                            </p:column>
+                            <p:column headerText="Modificar"  exportable="false"> 
+                                <h:commandLink action="#{vuelosMB.modifyRow(row)}" style="margin-left: 50%;" >
+                                    <i class="ui-icon ui-icon-create"></i>
+                                </h:commandLink>
+                            </p:column>
+                        </p:dataTable>                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

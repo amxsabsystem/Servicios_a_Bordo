@@ -1,0 +1,138 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Potenciales</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!potencialesMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{potencialesMB.modificarRegistro}" /> de Potencial</h1>
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{potencialesMB.returnMaster}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                       
+                        <p:outputLabel for="clase" value="Clase" style="float: right;"/>
+                        <h:panelGroup id="clase"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{potencialesMB.asignedClase}"  disabled="#{potencialesMB.modificarRegistro}" style="width: 90%;" >
+                                <f:selectItems value="#{potencialesMB.selectClases}" />
+                                <p:ajax update="codigo"  listener="#{potencialesMB.getCodigosServicio}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <h:outputText value="" />
+                        <h:outputText value="" />
+                        
+                        <p:outputLabel for="codigo" value="Codigo de Servicio" style="float: right;"/>
+                        <h:panelGroup id="codigo" styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{potencialesMB.asignedCodigoServicio}"   disabled="#{potencialesMB.modificarRegistro}" style="width: 90%;">
+                                    <f:selectItems value="#{potencialesMB.selectCodigosServico}" />
+                                    <p:ajax update="labelCodigo"  listener="#{potencialesMB.getCodigoDesc}" />
+                            </p:selectOneMenu>	
+                        </h:panelGroup>
+                        
+                        <h:outputText value="Descripción" style="float: right;"/>
+                        <h:outputText id="labelCodigo" value="#{potencialesMB.labelCodigo}" />
+                        
+                        <p:outputLabel for="TipodeClico" value="Tipo De Ciclo" style="float: right;"/>
+                        <h:panelGroup id="TipodeClico"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{potencialesMB.asignedTipoCiclo}"   disabled="#{potencialesMB.modificarRegistro}" style="width: 90%;" >
+                                <f:selectItems value="#{potencialesMB.selectTipoCiclos}" />
+                                <p:ajax update="ciclo"  listener="#{potencialesMB.getCiclo}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="ciclo" value="Ciclo" style="float: right;"/>
+                        <h:panelGroup id="ciclo"  styleClass="md-inputfield">
+                            <p:selectOneMenu  value="#{potencialesMB.asignedCiclo}"  disabled="#{potencialesMB.modificarRegistro}"  style="width: 90%;" >
+                                <f:selectItems value="#{potencialesMB.selectCiclos}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
+                        
+                    </p:panelGrid>
+                    <p:spacer height="15"/>
+
+                    <p:fileUpload id="fileUpload"
+                            fileUploadListener="#{potencialesMB.fileListener}"  disabled="#{potencialesMB.modificarRegistro}" mode="advanced" cancelLabel="#{res_i18n.CANCEL}" uploadLabel="CARGAR"
+                            immediate="true" label="Carga o remplazar una imagen" fileLimit="1" 
+                            fileLimitMessage="La carga esta limitada a 1 archivos"  multiple="true"
+                            invalidFileMessage="Formato incorrecto (pdf|PDF), Por favor seleccione un archivo valido."
+
+                            allowTypes="/(\.|\/)(pdf|PDF)$/"
+                            update=":form:fileUploadMsg" 
+                            process=":form"
+                            />
+                            <p:message for="fileUpload" id="fileUploadMsg" />
+                    <br />
+                    
+                    
+                    <a href="#{facesContext.externalContext.requestContextPath}#{potencialesMB.urlPotencial_mod}" target="_blank"  style="display:#{(potencialesMB.modificarRegistro)?'visible':'none'}">                                    
+                            <h:graphicImage value="/resources/img/logo_Pdf.png" width="30" height="30" style="padding-left: 40%;" />
+                    </a>
+
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">                    
+                     <p:outputLabel for="observaciones" value="Observaciones" style="float: right;" rendered="#{potencialesMB.modificarRegistro}"/>
+                                            <h:panelGroup id="observaciones"  styleClass="md-inputfield">
+                                                <p:inputText  value="#{potencialesMB.row_selected.observaciones}" style="width:80%;" maxlength="255" required="true" requiredMessage="Observaciones: Campo requerido" validatorMessage="Observaciones: Datos incorrectos, solo caracteres alfanuméricos, acentos, guiones, comas, diéresis" rendered="#{potencialesMB.modificarRegistro}">
+                                                    <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                                </p:inputText>
+
+                                            </h:panelGroup>
+                     
+                     <h:outputText value="Configurar Alerta " rendered="#{potencialesMB.modificarRegistro}"  style="float: right;"/>
+                    <p:selectBooleanCheckbox value="#{potencialesMB.alerta}" rendered="#{potencialesMB.modificarRegistro}">  
+                                <p:ajax update="group_alerta"  listener="#{potencialesMB.updateAlerta}" />
+                    </p:selectBooleanCheckbox>
+
+                     </p:panelGrid>
+                    
+                    
+                    
+                    <p:spacer height="20"/>
+                     
+                     <h:panelGroup id="group_alerta" >
+                         <p:panelGrid id="mensual" columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group" >
+                             <h:outputText value="Fecha" style="float: right;" rendered="#{potencialesMB.isalerta}"/>
+                             <h:outputText value="#{potencialesMB.fechaSistema}" rendered="#{potencialesMB.isalerta}"/>
+                             <h:outputText value="En cuantos dias se hará el recordatorio al comisariato? " style="float: right;" rendered="#{potencialesMB.isalerta}"/>
+                             <p:spinner id="spinner" min="1" value="#{potencialesMB.dias_alerta}" rendered="#{potencialesMB.isalerta}"/>
+                             <h:outputText value="Nota" style="float: right;" rendered="#{potencialesMB.isalerta}"/>
+                             <p:inputText  value="#{potencialesMB.row_selected.notaRecordatorio}"  rendered="#{potencialesMB.isalerta}" maxlength="255" required="false" validatorMessage="Nota: Datos incorrectos, solo caracteres alfanuméricos y -Ampersand.,#/_">
+                                <f:validateRegex pattern="^([A-Za-z0-9-[&amp;].,#/_ ]+)?"  />
+                            </p:inputText>
+                             <p:spacer height="15"/>
+                         </p:panelGrid>
+                     <p:spacer height="15"/>     
+                         
+                         
+                     </h:panelGroup>
+                    
+                     
+                    
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{potencialesMB.save}"  rendered="#{!potencialesMB.modificarRegistro}"/>
+                        <p:commandButton id="rechazarButton" value="RECHAZAR" icon="ui-icon-update" ajax="false" action="#{potencialesMB.update('R')}"  rendered="#{potencialesMB.modificarRegistro}"/>
+                        <p:commandButton id="publicarButton" value="PUBLICAR" icon="ui-icon-update" ajax="false" action="#{potencialesMB.update('P')}"  rendered="#{potencialesMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

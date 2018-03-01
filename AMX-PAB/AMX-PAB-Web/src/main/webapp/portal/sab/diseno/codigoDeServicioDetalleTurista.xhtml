@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Codigos De Servicio</ui:define>
+
+    <ui:define name="head"></ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h1>Clase Turista </h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />  
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{codigoDeServiciosMB.returnTurista('CY')}"  immediate="true"/>
+                        <h:outputText value="" />
+		    </p:panelGrid>
+                    <br/>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="margin: 0 auto;">
+                        
+                        <p:selectOneRadio id="serviciosSelect"  value="#{codigoDeServiciosMB.asignedServicioTurista}">
+                            <f:selectItems value="#{codigoDeServiciosMB.selectServiciosTurista}" />
+                        </p:selectOneRadio>
+                       
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        
+                        <p:outputLabel for="codigoDeServicio" value="Clave de Código de Servicio"  style="float: right;"/>
+                        <h:panelGroup id="codigoDeServicio" styleClass="md-inputfield">
+                            <p:inputText  value="#{codigoDeServiciosMB.row_selected.cveCodigoServicio}" maxlength="15" required="true" requiredMessage="Clave de Código de Servicio: Campo requerido" validatorMessage="Clave de Código de Servicio: Datos incorrectos, solo caracteres alfanuméricos y -Ampersand.,#/_">
+                                <f:validateRegex pattern="^([A-Za-z0-9-[&amp;].,#/_]+)$"  />
+                            </p:inputText>
+                         	
+                        </h:panelGroup>
+                        
+                        <p:outputLabel for="descripcion" value="Descripción"  style="float: right;"/>
+                        <h:panelGroup id="descripcion" styleClass="md-inputfield">
+                            <p:inputText  value="#{codigoDeServiciosMB.row_selected.descripcion}" maxlength="50" required="true" requiredMessage="Descripción: Campo requerido" validatorMessage="Descripción: Datos incorrectos, solo caracteres alfanuméricos">
+                                <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                            </p:inputText>
+                         	
+                        </h:panelGroup>
+                        
+                        
+                       <p:outputLabel for="tipo" value="Tipo de Ciclo"/>
+                       <p:selectManyCheckbox id="tipo"  value="#{codigoDeServiciosMB.asignedTipoTurista}"  layout="pageDirection" columns="1">
+                           <f:selectItems value="#{codigoDeServiciosMB.selectTiposTurista}" var="tipos" itemLabel="#{tipos}" itemValue="#{tipos}"/>
+                        </p:selectManyCheckbox>
+                        
+                         <p:outputLabel for="estatus" value="Estatus" rendered="#{codigoDeServiciosMB.modificarRegistro}" style="float: right;"/>
+                        <h:panelGroup id="estatus"  styleClass="md-inputfield" rendered="#{codigoDeServiciosMB.modificarRegistro}">
+                            <p:selectOneMenu  value="#{codigoDeServiciosMB.row_selected.status}"   style="width: 90%;" >
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Activo':'Active'}" itemValue="1" />
+                                <f:selectItem itemLabel="#{localeInfo.locale.language=='es'?'Inactivo':'Inactive'}" itemValue="0" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                         
+                         <h:outputText value="" />
+                         <h:outputText value="" />
+                    
+                    </p:panelGrid>
+                     <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{codigoDeServiciosMB.save('CY')}"  rendered="#{!codigoDeServiciosMB.modificarRegistro}"/>
+                        <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{codigoDeServiciosMB.update('CY')}"  rendered="#{codigoDeServiciosMB.modificarRegistro}"/>
+                        
+                    </p:panelGrid>                       
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

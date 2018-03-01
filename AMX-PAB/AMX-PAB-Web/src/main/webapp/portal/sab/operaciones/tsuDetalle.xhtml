@@ -1,0 +1,212 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">TSU</ui:define>
+
+    <ui:define name="head"></ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+
+                    <div class="card card-w-title">
+                        <h1><h:outputText value="Alta " rendered="#{!tsuMB.modificarRegistro}" /><h:outputText value="Modificación " rendered="#{tsuMB.modificarRegistro}" />TSU</h1>
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" /> 
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{tsuMB.returnMaster}"  immediate="true"/>
+                            <h:outputText value="" />
+                        </p:panelGrid>
+                        <p:spacer height="15"/>
+
+                        <h3>Datos Generales TSU</h3>
+
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-10,iu-grid-col-2" layout="grid" 
+                                     styleClass="ui-panelgrid-blank form-group" 
+                                     style="width:100%; margin:0px auto; background: transparent">
+                            <h:panelGroup>
+                                <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank form-group">
+
+                                    <p:outputLabel for="claveTSU" value="Clave de TSU" style="float: right;"/>
+                                    <h:panelGroup id="claveTSU"  styleClass="md-inputfield">
+                                        <p:inputText  value="#{tsuMB.row_selected.cveTsu}" styleClass="noprocess" style="text-transform: uppercase" maxlength="10" required="true" requiredMessage="Clave de TSU: Campo requerido" validatorMessage="Clave de TSU: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^[a-zA-Z0-9]*$"  />
+                                        </p:inputText>
+
+                                    </h:panelGroup>
+                                    <p:outputLabel for="clase" value="Clase" style="float: right;"/>
+                                    <h:panelGroup id="clase"  styleClass="md-inputfield">
+                                        <p:selectOneMenu  value="#{tsuMB.asignedClase}"   style="width: 90%;" styleClass="noprocess">
+                                            <f:selectItems value="#{tsuMB.selectClases}" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                    <p:outputLabel for="revision" value="Revisión" style="float: right;"/>
+                                    <h:panelGroup id="revision" styleClass="md-inputfield">
+                                        <p:inputText  value="#{tsuMB.norev}" styleClass="noprocess"  style="width:75%" maxlength="5" required="true" requiredMessage="Revisión: Campo requerido" validatorMessage="Revisión: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^[0-9]*$"  />
+                                        </p:inputText>
+
+                                    </h:panelGroup>
+                                    <p:outputLabel for="aniorev" value="Año" style="float: right;"/>
+                                    <h:panelGroup id="aniorev" styleClass="md-inputfield">
+                                        <p:inputText  value="#{tsuMB.aniorev}" styleClass="noprocess" style="width:75%" maxlength="4" required="true" requiredMessage="Año: Campo requerido" validatorMessage="Año: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^[0-9]*$"  />
+                                        </p:inputText>
+
+                                    </h:panelGroup>
+
+                                    <p:outputLabel for="vigenciaDese" value="Vigencia Desde"  style="float: right;"/>
+                                    <p:calendar id="vigenciaDese" showOn="button"  value="#{tsuMB.row_selected.fechaVigenciaInicio}" styleClass="noprocess"/>
+                                    <p:outputLabel for="vigenciaHasta" value=" Hasta"  style="float: right;"/>
+                                    <p:calendar id="vigenciaHasta" showOn="button" value="#{tsuMB.row_selected.fechaVigenciaFin}" styleClass="noprocess"/>
+
+                                </p:panelGrid>
+
+                                <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                    <p:outputLabel for="notas" value="Notas" style="float: right;"/>
+                                    <h:panelGroup id="notas"  styleClass="md-inputfield">
+                                        <p:inputText  value="#{tsuMB.row_selected.notas}" styleClass="noprocess" style="width:90%" maxlength="50" required="true" requiredMessage="Notas: Campo requerido" validatorMessage="Notas: Datos incorrectos, solo caracteres alfanuméricos">
+                                            <f:validateRegex pattern="^([A-Za-z0-9-ÑñáéíóúÁÉÍÓÚüÜ.,()/% ]+)$"  />
+                                        </p:inputText>
+                                    </h:panelGroup>
+                                </p:panelGrid>    
+                            </h:panelGroup>
+                            <p:outputPanel>
+                                <p:panelGrid columns="1" layout="grid" 
+                                             id="imgPnl"
+                                             style="width:100%; background: transparent;">
+
+                                    <p:fileUpload id="fileUpload"
+                                                  rendered="#{(tsuMB.estatus_EDITING_TSU_PICTURE or tsuMB.estatus_NEW_TSU_PICTURE)}"
+                                                  fileUploadListener="#{tsuMB.fileListener}" mode="advanced"
+                                                  immediate="true" label="Carga una imagen" fileLimit="1" 
+                                                  fileLimitMessage="La carga esta limitada a 1 archivos"  multiple="true"
+                                                  invalidFileMessage="Formato incorrecto (GIF, JPG,JPEG y PNG), Por favor seleccione un archivo valido."
+                                                  allowTypes="/(\.|\/)(gif|png|jpg|jpeg)$/"
+                                                  update="imgPnl" 
+                                                  process="imgPnl" />
+
+                                    <p:message for="fileUpload" id="fileUploadMsg" />
+
+                                    <p:commandButton value="CAMBIAR IMAGEN"
+                                                     rendered="#{(tsuMB.estatus_EDITING_TSU or tsuMB.estatus_NEW_TSU) and not empty tsuMB.row_selected.multimedio}"
+                                                     immediate="true"
+                                                     actionListener="#{tsuMB.changePic()}"
+                                                     update="imgPnl"/>
+                                    <p:commandButton value="AGREGAR IMAGEN"
+                                                     rendered="#{(tsuMB.estatus_EDITING_TSU or tsuMB.estatus_EDITING_TSU) and empty tsuMB.row_selected.multimedio}"
+                                                     immediate="true"
+                                                     actionListener="#{tsuMB.addPic()}"
+                                                     update="imgPnl"/>
+                                    <p:commandButton value="CANCELAR" styleClass="secondary"
+                                                     rendered="#{(tsuMB.estatus_EDITING_TSU_PICTURE or tsuMB.estatus_EDITING_TSU_PICTURE)}"
+                                                     immediate="true"
+                                                     actionListener="#{tsuMB.cancelChangePic()}"
+                                                     update="imgPnl"/>
+
+                                    <h:graphicImage   id="imgObj" value="#{tsuMB.row_selected.multimedio.url}" 
+                                                      rendered="#{not empty tsuMB.row_selected.multimedio and not empty tsuMB.row_selected.multimedio.mimeType}"
+                                                      title="urlMultimedia=#{tsuMB.row_selected.multimedio.url}, mimeType=#{tsuMB.row_selected.multimedio.mimeType}"
+                                                      width="200px"
+                                                      height="200px"/>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:panelGrid>
+                        <p:fieldset legend="Materiales">
+                            <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                <p:outputLabel for="noParte" value="No. Parte" style="float: right;"/>
+                                <h:panelGroup id="noParte"  styleClass="md-inputfield">
+                                    <p:selectOneMenu id="selectnoParte" value="#{tsuMB.asignedMaterial}"   filter="true" filterMatchMode="startsWith" >
+                                        <f:selectItems value="#{tsuMB.selectMateriales}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <p:outputLabel for="cantidadMat" value="Cantidad" style="float: right;"/>
+                                <h:panelGroup id="cantidadMat"  styleClass="md-inputfield">
+                                    <p:inputText id="cantidadMatInput" value="#{tsuMB.cantidadMat}" maxlength="4" required="true" 
+                                                 requiredMessage="Cantidad: Campo requerido" validatorMessage="Cantidad: Datos incorrectos, solo números ">
+                                        <f:validateRegex pattern="^[0-9]*$"  />
+                                    </p:inputText>
+                                </h:panelGroup>
+
+                                <p:commandButton id="addButtonMat" value="Agregar" icon="ui-icon-add" actionListener="#{tsuMB.addMaterial}"
+                                                 update="dataTableGridMateriales" process="@this selectnoParte cantidadMatInput" />
+                            </p:panelGrid>                        
+                            <p:dataTable id="dataTableGridMateriales" var="row" value="#{tsuMB.all_records_Material}" selectionMode="single" reflow="true"
+                                         rowKey="#{row.idMaterialTsu}" paginator="false" 
+                                         emptyMessage="No se encontraron registros."  
+                                         editable="false" >
+                                <p:column headerText="No. Parte" >
+                                    <h:outputText value="#{row.material.numeroParte}" />
+                                </p:column>
+                                <p:column headerText="Descripcion" >
+                                    <h:outputText    value="#{localeInfo.locale.language=='es'?row.material.descripcionEs:row.material.descripcionEn}" />
+                                </p:column>
+                                <p:column headerText="Cantidad" >
+                                    <h:outputText    value="#{row.cantidad}" />
+                                </p:column>
+                                <p:column exportable="false"> 
+                                    <p:commandLink actionListener="#{tsuMB.deleteMaterialRow(row)}" style="margin-left: 50%;" 
+                                                   immediate="true" process="@this" update="@form" >
+                                        <i class="ui-icon ui-icon-close"></i>
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </p:fieldset>
+                        <p:fieldset legend="Kits">
+                            <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                <p:outputLabel for="cveKitMaster" value="No. Kit" style="float: right;"/>
+                                <h:panelGroup id="cveKitMaster"  styleClass="md-inputfield">
+                                    <p:selectOneMenu id="selectCveKitMaster" value="#{tsuMB.asignedKit}"   filter="true" filterMatchMode="startsWith" >
+                                        <f:selectItems value="#{tsuMB.selectKits}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <p:outputLabel for="cantidadKit" value="Cantidad" style="float: right;"/>
+                                <h:panelGroup id="cantidadKit"  styleClass="md-inputfield">
+                                    <p:inputText id="cantidadKitInput" value="#{tsuMB.cantidadKit}" maxlength="4" required="true" 
+                                                 requiredMessage="Cantidad: Campo requerido" validatorMessage="Cantidad: Datos incorrectos, solo números ">
+                                        <f:validateRegex pattern="^[0-9]*$"  />
+                                    </p:inputText>
+                                </h:panelGroup>
+
+                                <p:commandButton id="addButtonKit" value="Agregar" icon="ui-icon-add" actionListener="#{tsuMB.addKit}"
+                                                 update="dataTableGridKits" process="@this selectCveKitMaster cantidadKitInput" />
+                            </p:panelGrid>
+                            <p:dataTable id="dataTableGridKits" var="row" value="#{tsuMB.all_records_Kit}" selectionMode="single" reflow="true"
+                                         rowKey="#{row.idKitTsu}" paginator="false" 
+                                         emptyMessage="No se encontraron registros."  
+                                         editable="false" >
+                                <p:column headerText="Cve KitMaster" >
+                                    <h:outputText value="#{row.kitMaster.cveKitMaster}" />
+                                </p:column>
+                                <p:column headerText="Descripcion" >
+                                    <h:outputText    value="#{localeInfo.locale.language=='es'?row.kitMaster.nombreEs:row.kitMaster.nombreEn}" />
+                                </p:column>
+                                <p:column headerText="Cantidad" >
+                                    <h:outputText    value="#{row.cantidad}" />
+                                </p:column>
+                                <p:column exportable="false"> 
+                                    <p:commandLink actionListener="#{tsuMB.deleteKitRow(row)}" style="margin-left: 50%;"   
+                                                   immediate="true" process="@this" update="@form">
+                                        <i class="ui-icon ui-icon-close"></i>
+                                    </p:commandLink>
+                                    
+                                </p:column>
+                            </p:dataTable>                        
+                        </p:fieldset>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="form-group" style="border:0px none; background-color:transparent;">
+                            <p:commandButton id="saveButton" value="#{res_i18n.SAVE}" icon="ui-icon-save" ajax="false" action="#{tsuMB.save}"  rendered="#{!tsuMB.modificarRegistro}"/>
+                            <p:commandButton id="updateButton" value="#{res_i18n.UPDATE}" icon="ui-icon-update" ajax="false" action="#{tsuMB.update}"  rendered="#{tsuMB.modificarRegistro}"/>
+
+                        </p:panelGrid>                      
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

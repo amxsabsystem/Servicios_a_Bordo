@@ -1,0 +1,207 @@
+package com.aeromexico.pab.backend.remote.ejb;
+
+import com.aeromexico.pab.entity.TipoEquipoAvion;
+import com.aeromexico.pab.entity.*;
+import com.aeromexico.pab.backend.remote.TipoEquipoAvionFacadeRemote;
+import java.sql.Timestamp;
+import java.util.List;
+import java.security.Principal;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+/**
+ * SSB JPA Entity Facade of Table tipo_equipo_avion by TipoEquipoAvionFacadeRemote.
+ * 
+ * @author Tracktopell::jpa-builder @see  https://github.com/tracktopell/jpa-builder
+ */
+@Stateless(
+    name         = "tipoEquipoAvion_RSB",
+    mappedName   = "TipoEquipoAvion_RSB",
+    description  = "TipoEquipoAvionFacadeRemote-Stateless-Session EJB-3.1"
+)
+public class TipoEquipoAvionFacade extends AbstractFacade<TipoEquipoAvion> implements TipoEquipoAvionFacadeRemote {
+
+	@PersistenceContext(unitName = "AMX_PAB_PU")
+	private EntityManager em;
+
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
+
+	public TipoEquipoAvionFacade() {
+		super(TipoEquipoAvion.class);
+	}
+
+	@Override
+	public TipoEquipoAvion create(TipoEquipoAvion entity) {
+        if(ctx != null){
+            final Principal authenticatedRealmUser = ctx.getCallerPrincipal();
+            // obtain the caller principal.
+            if(authenticatedRealmUser != null){                
+                if(entity instanceof AuditableEntity){
+                    final Timestamp nowTimeStamp = new Timestamp(System.currentTimeMillis());
+                    ((AuditableEntity) entity).setFechaCreo(nowTimeStamp);
+                    ((AuditableEntity) entity).setUsuarioCreo(authenticatedRealmUser.getName());
+                    ((AuditableEntity) entity).setFechaModifico(nowTimeStamp);
+                    ((AuditableEntity) entity).setUsuarioModifico(authenticatedRealmUser.getName());
+                }
+            }
+        }
+        final List<Matriz> entity_matrizHasTipoEquipoAvionList =  entity.getMatrizHasTipoEquipoAvionList();
+        entity.setMatrizHasTipoEquipoAvionList(null);
+        final List<Avion> entity_avionHasTipoEquipoAvionList =  entity.getAvionHasTipoEquipoAvionList();
+        entity.setAvionHasTipoEquipoAvionList(null);
+
+		getEntityManager().persist(entity);
+		getEntityManager().flush();
+        // EAGER M-2-M persist 
+        entity.setMatrizHasTipoEquipoAvionList(entity_matrizHasTipoEquipoAvionList);
+        entity.setAvionHasTipoEquipoAvionList(entity_avionHasTipoEquipoAvionList);
+
+        getEntityManager().merge(entity);
+        getEntityManager().flush();
+
+		return entity;
+	}
+
+	@Override
+	public TipoEquipoAvion update(TipoEquipoAvion entity) {
+        if(ctx != null){
+            final Principal authenticatedRealmUser = ctx.getCallerPrincipal();
+            // obtain the caller principal.
+            if(authenticatedRealmUser != null){                
+                if(entity instanceof AuditableEntity){
+                    ((AuditableEntity) entity).setFechaModifico(new Timestamp(System.currentTimeMillis()));
+                    ((AuditableEntity) entity).setUsuarioModifico(authenticatedRealmUser.getName());
+                }
+            }
+        }
+        final List<Matriz> entity_matrizHasTipoEquipoAvionList =  entity.getMatrizHasTipoEquipoAvionList();
+        entity.setMatrizHasTipoEquipoAvionList(null);
+        final List<Avion> entity_avionHasTipoEquipoAvionList =  entity.getAvionHasTipoEquipoAvionList();
+        entity.setAvionHasTipoEquipoAvionList(null);
+
+		getEntityManager().merge(entity);
+		getEntityManager().flush();
+        // EAGER M-2-M persist
+        entity.setMatrizHasTipoEquipoAvionList(entity_matrizHasTipoEquipoAvionList);
+        entity.setAvionHasTipoEquipoAvionList(entity_avionHasTipoEquipoAvionList);
+
+        getEntityManager().merge(entity);
+        getEntityManager().flush();
+		return entity;
+	}
+
+
+	@Override
+	public List<TipoEquipoAvion> findAllLike(TipoEquipoAvion x){				
+		StringBuilder sbq=new StringBuilder("SELECT x FROM TipoEquipoAvion x WHERE ");
+		int paramAsigned=0;
+		if(x != null){
+			sbq.append(" 1=1 ");
+			if(x.getIdTipoEquipoAvion() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.idTipoEquipoAvion = :idTipoEquipoAvion");
+			}
+			if(x.getModeloAvion() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.modeloAvion = :modeloAvion");
+			}
+			if(x.getTotalAviones() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.totalAviones = :totalAviones");
+			}
+			if(x.getTipoEquipo() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.tipoEquipo = :tipoEquipo");
+			}
+			if(x.getStatus() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.status = :status");
+			}
+			if(x.getUsuarioCreo() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.usuarioCreo = :usuarioCreo");
+			}
+			if(x.getFechaCreo() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.fechaCreo = :fechaCreo");
+			}
+			if(x.getUsuarioModifico() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.usuarioModifico = :usuarioModifico");
+			}
+			if(x.getFechaModifico() != null){
+			    paramAsigned++;
+			    sbq.append(" and x.fechaModifico = :fechaModifico");
+			}
+			
+		} else {
+			sbq.append(" 1=2 ");
+		}
+		
+		TypedQuery<TipoEquipoAvion> nq = em.createQuery(sbq.toString(), TipoEquipoAvion.class);
+		
+		if(paramAsigned>0){
+			if(x.getIdTipoEquipoAvion() != null){
+			    nq.setParameter("idTipoEquipoAvion",x.getIdTipoEquipoAvion());
+			}
+			if(x.getModeloAvion() != null){
+			    nq.setParameter("modeloAvion",x.getModeloAvion());
+			}
+			if(x.getTotalAviones() != null){
+			    nq.setParameter("totalAviones",x.getTotalAviones());
+			}
+			if(x.getTipoEquipo() != null){
+			    nq.setParameter("tipoEquipo",x.getTipoEquipo());
+			}
+			if(x.getStatus() != null){
+			    nq.setParameter("status",x.getStatus());
+			}
+			if(x.getUsuarioCreo() != null){
+			    nq.setParameter("usuarioCreo",x.getUsuarioCreo());
+			}
+			if(x.getFechaCreo() != null){
+			    nq.setParameter("fechaCreo",x.getFechaCreo());
+			}
+			if(x.getUsuarioModifico() != null){
+			    nq.setParameter("usuarioModifico",x.getUsuarioModifico());
+			}
+			if(x.getFechaModifico() != null){
+			    nq.setParameter("fechaModifico",x.getFechaModifico());
+			}
+			
+		}		
+		return nq.getResultList();
+		
+	}
+    
+    @Override
+	public TipoEquipoAvion findByPK_EAGER(Object pk){
+        TipoEquipoAvion x = getEntityManager().find(TipoEquipoAvion.class, pk);
+        if( x != null){
+            if(x.getModeloAvion() !=null && x.getModeloAvion().getIdModeloAvion()!=null){} 
+            for(Matriz x_matriz: x.getMatrizHasTipoEquipoAvionList() ) {} 
+            for(Avion x_avion: x.getAvionHasTipoEquipoAvionList() ) {} 
+
+        }
+        return x;
+    }
+
+	@Override
+	public List<TipoEquipoAvion> findAll() {
+		TypedQuery<TipoEquipoAvion> nq = em.createNamedQuery("TipoEquipoAvion.findAll", TipoEquipoAvion.class);		
+		return nq.getResultList();
+	}
+	
+	@Override
+	public Long countAll() {
+		TypedQuery<Long> nq = em.createNamedQuery("TipoEquipoAvion.countAll", Long.class);		
+		return (Long)nq.getSingleResult().longValue();
+	}
+	
+}

@@ -1,0 +1,342 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
+                >
+
+    <ui:define name="title">Asignación de Servicios</ui:define>
+
+    <ui:define name="head"> 
+    <style>
+            /* DivTable.com */
+.divTable{
+	display: table;
+	width: 97%;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell, .divTableHead {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+        
+}
+.divTableCell2{
+        border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;}
+
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+.table_header{ background-color: #4F81BD; text-align: center; font-weight: bold;}
+
+.imagenDiv{
+    position: relative;
+    height: 80px;
+    top: 40px;
+    width: 80px;
+    background-color: white;
+}
+            
+   /** fin estilos tabla ***/
+            body .ui-dialog .ui-dialog-titlebar {
+    background-color: #06c;
+    color: #fff;
+    padding: 10px 16px;
+}
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon {
+    color: #fff;
+}
+
+body .ui-selectmanycheckbox.ui-widget label, body .ui-selectoneradio.ui-widget label {
+    position: inherit !important;
+}
+.ui-orderlist .ui-orderlist-list{
+    width: 100% !important;
+}        
+    </style>
+    </ui:define>
+
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                        <h5>
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/HorariosPorRegion.xhtml"> Horarios Región / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/duraciones.xhtml"> Duración Vuelos / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/asignarServiciosAlimentos.xhtml"> Consulta de Servicios / </a> 
+                            <a href="#{facesContext.externalContext.requestContextPath}/portal/sab/diseno/asignacionDeServicios/consultaServicios.xhtml"> Consulta </a> 
+                             </h5>
+                        
+                         
+                        <p:panelGrid columns="5" columnClasses="ui-grid-col-1,ui-grid-col-4,ui-grid-col-1,ui-grid-col-4,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" >
+                        
+                        <h:outputText value="Modelo de Avión" style="float: right;" />
+                        <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedModelo}"   style="width: 90%;">
+				<f:selectItems value="#{asignacionDeServiciosMB.selectModelos}" />
+                        </p:selectOneMenu>
+                        
+                        <h:outputText value="Región" style="float: right;" />
+                        <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedRegion}"   style="width: 90%;" >
+				<f:selectItems value="#{asignacionDeServiciosMB.selectRegiones}" />
+                                
+                            </p:selectOneMenu>
+                        
+                        <p:commandButton  value="Buscar" icon="ui-icon-search" ajax="false" 
+                                     action="#{asignacionDeServiciosMB.buscar()}" 
+                                     update="dataTableGridSalMEX_P,dataTableGridSalMEX_T,dataTableGridHaciMEX_P,dataTableGridHaciMEX_T" 
+                                     process=":form" />
+                        
+                        
+                        </p:panelGrid>
+                        
+                        <p:spacer height="30"/>
+			
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-5,ui-grid-col-2,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:#538DD5;">
+                            <h:outputText value=""/>
+                            <h:outputText value="Vuelos Saliendo de MEX" style="color:#FFF; font-weight: bold;"/>
+                            <h:outputText value=""/>
+                        </p:panelGrid>
+                        <p:spacer height="10"/>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                            
+                        
+                            <p:dataTable id="dataTableGridSalMEX_P" var="row" value="#{asignacionDeServiciosMB.all_records_SalMEX_P}" selectionMode="single" reflow="true"
+                                    rowKey="#{row.asignacionServicio.idAsignacionServicio}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                                <f:facet name="header">
+                                    PREMIER
+                                </f:facet>
+
+                                <p:column headerText="Modelo" >
+                                    <h:outputText value="#{row.asignacionServicio.modeloAvion.modelo}" />
+                                </p:column>
+                                <p:column headerText="Región" >
+                                    <h:outputText value="#{row.asignacionServicio.region.cveRegion}" />
+                                </p:column>
+                                <p:column headerText="Horario Región" >
+                                    <h:outputText value="#{row.horarioRegion.horaInicio} - #{row.horarioRegion.horaFin}" />
+                                </p:column>
+                                <p:column headerText="Duración" >
+                                    <h:outputText value="#{row.duracionVuelos.tiempoInicio} - #{row.duracionVuelos.tiempoFin}" />
+                                </p:column>
+                                <p:column headerText="Secuencias" >
+                                    <h:outputText value="#{row.secuencia}" />
+                                </p:column>
+                                <p:column headerText="Modificar"  exportable="false"> 
+                                    <h:commandLink action="#{asignacionDeServiciosMB.modifyRow(row,'SalMEX_P')}" style="margin-left: 50%;" >
+                                        <i class="ui-icon ui-icon-create"></i>
+                                    </h:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+
+
+
+                            <p:dataTable id="dataTableGridSalMEX_T" var="row" value="#{asignacionDeServiciosMB.all_records_SalMEX_T}" selectionMode="single" reflow="true"
+                                    rowKey="#{row.asignacionServicio.idAsignacionServicio}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                                <f:facet name="header">
+                                    TURISTA
+                                </f:facet>
+                                <p:column headerText="Modelo" >
+                                    <h:outputText value="#{row.asignacionServicio.modeloAvion.modelo}" />
+                                </p:column>
+                                <p:column headerText="Región" >
+                                    <h:outputText value="#{row.asignacionServicio.region.cveRegion}" />
+                                </p:column>
+                                <p:column headerText="Horario Región" >
+                                    <h:outputText value="#{row.horarioRegion.horaInicio} - #{row.horarioRegion.horaFin}" />
+                                </p:column>
+                                <p:column headerText="Duración" >
+                                    <h:outputText value="#{row.duracionVuelos.tiempoInicio} - #{row.duracionVuelos.tiempoFin}" />
+                                </p:column>
+                                <p:column headerText="Secuencias" >
+                                    <h:outputText value="#{row.secuencia}" />
+                                </p:column>
+                                <p:column headerText="Modificar"  exportable="false"> 
+                                    <h:commandLink action="#{asignacionDeServiciosMB.modifyRow(row,'SalMEX_T')}" style="margin-left: 50%;" >
+                                        <i class="ui-icon ui-icon-create"></i>
+                                    </h:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                       
+                        </p:panelGrid>    
+                            
+                            <p:spacer height="30"/>
+                        
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-5,ui-grid-col-2,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:#538DD5;">
+                            <h:outputText value=""/>
+                            <h:outputText value="Vuelos Hacia MEX" style="color:#FFF; font-weight: bold;"/>
+                            <h:outputText value=""/>
+                        </p:panelGrid>
+                        
+                        <p:spacer height="10"/>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                            
+                             
+                        <p:dataTable id="dataTableGridHaciMEX_P" var="row" value="#{asignacionDeServiciosMB.all_records_HaciMEX_P}" selectionMode="single" reflow="true"
+                                rowKey="#{row.asignacionServicio.idAsignacionServicio}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            <f:facet name="header">
+                                PREMIER
+                            </f:facet>
+                                <p:column headerText="Modelo" >
+                                    <h:outputText value="#{row.asignacionServicio.modeloAvion.modelo}" />
+                                </p:column>
+                                <p:column headerText="Región" >
+                                    <h:outputText value="#{row.asignacionServicio.region.cveRegion}" />
+                                </p:column>                            
+                            <p:column headerText="Horario Región" >
+                                <h:outputText value="#{row.horarioRegion.horaInicio} - #{row.horarioRegion.horaFin}" />
+		            </p:column>
+                            <p:column headerText="Duración" >
+                                <h:outputText value="#{row.duracionVuelos.tiempoInicio} - #{row.duracionVuelos.tiempoFin}" />
+		            </p:column>
+                            <p:column headerText="Secuencias" >
+                                <h:outputText value="#{row.secuencia}" />
+		            </p:column>
+                            <p:column headerText="Modificar"  exportable="false"> 
+                                    <h:commandLink action="#{asignacionDeServiciosMB.modifyRow(row,'HaciMEX_P')}" style="margin-left: 50%;" >
+                                        <i class="ui-icon ui-icon-create"></i>
+                                    </h:commandLink>
+                            </p:column>
+                            
+                        </p:dataTable>
+                        
+                        <p:dataTable id="dataTableGridHaciMEX_T" var="row" value="#{asignacionDeServiciosMB.all_records_HaciMEX_T}" selectionMode="single" reflow="true"
+                                rowKey="#{row.asignacionServicio.idAsignacionServicio}" paginator="true" rows="10" emptyMessage="No se encontraron registros."   paginatorPosition="bottom" editable="false" >
+                            <f:facet name="header">
+                                TURISTA
+                            </f:facet>
+                                <p:column headerText="Modelo" >
+                                    <h:outputText value="#{row.asignacionServicio.modeloAvion.modelo}" />
+                                </p:column>
+                                <p:column headerText="Región" >
+                                    <h:outputText value="#{row.asignacionServicio.region.cveRegion}" />
+                                </p:column>                            
+                            <p:column headerText="Horario Región" >
+                                <h:outputText value="#{row.horarioRegion.horaInicio} - #{row.horarioRegion.horaFin}" />
+		            </p:column>
+                            <p:column headerText="Duración" >
+                                <h:outputText value="#{row.duracionVuelos.tiempoInicio} - #{row.duracionVuelos.tiempoFin}" />
+		            </p:column>
+                            <p:column headerText="Secuencias" >
+                                <h:outputText value="#{row.secuencia}" />
+		            </p:column>
+                            <p:column headerText="Modificar"  exportable="false"> 
+                                    <h:commandLink action="#{asignacionDeServiciosMB.modifyRow(row,'HaciMEX_T')}" style="margin-left: 50%;" >
+                                        <i class="ui-icon ui-icon-create"></i>
+                                    </h:commandLink>
+                            </p:column>
+                            
+                        </p:dataTable>
+                        </p:panelGrid>
+                        
+                        
+                <p:dialog id="agregarSecuenciadialog" header="Agregar Secuencia de Codigos de Servicio" widgetVar="agregarSecuencia" modal="true" height="550" width="900" responsive="true">
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:panelGrid columns="4" layout="grid"  styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:#CCCCCC;" >
+                            <h:panelGroup id="label10"  styleClass="md-inputfield"><h:outputText value="Horario" style="font-weight: bold;"/></h:panelGroup>
+                            <h:panelGroup id="label11"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.horarioregionSelectServ}"/></h:panelGroup>
+                            <h:panelGroup id="label12"  styleClass="md-inputfield"><h:outputText value="Duracion" style="font-weight: bold;"/></h:panelGroup>
+                            <h:panelGroup id="label13"  styleClass="md-inputfield"><h:outputText value="#{asignacionDeServiciosMB.duracionesSelectServ}"/></h:panelGroup>
+                            
+                        </p:panelGrid>
+                        
+                        <h:panelGroup id="codigoServ"  styleClass="md-inputfield">
+                            <h4>Servicios Alimentos</h4> 
+                            <p:selectManyCheckbox  value="#{asignacionDeServiciosMB.asignedCodigos}" layout="responsive" columns="9" styleClass="form-group">
+                                        <f:selectItems value="#{asignacionDeServiciosMB.selectedCodigos}" var="codigo" itemLabel="#{codigo.cveCodigoServicio}" itemValue="#{codigo.idCodigoServicio}" />
+                            </p:selectManyCheckbox>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup id="codigoServComple"  styleClass="md-inputfield" style="border-top: 1px solid #CCCCCC;">
+                            <h4>Servicios Complementarios</h4>
+                            <p:selectManyCheckbox  value="#{asignacionDeServiciosMB.asignedCodigoComples}" layout="responsive" columns="9" styleClass="form-group">
+                                        <f:selectItems value="#{asignacionDeServiciosMB.selectedCodigosComple}" var="codigo" itemLabel="#{codigo.cveCodigoServicio}" itemValue="#{codigo.idCodigoServicio}" />
+                            </p:selectManyCheckbox>
+                        </h:panelGroup>
+                        
+                        
+                        <p:panelGrid columns="3"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="addCodigo" value="Agregar a Secuencia Actual" icon="ui-icon-add" ajax="true" action="#{asignacionDeServiciosMB.agregarCodigo}" update="tablaCodigo,codigoServ,codigoServComple" process="addCodigo codigoServ codigoServComple"/>
+                            <h:outputText value=""/>
+                            <p:commandButton id="agregarOtraSecuencia" value="Crear otra Secuencia" icon="ui-icon-save" ajax="true" action="#{asignacionDeServiciosMB.agregarOtraSecuencia}"  update="tablaCodigo,codigoServ,codigoServComple" process=":form"/>
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-1,ui-grid-col-10,ui-grid-col-1" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <h:outputText value=""/>
+                            <p:orderList id="tablaCodigo" value="#{asignacionDeServiciosMB.codigos_Servicio}" 
+                                     var="row" controlsLocation="right" 
+                                     itemValue="#{row}" style="width:100%">
+                                <p:column style="width:50%">
+                                    <h:outputText value="#{row.cveCodigoServicio}" />
+                                </p:column>
+                                <p:column style="width:50%" > 
+                                    
+                                    <p:commandButton update="tablaCodigo" process="tablaCodigo @this" ajax="true"
+                                        icon="ui-icon ui-icon-delete" actionListener="#{asignacionDeServiciosMB.quitarCodigoServicio()}">
+                                        <f:param name="selectedElement" value="#{row.idCodigoServicio}" />  
+                                    </p:commandButton>
+                                 </p:column>
+                            </p:orderList>
+                            <h:outputText value=""/>
+                        </p:panelGrid>
+    
+                        <p:spacer height="30"/>
+                        <p:panelGrid columns="3"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="regresarAll" value="Cancelar" icon="ui-icon-arrow-back" ajax="true"   action="#{asignacionDeServiciosMB.regeresarHorariosEncabezado}" update="tablaCodigo,codigoServ,codigoServComple" process=":form"/>
+                            <h:outputText value=""/>
+                            <p:commandButton id="updateAll" value="Actualizar" icon="ui-icon-update" ajax="true" action="#{asignacionDeServiciosMB.update}" update="agregarSecuenciadialog,tablaCodigo,codigoServ,codigoServComple,dataTableGridSalMEX_P,dataTableGridSalMEX_T,dataTableGridHaciMEX_P,dataTableGridHaciMEX_T" process=":form"/>
+                            
+                        </p:panelGrid>
+                    </p:dialog>
+                        
+                    <p:dialog id="seleccionarSecuenciaDialog" header="Seleccionar Secuencia de Codigos de Servicio" 
+                              widgetVar="seleccionarSecuenciaDialog" modal="true" height="250" width="800" responsive="true">
+                        <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:spacer height="30"/>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                        <h:outputText value="Selcciona una Secuencia" style="float: right;" />
+                        <p:selectOneMenu  value="#{asignacionDeServiciosMB.asignedSecuencia}"   style="width: 90%;">
+				<f:selectItems value="#{asignacionDeServiciosMB.selectSecuencias}" />
+                                
+                        </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:spacer height="30"/>
+                        <p:panelGrid columns="3"  layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;" >
+                            <p:commandButton id="cancelDialog" value="Cancelar" icon="ui-icon-arrow-back" ajax="true"   action="#{asignacionDeServiciosMB.cerrarDialog}" immediate="true"/>
+                            <h:outputText value=""/>
+                            <p:commandButton id="seleccionarSecuenciaButton" value="Editar" icon="ui-icon-update" ajax="true" action="#{asignacionDeServiciosMB.editarSecuencia}" />
+                            
+                        </p:panelGrid>
+                    </p:dialog>    
+                        
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

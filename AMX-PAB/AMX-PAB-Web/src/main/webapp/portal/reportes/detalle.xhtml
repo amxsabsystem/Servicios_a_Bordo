@@ -1,0 +1,230 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Reportes</ui:define>
+
+    <ui:define name="head">
+        <style>
+            body .ui-dialog .ui-dialog-titlebar {
+                background-color: #06c;
+                color: #fff;
+                padding: 10px 16px;
+            }
+            body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon {
+                color: #fff;
+            }
+            h5 {
+                text-align: center;
+            }
+            .tittle_table{
+                background-color: #4F81BD;
+                color:#ffffff;
+                
+            }
+        </style>
+        
+    </ui:define>
+    
+    <ui:define name="content">
+    <h:form id="form">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                
+                    <div class="card card-w-title">
+                    <p:messages showSummary="false" showDetail="true" autoUpdate="true" closable="true" /> 
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton value="Regresar" icon="ui-icon-arrow-back" action="#{reporteMB.returnConsulta}"  immediate="true"/>
+		    </p:panelGrid>
+                    <p:spacer height="15"/>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;line-height: .1;">
+                        <h:outputText value="Id de Reporte" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.claveReporte}" />
+                        <h:outputText value="Fecha" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.fechaCreo}" />
+                    </p:panelGrid>
+                    <p:spacer height="30" />
+                    <p:panelGrid columns="6" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="background-color:transparent;line-height: .1; border-top: 1px solid #7C7B7A;border-right: 1px solid #7C7B7A;border-left: 1px solid #7C7B7A;">
+                        <h:outputText value="" /><h:outputText value="" /><h:outputText value="" /><h:outputText value="" /><h:outputText value="" /><h:outputText value="" />
+                        
+                        <h:outputText value="No de Vuelo" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.vuelo.numeroVuelo}" />
+                        <h:outputText value="Ruta" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.vuelo.estacionOrigen.claveIata} - #{reporteMB.row_selected.vuelo.estacionDestino.claveIata} " />
+                        <h:outputText value="Estación" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.vuelo.estacionOrigen.claveIata}" />
+                        
+                        <h:outputText value="Fecha del Vuelo" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.fechaVuelo}" />
+                        <h:outputText value="" />
+                        <h:outputText value="" />
+                        <h:outputText value="Clase" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.clase.clave}" />
+                    
+                        <h:outputText value="Procedencia" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.areaResponsable.nombreEs}" />
+                        <h:outputText value="" />
+                        <h:outputText value="" />
+                        <h:outputText value="Autor" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.usuarioCreo} " />
+                        
+                        <h:outputText value="Tipo de Reporte" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.tipoReporte.valorEs}" />
+                        <h:outputText value="" />
+                        <h:outputText value="" />
+                        <h:outputText value="Producto" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.row_selected.tipoProductoReporte.descripcion}" />
+                        
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="background-color:transparent;line-height: .1;border-right: 1px solid #7C7B7A;border-left: 1px solid #7C7B7A;">
+                        <h:outputText value="Estado" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{reporteMB.estado}" />
+                    </p:panelGrid>
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style=" background-color:transparent;line-height: .1;border-right: 1px solid #7C7B7A;border-left: 1px solid #7C7B7A;">
+                        
+                        <h:outputText value="Descripción" style="float: right;font-weight: bold;"/>
+                        <h:inputTextarea rows="4" cols="95" value="#{reporteMB.row_selected.descripcion}" style="width: 70%;" disabled="true" />
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="background-color:transparent;border-right: 1px solid #7C7B7A;border-left: 1px solid #7C7B7A;border-bottom: 1px solid #7C7B7A;">
+                        <h:outputText value=""/>
+                    
+                    <p:dataTable id="dataTableGridEF" var="row" value="#{reporteMB.archivos_reportes}" selectionMode="single" reflow="true" 
+                                 rowKey="#{row.idMultimedio}" paginator="false" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                        <p:column headerText="Nombre"  >
+                                <a href="#{facesContext.externalContext.requestContextPath}#{row.url}" target="_blank">                                    
+                                    <h:outputText value="#{row.fileName}"/>
+                                </a>                                
+			    </p:column>
+                            <p:column headerText="Fecha Creación" >
+                                <h:outputText    value="#{row.fechaCreo}" />
+			    </p:column>
+
+                    </p:dataTable>
+                        <h:outputText value=""/>
+                    </p:panelGrid>    
+                    
+                    <!--                               Respuestas                             -->
+                    <p:repeat id="seguimientoReporte" value="#{reporteMB.seguimiento_List}" var="rowInner" varStatus="status" >
+                    
+                    
+                    <p:spacer height="5"/>
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style=" background-color:transparent;line-height: .1;border-top: 1px solid #7C7B7A;border-right: 1px solid #7C7B7A;border-left: 1px solid #7C7B7A;">
+                        <h:outputText value=""/><h:outputText value=""/><h:outputText value=""/><h:outputText value=""/>
+                        <h:outputText value="Area" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{rowInner.areaResponsable.clave}"/>
+                        <h:outputText value="Responsable" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{rowInner.responsableEstacion.empleado.usuario.emailUsuario}"/>
+                        <h:outputText value="Estación" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{rowInner.proveedorEstacion.estacion.claveIata}"/>
+                        <h:outputText value="Proveedor" style="float: right;font-weight: bold;"/>
+                        <h:outputText value="#{rowInner.proveedorEstacion.claveProveedorEstacion}"/>
+                        <h:outputText value=""/><h:outputText value=""/><h:outputText value="Fecha" style="float: right;font-weight: bold;"/><h:outputText value="#{rowInner.fecha}"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style=" background-color:transparent;line-height: .1;border-right: 1px solid #7C7B7A;border-left: 1px solid #7C7B7A;">
+                        
+                        <h:outputText value="Descripción" style="float: right;font-weight: bold;"/>
+                        <h:inputTextarea rows="4" cols="95" value="#{rowInner.mensajeRespuesta}" style="width: 70%;" disabled="true" />
+                        
+                    </p:panelGrid>
+                    <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank form-group" style="background-color:transparent;border-right: 1px solid #7C7B7A;border-left: 1px solid #7C7B7A;border-bottom: 1px solid #7C7B7A;">
+                        <h:outputText value=""/>
+                    
+                        <p:dataTable  var="row" value="#{reporteMB.fill_evidenciaList(rowInner.idSeguimiento)}" selectionMode="single" reflow="true" 
+                                      rowKey="#{row.idMultimedio}" paginator="false" rows="10" emptyMessage="No se encontraron registros."  paginatorPosition="bottom" editable="false" >
+                        <p:column headerText="Nombre"  >
+                                <a href="#{facesContext.externalContext.requestContextPath}#{row.url}" target="_blank">                                    
+                                    <h:outputText value="#{row.fileName}"/>
+                                </a>                                
+			    </p:column>
+                            <p:column headerText="Fecha Creación" >
+                                <h:outputText    value="#{row.fechaCreo}" />
+			    </p:column>
+
+                    </p:dataTable>
+                        <h:outputText value=""/>
+                    </p:panelGrid>
+                    </p:repeat>
+                    <!-- ................................Respuestas  FIN.................................... -->
+                    
+                    
+                    <p:spacer height="15"/>
+                       
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                        <p:commandButton id="reasignarButton" value="Reasignar Responsable" icon="ui-icon-save" ajax="true" action="#{reporteMB.reasignarReporte}" immediate="true" process="@form @this" update="group_reasignar,reasignarButton,confirmarResponsable,group_aceptarBoton"  style="background-color: #{reporteMB.reasignar?'#7C7B7A':'#3F51B5'}"  
+                                         rendered="#{(!reporteMB.isCancelado and !reporteMB.isConfirmado and  !reporteMB.is_SUPPLIER)  or (reporteMB.isAdministrador and  !reporteMB.is_SUPPLIER) }"/>
+                        <h:panelGroup id="group_aceptarBoton" > 
+                            <p:commandButton id="aceptarReporteButton" value="Aceptar Reporte" icon="ui-icon-update" ajax="false" action="#{reporteMB.aceptarReporte}" rendered="#{!reporteMB.reasignar and !reporteMB.isCancelado and !reporteMB.isConfirmado and !reporteMB.isAdministrador}"/> 
+                            <p:commandButton id="confirmarResponsable" value="Confirmar Responsable" icon="ui-icon-save" ajax="false" action="#{reporteMB.confirmarResponsable}" rendered="#{reporteMB.reasignar}"/>
+                            <p:commandButton id="cerrarResponsable" value="Cerrar Reporte" icon="ui-icon-save" ajax="false" action="#{reporteMB.cerrarReporte}" rendered="#{reporteMB.isConfirmado}"/>
+                        </h:panelGroup>
+                        
+                    </p:panelGrid>
+                    
+                    <h:panelGroup id="group_reasignar" >
+                        <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group" rendered="#{reporteMB.reasignar}">
+                                <p:selectOneRadio  value="#{reporteMB.asignedTipoResponsable}" columns="2" style="width:95%" rendered="#{reporteMB.reasignar}" >
+                                        <f:selectItems value="#{reporteMB.selectTiposResponsables}"  />
+                                        <p:ajax update="area,responsableEstacion,estacion,proveedor"  listener="#{reporteMB.limpiarasignacion}" />
+                                </p:selectOneRadio>
+                        </p:panelGrid>
+                        <p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank form-group" rendered="#{reporteMB.reasignar}">
+                            <p:outputLabel for="area" value="Área" style="float: right;font-weight: bold;"/>
+                            <h:panelGroup id="area"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{reporteMB.asignedArea}"   style="width: 90%;">
+                                    <f:selectItems value="#{reporteMB.selectAreas}" />
+                                    <p:ajax update="responsableEstacion"  listener="#{reporteMB.mostrarResponsablesEstación}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <p:outputLabel for="estacion" value="Estación" style="float: right;font-weight: bold;"/>
+                            <h:panelGroup id="estacion"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{reporteMB.asignedEstacion}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{reporteMB.selectEstaciones}" />
+                                    <p:ajax update="proveedor"  listener="#{reporteMB.mostrarProveedoresEstación}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            
+                             <p:outputLabel for="responsableEstacion" value="Responsable de Estación" style="float: right;"/>
+                            <h:panelGroup id="responsableEstacion"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{reporteMB.asignedResponsable}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{reporteMB.selectResponsables}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                              <p:outputLabel for="proveedor" value="Proveedor" style="float: right;"/>
+                            <h:panelGroup id="proveedor"  styleClass="md-inputfield">
+                                <p:selectOneMenu  value="#{reporteMB.asignedProveedor}"   filter="true" filterMatchMode="startsWith" style="width: 90%;">
+                                    <f:selectItems value="#{reporteMB.selectProveedores}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </h:panelGroup>
+                    
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                        <h:outputText value="Observaciones" style="float: right;font-weight: bold;" rendered="#{!reporteMB.isCancelado}"/>
+                        <h:inputTextarea rows="4" cols="95"  style="width: 70%;"  value="#{reporteMB.observaciones}" rendered="#{!reporteMB.isCancelado}"/>
+                        
+                    </p:panelGrid>
+                    <br />
+                    <p:fileUpload id="fileUpload"  rendered="#{!reporteMB.isCancelado}"
+                            fileUploadListener="#{reporteMB.fileListener}" mode="advanced" cancelLabel="#{res_i18n.CANCEL}" uploadLabel="CARGAR"
+                            immediate="true" label="Carga archivo(s)" fileLimit="5" 
+                            fileLimitMessage="La carga esta limitada a 5 archivos"  multiple="true"
+                            update=":form:fileUploadMsg" 
+                            process=":form" />
+                            <p:message for="fileUpload" id="fileUploadMsg" />
+                    <br />
+                    
+                    
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>   

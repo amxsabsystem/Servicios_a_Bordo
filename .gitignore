@@ -7,6 +7,14 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+.classpath
+.project
+.settings
+
+AMX-SAB/db_resources/model/exported/data.zip
+AMX-PAB/AMX-PAB-BackEnd/AMX-PAB-BackEnd-ear/nb-configuration.xml
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
+/AMX-SAB-BackEnd/AMX-SAB-BackEnd-persistence/nbproject/
+/AMX-PAB/AMX-PAB-remote/nbproject/

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AMX_TSU_report1" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6375889b-3d07-484b-8fe4-58559f02241b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="cveTsu" class="java.lang.String"/>
+	<parameter name="nombreClase" class="java.lang.String"/>
+	<parameter name="notas" class="java.lang.String"/>
+	<parameter name="urlImagenTSU" class="java.net.URL"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="equipo" class="java.lang.String"/>
+	<field name="noParte" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.String"/>
+	<background>
+		<band height="736" splitType="Stretch">
+			<image isLazy="true" onErrorType="Blank">
+				<reportElement x="-20" y="0" width="612" height="110" uuid="59ba92fc-ce81-4ffa-aa38-7ea30e00f49b"/>
+				<imageExpression><![CDATA["resportsDesigns/images/AMX_REPORTES_header.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="360" y="10" width="185" height="40" backcolor="#FFFF00" uuid="7059c4b8-3dc0-4fe1-8e8c-dba0b61ddc75"/>
+				<textElement verticalAlignment="Middle">
+					<font size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TSU: "+$P{cveTsu}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="570" height="30" backcolor="#D6D6D6" uuid="3ff02756-6227-4cd0-a54b-99ece31d67c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{nombreClase}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="-1" width="330" height="30" uuid="e3b156b7-7da6-43dd-a7e9-c06d8f76d278"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{equipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="-1" width="150" height="30" uuid="4e23b0c2-98d4-4454-bfce-6b4a95a5cbab"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{noParte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="-1" width="90" height="30" uuid="e6182cd1-dc24-48ef-b456-22e215c4d65c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="1" y="0" width="569" height="19" backcolor="#D6D6D6" uuid="cbc6deb3-739d-4b11-968a-4031992484b9"/>
+				<textFieldExpression><![CDATA["Notas :"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="0" y="19" width="570" height="26" backcolor="#D6D6D6" uuid="db0ab120-b36f-4dac-ad72-f5a3f970d10a"/>
+				<textFieldExpression><![CDATA[$P{notas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="480" y="0" width="97" height="7" uuid="df880248-5786-4107-9f69-3f1df891ad9f"/>
+				<textElement textAlignment="Right">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["P\u00C1GINA "+$V{PAGE_NUMBER}+" DE"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="156">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="1" y="0" width="569" height="156" uuid="36f4d789-6b3b-4037-a2d2-215663dc600d"/>
+				<imageExpression><![CDATA[$P{urlImagenTSU}]]></imageExpression>
+			</image>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

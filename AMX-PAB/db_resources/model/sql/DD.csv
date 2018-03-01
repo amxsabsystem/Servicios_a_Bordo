@@ -1,0 +1,827 @@
+,TABLE_NAME,COLUMN_NAME,OBJECT_NAME,LABEL,SQL_TYPE,PRESCISION,IS_PK,IS_FK,AUTO++,NULLABLE,DESCRIPTION
+,PARAMETRO,,Parametro,,"Parametro",,,,
+,,id_parametro,IdParametro,"Id Parametro",INT,0,true,false,true,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,valor_es,ValorEs,"Valor Es",VARCHAR,255,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,clave,Clave,"Clave",VARCHAR,50,false,false,false,false
+,,valor_en,ValorEn,"Valor En",VARCHAR,255,false,false,false,false
+,REGION,,Region,,"Region",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_region,IdRegion,"Id Region",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,cve_region,CveRegion,"Cve Region",VARCHAR,3,false,false,false,false
+,,nombre,Nombre,"Nombre",VARCHAR,50,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,PAIS,,Pais,,"Pais",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_region,IdRegion,"Id Region",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_pais,IdPais,"Id Pais",INT,0,true,false,true,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,nombre,Nombre,"Nombre",VARCHAR,50,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,CIUDAD,,Ciudad,,"Ciudad",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_ciudad,IdCiudad,"Id Ciudad",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_pais,IdPais,"Id Pais",INT,0,false,true,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,nombre,Nombre,"Nombre",VARCHAR,50,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,ESTACION,,Estacion,,"Estacion",,,,
+,,observaciones,Observaciones,"Observaciones",VARCHAR,150,false,false,false,true
+,,id_ciudad,IdCiudad,"Id Ciudad",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,clave_iata,ClaveIata,"Clave Iata",VARCHAR,3,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_estacion,IdEstacion,"Id Estacion",INT,0,true,false,true,false
+,,nombre,Nombre,"Nombre",VARCHAR,100,false,false,false,false
+,CLASE,,Clase,,"Clase",,,,
+,,id_clase,IdClase,"Id Clase",INT,0,true,false,true,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,nombre_esp,NombreEsp,"Nombre Esp",VARCHAR,50,false,false,false,false
+,,nombre_eng,NombreEng,"Nombre Eng",VARCHAR,64,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,clave,Clave,"Clave",VARCHAR,10,false,false,false,false
+,COMPANIA,,Compania,,"Compania",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_compania,IdCompania,"Id Compania",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,cve_compania,CveCompania,"Cve Compania",VARCHAR,3,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,nombre,Nombre,"Nombre",VARCHAR,50,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,AREA,,Area,,"Area",,,,
+,,nombre_en,NombreEn,"Nombre En",VARCHAR,50,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_area,IdArea,"Id Area",INT,0,true,false,true,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,mime_type,MimeType,"Mime Type",VARCHAR,64,false,false,false,true
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,clave,Clave,"Clave",VARCHAR,6,false,false,false,false
+,,url_multimedia,UrlMultimedia,"Url Multimedia",VARCHAR,255,false,false,false,true
+,,nombre_es,NombreEs,"Nombre Es",VARCHAR,50,false,false,false,false
+,PROVEEDOR,,Proveedor,,"PROVEEDOR_CORPORATIVO",,,,
+,,fecha_modifico,FechaModifico,,TIMESTAMP,0,false,false,false,false
+,,status,Status,,TINYINT,0,false,false,false,false
+,,clave_proveedor,ClaveProveedor,,VARCHAR,10,true,false,false,false
+,,fecha_creo,FechaCreo,,TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,,VARCHAR,100,false,false,false,false
+,,razon_social,RazonSocial,,VARCHAR,150,false,false,false,true
+,,nombre,Nombre,,VARCHAR,50,false,false,false,false
+,,usuario_creo,UsuarioCreo,,VARCHAR,100,false,false,false,false
+,MODELO_AVION,,ModeloAvion,,"Modelo Avion",,,,
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,true,false,true,false
+,,modelo,Modelo,"Modelo",VARCHAR,50,false,false,false,false
+,,descripcion,Descripcion,"Descripcion",VARCHAR,200,false,false,false,true
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,id_compania,IdCompania,"Id Compania",INT,0,false,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_tipo_cabina,IdTipoCabina,"Id Tipo Cabina",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_fabricante,IdFabricante,"Id Fabricante",INT,0,false,true,false,false
+,USUARIO,,Usuario,,"Usuario",,,,
+,,apellido_paterno,ApellidoPaterno,"Apellido Paterno",VARCHAR,50,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,email_usuario,EmailUsuario,"Email Usuario",VARCHAR,100,true,false,false,false
+,,apellido_materno,ApellidoMaterno,"Apellido Materno",VARCHAR,50,false,false,false,true
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,tipo,Tipo,"Tipo",VARCHAR,1,false,false,false,false
+,,nombre,Nombre,"Nombre",VARCHAR,50,false,false,false,false
+,,contrasenia,Contrasenia,"Contrasenia",VARCHAR,255,false,false,false,false
+,CODIGO_SERVICIO,,CodigoServicio,,"Codigo Servicio",,,,
+,,descripcion,Descripcion,"Descripcion",VARCHAR,64,false,false,false,false
+,,id_codigo_servicio,IdCodigoServicio,"Id Codigo Servicio",INT,0,true,false,true,false
+,,id_clase,IdClase,"Id Clase",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,id_tipo_ciclo,IdTipoCiclo,"Id Tipo Ciclo",INT,0,false,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_tipo_codigo_servicio,IdTipoCodigoServicio,"Id Tipo Codigo Servicio",INT,0,false,true,false,false
+,,cve_codigo_servicio,CveCodigoServicio,"Cve Codigo Servicio",VARCHAR,16,false,false,false,false
+,MULTIMEDIO,,Multimedio,,"Multimedio",,,,
+,,url,Url,"Url",VARCHAR,255,false,false,false,false
+,,hash_md5,HashMd5,"Hash Md5",VARCHAR,32,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,url_local,UrlLocal,"Url Local",VARCHAR,255,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,file_name,FileName,"File Name",VARCHAR,255,false,false,false,true
+,,mime_type,MimeType,"Mime Type",VARCHAR,64,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_multimedio,IdMultimedio,"Id Multimedio",INT,0,true,false,true,false
+,,size,Size,"Size",INT,0,false,false,false,false
+,PROVEEDOR_ESTACION,,ProveedorEstacion,,"Proveedor Estacion",,,,
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,clave_proveedor,ClaveProveedor,"Clave Proveedor",VARCHAR,10,false,true,false,false
+,,razon_social,RazonSocial,"Razon Social",VARCHAR,50,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_estacion,IdEstacion,"Id Estacion",INT,0,false,true,false,false
+,,clave_proveedor_estacion,ClaveProveedorEstacion,"Clave Proveedor Estacion",VARCHAR,6,false,false,false,false
+,,id_proveedor_estacion,IdProveedorEstacion,"Id Proveedor Estacion",INT,0,true,false,true,false
+,TABLA_ABORDAMIENTO,,TablaAbordamiento,,"TABLA_DE_ABORDAMIENTO",,,,
+,,todos_modelos_avion,TodosModelosAvion,,INT,0,false,false,false,true
+,,id_origen_vuelo,IdOrigenVuelo,,INT,0,false,true,false,false
+,,aplica_tsu,AplicaTsu,,TINYINT,0,false,false,false,true
+,,aplica_sobreabordaje,AplicaSobreabordaje,,TINYINT,0,false,false,false,true
+,,id_codigo_servicio,IdCodigoServicio,,INT,0,false,true,false,false
+,,id_clase,IdClase,,INT,0,false,true,false,false
+,,status,Status,,TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,,VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,,TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,,VARCHAR,100,false,false,false,false
+,,revision,Revision,,INT,0,false,false,false,false
+,,fecha_creo,FechaCreo,,TIMESTAMP,0,false,false,false,false
+,,todas_regiones,TodasRegiones,,TINYINT,0,false,false,false,true
+,,id_tabla_abordamiento,IdTablaAbordamiento,,INT,0,true,false,true,false
+,EMPLEADO,,Empleado,,"Empleado",,,,
+,,puesto_es,PuestoEs,"Puesto Es",VARCHAR,64,false,false,false,false
+,,puesto_en,PuestoEn,"Puesto En",VARCHAR,64,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,email_usuario,EmailUsuario,"Email Usuario",VARCHAR,100,false,true,false,false
+,,id_area,IdArea,"Id Area",INT,0,false,true,false,false
+,,email_jefe,EmailJefe,"Email Jefe",VARCHAR,100,false,false,false,true
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,directorio_sab,DirectorioSab,"Directorio Sab",TINYINT,0,false,false,false,false
+,,id_compania,IdCompania,"Id Compania",INT,0,false,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_empleado,IdEmpleado,"Id Empleado",INT,0,true,false,true,false
+,,telefono,Telefono,"Telefono",VARCHAR,25,false,false,false,true
+,,id_estacion,IdEstacion,"Id Estacion",INT,0,false,true,false,true
+,,extension,Extension,"Extension",VARCHAR,10,false,false,false,true
+,CATEGORIA_MATERIAL,,CategoriaMaterial,,"Categoria Material",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_categoria_material,IdCategoriaMaterial,"Id Categoria Material",INT,0,true,false,true,false
+,,nombre_es,NombreEs,"Nombre Es",VARCHAR,50,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,nombre_en,NombreEn,"Nombre En",VARCHAR,50,false,false,false,true
+,MATERIAL,,Material,,"Material",,,,
+,,descripcion_es,DescripcionEs,"Descripcion Es",VARCHAR,255,false,false,false,false
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,true,false,false,false
+,,descripcion_en,DescripcionEn,"Descripcion En",VARCHAR,255,false,false,false,true
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,tipo_abastecimiento,TipoAbastecimiento,"Tipo Abastecimiento",INT,0,false,true,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,mime_type,MimeType,"Mime Type",VARCHAR,64,false,false,false,true
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_categoria_material,IdCategoriaMaterial,"Id Categoria Material",INT,0,false,true,false,false
+,,peso,Peso,"Peso",DECIMAL,19,false,false,false,false
+,,url_multimedia,UrlMultimedia,"Url Multimedia",VARCHAR,255,false,false,false,true
+,RESPONSABLE_ESTACION,,ResponsableEstacion,,"Responsable Estacion",,,,
+,,id_empleado_jefe,IdEmpleadoJefe,"Id Empleado Jefe",INT,0,false,true,false,false
+,,id_responsable_estacion,IdResponsableEstacion,"Id Responsable Estacion",INT,0,true,false,true,false
+,,id_area,IdArea,"Id Area",INT,0,false,true,false,false
+,,id_estacion,IdEstacion,"Id Estacion",INT,0,false,true,false,false
+,,id_empleado,IdEmpleado,"Id Empleado",INT,0,false,true,false,false
+,TIPO_PRODUCTO_REPORTE,,TipoProductoReporte,,"Tipo Producto Reporte",,,,
+,,estatus,Estatus,"Estatus",INT,0,false,true,false,false
+,,descripcion,Descripcion,"Descripcion",VARCHAR,20,false,false,false,false
+,,id_tipo_producto_reporte,IdTipoProductoReporte,"Id Tipo Producto Reporte",INT,0,true,false,true,false
+,TIPO_EQUIPO_AVION,,TipoEquipoAvion,,"Tipo Equipo Avion",,,,
+,,id_tipo_equipo_avion,IdTipoEquipoAvion,"Id Tipo Equipo Avion",INT,0,true,false,true,false
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,false,true,false,false
+,,total_aviones,TotalAviones,"Total Aviones",TINYINT,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,tipo_equipo,TipoEquipo,"Tipo Equipo",VARCHAR,6,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,TSU,,Tsu,,"tsu_operaciones",,,,
+,,id_idioma,IdIdioma,,INT,0,false,true,false,false
+,,fecha_vigencia_fin,FechaVigenciaFin,,DATE,0,false,false,false,true
+,,id_clase,IdClase,,INT,0,false,true,false,false
+,,status,Status,,TINYINT,0,false,false,false,false
+,,id_revision,IdRevision,,INT,0,false,true,false,false
+,,cve_tsu,CveTsu,,VARCHAR,10,false,false,false,false
+,,usuario_modifico,UsuarioModifico,,VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,,TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,,VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,,TIMESTAMP,0,false,false,false,false
+,,id_multimedio,IdMultimedio,,INT,0,false,true,false,false
+,,fecha_vigencia_inicio,FechaVigenciaInicio,,DATE,0,false,false,false,true
+,,id_tsu,IdTsu,,INT,0,true,false,true,false
+,,notas,Notas,,VARCHAR,512,false,false,false,true
+,AVION,,Avion,,"Avion",,,,
+,,id_tipo_equipo_avion,IdTipoEquipoAvion,"Id Tipo Equipo Avion",INT,0,false,true,false,false
+,,matricula,Matricula,"Matricula",VARCHAR,50,false,false,false,false
+,,id_conectividad,IdConectividad,"Id Conectividad",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,id_avion,IdAvion,"Id Avion",INT,0,true,false,true,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,matricula_corta,MatriculaCorta,"Matricula Corta",VARCHAR,10,false,false,false,false
+,VUELO,,Vuelo,,"Vuelo",,,,
+,,id_estacion_destino,IdEstacionDestino,"Id Estacion Destino",INT,0,false,true,false,false
+,,id_vuelo,IdVuelo,"Id Vuelo",INT,0,true,false,true,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,id_estacion_origen,IdEstacionOrigen,"Id Estacion Origen",INT,0,false,true,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,id_compania,IdCompania,"Id Compania",INT,0,false,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_tipo_cabina,IdTipoCabina,"Id Tipo Cabina",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,numero_vuelo,NumeroVuelo,"Numero Vuelo",INT,0,false,false,false,false
+,KIT_MASTER,,KitMaster,,"Kit Master",,,,
+,,id_unidad_medida,IdUnidadMedida,"Id Unidad Medida",INT,0,false,true,false,false
+,,contenedor,Contenedor,"Contenedor",VARCHAR,50,false,false,false,true
+,,nombre_en,NombreEn,"Nombre En",VARCHAR,50,false,false,false,false
+,,cve_kit_master,CveKitMaster,"Cve Kit Master",VARCHAR,50,true,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_instrucciones_nacionales,IdInstruccionesNacionales,"Id Instrucciones Nacionales",INT,0,false,true,false,false
+,,id_tipo_kit,IdTipoKit,"Id Tipo Kit",INT,0,false,true,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,mime_type,MimeType,"Mime Type",VARCHAR,64,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_multimedio,IdMultimedio,"Id Multimedio",INT,0,false,true,false,true
+,,url_multimedia,UrlMultimedia,"Url Multimedia",VARCHAR,255,false,false,false,false
+,,id_instrucciones_internac,IdInstruccionesInternac,"Id Instrucciones Internac",INT,0,false,true,false,false
+,,nombre_es,NombreEs,"Nombre Es",VARCHAR,50,false,false,false,false
+,PRODUCTO,,Producto,,"Producto",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_producto,IdProducto,"Id Producto",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,nombre,Nombre,"Nombre",VARCHAR,128,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,TEMA_COMUNICADO,,TemaComunicado,,"Tema Comunicado",,,,
+,,tema_ingles,TemaIngles,"Tema Ingles",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_tema_comunicado,IdTemaComunicado,"Id Tema Comunicado",INT,0,true,false,true,false
+,,tema_espaniol,TemaEspaniol,"Tema Espaniol",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,DETALLE_TABLA_COMPLEMENTARIO,,DetalleTablaComplementario,,"Detalle Tabla Complementario",,,,
+,,aplica_material_extra,AplicaMaterialExtra,"Aplica Material Extra",TINYINT,0,false,false,false,true
+,,porcentaje,Porcentaje,"Porcentaje",INT,0,false,false,false,false
+,,aplica_kit,AplicaKit,"Aplica Kit",TINYINT,0,false,false,false,true
+,,aplica_cantidad_vuelo,AplicaCantidadVuelo,"Aplica Cantidad Vuelo",TINYINT,0,false,false,false,true
+,,aplica_pax,AplicaPax,"Aplica Pax",TINYINT,0,false,false,false,true
+,,nombre_complementario,NombreComplementario,"Nombre Complementario",VARCHAR,90,false,false,false,false
+,,id_detalle_tabla_complementario,IdDetalleTablaComplementario,"Id Detalle Tabla Complementario",INT,0,true,false,true,false
+,,id_tabla_abordamiento,IdTablaAbordamiento,"Id Tabla Abordamiento",INT,0,false,true,false,false
+,REPORTE,,Reporte,,"Reporte",,,,
+,,id_reporte,IdReporte,"Id Reporte",INT,0,true,false,true,false
+,,id_tipo_producto_reporte,IdTipoProductoReporte,"Id Tipo Producto Reporte",INT,0,false,true,false,true
+,,id_estatus_reporte_actual,IdEstatusReporteActual,"Id Estatus Reporte Actual",INT,0,false,true,false,true
+,,clave_reporte,ClaveReporte,"Clave Reporte",VARCHAR,20,false,false,false,false
+,,id_responsable_proveedor_estacion_final,IdResponsableProveedorEstacionFinal,"Id Responsable Proveedor Estacion Final",INT,0,false,true,false,true
+,,descripcion,Descripcion,"Descripcion",VARCHAR,150,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_responsable_amx,IdResponsableAmx,"Id Responsable Amx",INT,0,false,true,false,true
+,,id_vuelo,IdVuelo,"Id Vuelo",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,id_area_responsable,IdAreaResponsable,"Id Area Responsable",INT,0,false,true,false,true
+,,id_responsable_proveedor_estacion,IdResponsableProveedorEstacion,"Id Responsable Proveedor Estacion",INT,0,false,true,false,true
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_responsable_final_amx,IdResponsableFinalAmx,"Id Responsable Final Amx",INT,0,false,true,false,true
+,,fecha_vuelo,FechaVuelo,"Fecha Vuelo",DATE,0,false,false,false,false
+,,id_clase,IdClase,"Id Clase",INT,0,false,true,false,false
+,,id_tipo_reporte,IdTipoReporte,"Id Tipo Reporte",INT,0,false,true,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,COMUNICADO,,Comunicado,,"Comunicado",,,,
+,,estatus_comunicado,EstatusComunicado,"Estatus Comunicado",INT,0,false,true,false,false
+,,fecha_fin_publicacion,FechaFinPublicacion,"Fecha Fin Publicacion",DATE,0,false,false,false,true
+,,no_revision,NoRevision,"No Revision",TINYINT,0,false,false,false,false
+,,fecha_inicio_publicacion,FechaInicioPublicacion,"Fecha Inicio Publicacion",DATE,0,false,false,false,false
+,,dirigido_si_no,DirigidoSiNo,"Dirigido Si No",TINYINT,0,false,false,false,true
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_area,IdArea,"Id Area",INT,0,false,true,false,false
+,,mensaje,Mensaje,"Mensaje",VARCHAR,1024,false,false,false,false
+,,titulo,Titulo,"Titulo",VARCHAR,255,false,false,false,false
+,,id_idioma,IdIdioma,"Id Idioma",INT,0,false,true,false,false
+,,id_empleado,IdEmpleado,"Id Empleado",INT,0,false,true,false,false
+,,mensaje_slider,MensajeSlider,"Mensaje Slider",VARCHAR,30,false,false,false,true
+,,ref_otro_comunicado,RefOtroComunicado,"Ref Otro Comunicado",VARCHAR,15,false,false,false,true
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,id_tema,IdTema,"Id Tema",INT,0,false,true,false,false
+,,referencia,Referencia,"Referencia",VARCHAR,15,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_comunicado,IdComunicado,"Id Comunicado",INT,10,true,false,true,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,accion_comunicado,AccionComunicado,"Accion Comunicado",INT,0,false,true,false,true
+,CONTACTO_PROVEEDOR_ESTACION,,ContactoProveedorEstacion,,"Contacto Proveedor Estacion",,,,
+,,apellido_materno,ApellidoMaterno,"Apellido Materno",VARCHAR,50,false,false,false,false
+,,id_proveedor_estacion,IdProveedorEstacion,"Id Proveedor Estacion",INT,0,false,true,false,false
+,,nombre,Nombre,"Nombre",VARCHAR,50,false,false,false,false
+,,puesto_area_es,PuestoAreaEs,"Puesto Area Es",VARCHAR,150,false,false,false,true
+,,id_estacion,IdEstacion,"Id Estacion",INT,0,false,true,false,false
+,,puesto_area_en,PuestoAreaEn,"Puesto Area En",VARCHAR,150,false,false,false,true
+,,id_contacto_proveedor_estacion,IdContactoProveedorEstacion,"Id Contacto Proveedor Estacion",INT,0,true,false,true,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,email_usuario,EmailUsuario,"Email Usuario",VARCHAR,100,false,true,false,true
+,,apellido_paterno,ApellidoPaterno,"Apellido Paterno",VARCHAR,50,false,false,false,false
+,,extension,Extension,"Extension",VARCHAR,5,false,false,false,true
+,,directorio_pab,DirectorioPab,"Directorio Pab",TINYINT,0,false,false,false,false
+,,telefono,Telefono,"Telefono",VARCHAR,15,false,false,false,true
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,clave_proveedor,ClaveProveedor,"Clave Proveedor",VARCHAR,10,false,true,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,GRAFICO,,Grafico,,"Grafico",,,,
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,false,true,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_grafico,IdGrafico,"Id Grafico",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_idioma,IdIdioma,"Id Idioma",INT,0,false,true,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,CRITERIO_IRREGULARIDAD,,CriterioIrregularidad,,"Criterio Irregularidad",,,,
+,,estatus,Estatus,"Estatus",INT,0,false,true,false,false
+,,descripcion,Descripcion,"Descripcion",VARCHAR,30,false,false,false,false
+,,id_criterio_irregularidad,IdCriterioIrregularidad,"Id Criterio Irregularidad",INT,0,true,false,true,false
+,PERFIL,,Perfil,,"Perfil",,,,
+,,descripcion_en,DescripcionEn,"Descripcion En",VARCHAR,128,false,false,false,false
+,,perfil,Perfil,"Perfil",VARCHAR,50,true,false,false,false
+,,descripcion_es,DescripcionEs,"Descripcion Es",VARCHAR,128,false,false,false,false
+,TSU_ABORDAMIENTO,,TsuAbordamiento,,"Tsu Abordamiento",,,,
+,,porcentaje,Porcentaje,"Porcentaje",INT,0,false,false,false,true
+,,id_tsu,IdTsu,"Id Tsu",INT,0,false,true,false,false
+,,id_tsu_abordamiento,IdTsuAbordamiento,"Id Tsu Abordamiento",INT,0,true,false,true,false
+,,id_tabla_abordamiento,IdTablaAbordamiento,"Id Tabla Abordamiento",INT,0,false,true,false,false
+,TIPO_IRREGULARIDAD,,TipoIrregularidad,,"Tipo Irregularidad",,,,
+,,estatus,Estatus,"Estatus",INT,0,false,true,false,false
+,,descripcion,Descripcion,"Descripcion",VARCHAR,30,false,false,false,false
+,,id_tipo_irregularidad,IdTipoIrregularidad,"Id Tipo Irregularidad",INT,0,true,false,true,false
+,ACOMODO_DETALLE,,AcomodoDetalle,,"Acomodo Detalle",,,,
+,,id_acomodo_detalle,IdAcomodoDetalle,"Id Acomodo Detalle",INT,0,true,false,true,false
+,,url_acomodo,UrlAcomodo,"Url Acomodo",VARCHAR,255,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,anio_rev,AnioRev,"Anio Rev",INT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,mime_type,MimeType,"Mime Type",VARCHAR,64,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,no_rev,NoRev,"No Rev",TINYINT,0,false,false,false,false
+,OPCION_MENU,,OpcionMenu,,"Opcion Menu",,,,
+,,clave_i18n,ClaveI18n,"Clave I18n",VARCHAR,256,false,false,false,false
+,,id_opcion_menu,IdOpcionMenu,"Id Opcion Menu",INT,0,true,false,true,false
+,SEGUIMIENTO,,Seguimiento,,"Seguimiento",,,,
+,,fecha,Fecha,"Fecha",TIMESTAMP,0,false,false,false,false
+,,id_seguimiento,IdSeguimiento,"Id Seguimiento",INT,0,true,false,true,false
+,,id_contacto_proveedor_estacion,IdContactoProveedorEstacion,"Id Contacto Proveedor Estacion",INT,0,false,true,false,true
+,,id_responsable_estacion,IdResponsableEstacion,"Id Responsable Estacion",INT,0,false,true,false,true
+,,mensaje_respuesta,MensajeRespuesta,"Mensaje Respuesta",VARCHAR,512,false,false,false,false
+,,id_reporte,IdReporte,"Id Reporte",INT,0,false,true,false,false
+,,id_proveedor_estacion,IdProveedorEstacion,"Id Proveedor Estacion",INT,0,false,true,false,true
+,,id_area_responsable,IdAreaResponsable,"Id Area Responsable",INT,0,false,true,false,true
+,CICLO,,Ciclo,,"Ciclo",,,,
+,,id_TipoCiclo,IdTipociclo,"Id Tipociclo",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_ciclo,IdCiclo,"Id Ciclo",INT,0,true,false,true,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,clave_proveedor,ClaveProveedor,"Clave Proveedor",VARCHAR,10,false,true,false,false
+,,id_region,IdRegion,"Id Region",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_estacion,IdEstacion,"Id Estacion",INT,0,false,true,false,false
+,,id_origenVuelo,IdOrigenvuelo,"Id Origenvuelo",INT,0,false,true,false,false
+,,doble_abastecido,DobleAbastecido,"Doble Abastecido",TINYINT,0,false,false,false,false
+,TIPO_PROVEEDOR,,TipoProveedor,,"Tipo Proveedor",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,nombre_es,NombreEs,"Nombre Es",VARCHAR,50,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,id_tipo_proveedor,IdTipoProveedor,"Id Tipo Proveedor",INT,0,true,false,true,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,nombre_en,NombreEn,"Nombre En",VARCHAR,50,false,false,false,false
+,PROCESO,,Proceso,,"PROCESOS",,,,
+,,id_idioma,IdIdioma,,INT,0,false,true,false,false
+,,titulo,Titulo,,VARCHAR,255,false,false,false,true
+,,status,Status,,TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,,VARCHAR,100,false,false,false,false
+,,tipo_proceso,TipoProceso,,INT,0,false,true,false,false
+,,fecha_modifico,FechaModifico,,TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,,VARCHAR,100,false,false,false,false
+,,revision,Revision,,INT,0,false,false,false,false
+,,fecha_creo,FechaCreo,,TIMESTAMP,0,false,false,false,false
+,,id_proceso,IdProceso,,INT,0,true,false,true,false
+,ACOMODO,,Acomodo,,"Acomodo",,,,
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,false,true,false,false
+,,id_estacion_destino,IdEstacionDestino,"Id Estacion Destino",INT,0,false,true,false,false
+,,id_idioma,IdIdioma,"Id Idioma",INT,0,false,true,false,false
+,,id_acomodo_detalle,IdAcomodoDetalle,"Id Acomodo Detalle",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,id_estacion_origen,IdEstacionOrigen,"Id Estacion Origen",INT,0,false,true,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_acomodo,IdAcomodo,"Id Acomodo",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,HORARIO_REGION,,HorarioRegion,,"Horario Region",,,,
+,,hora_fin,HoraFin,"Hora Fin",VARCHAR,5,false,false,false,false
+,,hora_inicio,HoraInicio,"Hora Inicio",VARCHAR,5,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_region,IdRegion,"Id Region",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_horario_region,IdHorarioRegion,"Id Horario Region",INT,0,true,false,true,false
+,DETALLE_TABLA_TSU,,DetalleTablaTsu,,"Detalle Tabla Tsu",,,,
+,,material_comisariato,MaterialComisariato,"Material Comisariato",VARCHAR,50,false,false,false,true
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,false,true,false,false
+,,id_detalle_tabla_tsu,IdDetalleTablaTsu,"Id Detalle Tabla Tsu",INT,0,true,false,false,false
+,,porcentaje,Porcentaje,"Porcentaje",INT,0,false,false,false,false
+,,instrucciones,Instrucciones,"Instrucciones",VARCHAR,100,false,false,false,true
+,,material_montaje,MaterialMontaje,"Material Montaje",VARCHAR,50,false,true,false,false
+,,material_amx,MaterialAmx,"Material Amx",VARCHAR,50,false,true,false,false
+,,detalle_tsu_abordajetsu_porcentaje,DetalleTsuAbordajetsuPorcentaje,"Detalle Tsu Abordajetsu Porcentaje",INT,0,false,true,false,true
+,,id_tsu,IdTsu,"Id Tsu",INT,0,false,true,false,false
+,,material_montaje_amx,MaterialMontajeAmx,"Material Montaje Amx",VARCHAR,50,false,true,false,false
+,,material_comisariato_montaje,MaterialComisariatoMontaje,"Material Comisariato Montaje",VARCHAR,50,false,false,false,true
+,,nombre_platillo,NombrePlatillo,"Nombre Platillo",VARCHAR,90,false,false,false,false
+,,id_tabla_abordamiento,IdTablaAbordamiento,"Id Tabla Abordamiento",INT,0,false,true,false,false
+,MATRIZ,,Matriz,,"Matriz",,,,
+,,id_tipo_equipo_avion,IdTipoEquipoAvion,"Id Tipo Equipo Avion",INT,0,false,true,false,false
+,,cantidad_CY,CantidadCy,"Cantidad Cy",INT,0,false,false,false,false
+,,cve_kit_master,CveKitMaster,"Cve Kit Master",VARCHAR,50,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,id_producto,IdProducto,"Id Producto",INT,0,false,true,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_matriz,IdMatriz,"Id Matriz",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,cantidad_CJ,CantidadCj,"Cantidad Cj",INT,0,false,false,false,false
+,,total_cantidad_CJ_CY,TotalCantidadCjCy,"Total Cantidad Cj Cy",INT,0,false,false,false,false
+,DURACION_VUELOS,,DuracionVuelos,,"Duracion Vuelos",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,tiempo_fin,TiempoFin,"Tiempo Fin",VARCHAR,5,false,false,false,false
+,,tiempo_inicio,TiempoInicio,"Tiempo Inicio",VARCHAR,5,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_duracion_vuelos,IdDuracionVuelos,"Id Duracion Vuelos",INT,0,true,false,true,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,SISTEMA_ENTRETENIMIENTO,,SistemaEntretenimiento,,"Sistema Entretenimiento",,,,
+,,descripcion,Descripcion,"Descripcion",VARCHAR,200,false,false,false,true
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_sistema_entretenimiento,IdSistemaEntretenimiento,"Id Sistema Entretenimiento",INT,0,true,false,true,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,version,Version,"Version",VARCHAR,15,false,false,false,true
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,tipo,Tipo,"Tipo",VARCHAR,50,false,false,false,false
+,ASIGNACION_SERVICIO,,AsignacionServicio,,"Asignacion Servicio",,,,
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,false,true,false,false
+,,id_asignacion_servicio,IdAsignacionServicio,"Id Asignacion Servicio",INT,0,true,false,true,false
+,,id_origen,IdOrigen,"Id Origen",INT,0,false,true,false,false
+,,id_clase,IdClase,"Id Clase",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_region,IdRegion,"Id Region",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,REGION_ABORDAJE,,RegionAbordaje,,"Region Abordaje",,,,
+,,id_region,IdRegion,"Id Region",INT,0,false,true,false,false
+,,todas_estaciones,TodasEstaciones,"Todas Estaciones",TINYINT,0,false,false,false,true
+,,id_tabla_abordamiento,IdTablaAbordamiento,"Id Tabla Abordamiento",INT,0,false,true,false,false
+,,id_region_abordaje,IdRegionAbordaje,"Id Region Abordaje",INT,0,true,false,true,false
+,MATERIAL_KIT_MASTER,,MaterialKitMaster,,"Material Kit Master",,,,
+,,id_unidad_medida,IdUnidadMedida,"Id Unidad Medida",INT,0,false,true,false,false
+,,observaciones,Observaciones,"Observaciones",VARCHAR,255,false,false,false,true
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,true,true,false,false
+,,cve_kit_master,CveKitMaster,"Cve Kit Master",VARCHAR,50,true,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_instrucciones_nacionales,IdInstruccionesNacionales,"Id Instrucciones Nacionales",INT,0,false,true,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,cantidad,Cantidad,"Cantidad",INT,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,reciclable,Reciclable,"Reciclable",TINYINT,0,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_instrucciones_internac,IdInstruccionesInternac,"Id Instrucciones Internac",INT,0,false,true,false,false
+,REGION_ABORDAJE_ESTACION,,RegionAbordajeEstacion,,"Region Abordaje Estacion",,,,
+,,id_detalle_estacion_abordaje,IdDetalleEstacionAbordaje,"Id Detalle Estacion Abordaje",INT,0,true,false,true,false
+,,id_estacion,IdEstacion,"Id Estacion",INT,0,false,true,false,false
+,,id_region_abordaje,IdRegionAbordaje,"Id Region Abordaje",INT,0,false,true,false,true
+,SOBREABORDAJE,,Sobreabordaje,,"Sobreabordaje",,,,
+,,instrucciones,Instrucciones,"Instrucciones",VARCHAR,100,false,false,false,true
+,,cantidad,Cantidad,"Cantidad",TINYINT,0,false,false,false,false
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,false,true,false,false
+,,id_sobreabordaje,IdSobreabordaje,"Id Sobreabordaje",INT,0,true,false,true,false
+,,id_tabla_abordamiento,IdTablaAbordamiento,"Id Tabla Abordamiento",INT,0,false,true,false,false
+,AVION_CAPACIDAD,,AvionCapacidad,,"Avion Capacidad",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,capacidad,Capacidad,"Capacidad",INT,0,false,false,false,false
+,,id_avion,IdAvion,"Id Avion",INT,0,true,true,false,false
+,,id_clase,IdClase,"Id Clase",INT,0,true,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,AVION_SISTEMA_ENTRETENIMIENTO,,AvionSistemaEntretenimiento,,"Avion Sistema Entretenimiento",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,id_avion,IdAvion,"Id Avion",INT,0,true,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,id_sistema_entretenimiento,IdSistemaEntretenimiento,"Id Sistema Entretenimiento",INT,0,true,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,CICLO_COMPLEMENTARIO,,CicloComplementario,,"Ciclo Complementario",,,,
+,,id_detalle_tabla_complementario,IdDetalleTablaComplementario,"Id Detalle Tabla Complementario",INT,0,true,true,false,false
+,,id_ciclo_numero_temporada,IdCicloNumeroTemporada,"Id Ciclo Numero Temporada",INT,0,true,true,false,false
+,TSU_CICLO,,TsuCiclo,,"Tsu Ciclo",,,,
+,,id_detalle_tabla_tsu,IdDetalleTablaTsu,"Id Detalle Tabla Tsu",INT,0,true,true,false,false
+,,id_ciclo_numero_temporada,IdCicloNumeroTemporada,"Id Ciclo Numero Temporada",INT,0,true,true,false,false
+,PROVEEDOR_ESTACION_TIPO_PROVEEDOR,,ProveedorEstacionTipoProveedor,,"Proveedor Estacion Tipo Proveedor",,,,
+,,id_proveedor_estacion,IdProveedorEstacion,"Id Proveedor Estacion",INT,0,true,true,false,false
+,,id_tipo_proveedor,IdTipoProveedor,"Id Tipo Proveedor",INT,0,true,true,false,false
+,ASIGNACION_SERVICIO_DURACION,,AsignacionServicioDuracion,,"Asignacion Servicio Duracion",,,,
+,,id_asignacion_servicio,IdAsignacionServicio,"Id Asignacion Servicio",INT,0,false,true,false,false
+,,id_codigo_servicio,IdCodigoServicio,"Id Codigo Servicio",INT,0,false,true,false,false
+,,orden,Orden,"Orden",TINYINT,0,false,false,false,false
+,,no_secuencia,NoSecuencia,"No Secuencia",INT,0,false,false,false,true
+,,id_duracion_vuelos,IdDuracionVuelos,"Id Duracion Vuelos",INT,0,false,true,false,false
+,,id_Asignacion_Servicio_Duracion,IdAsignacionServicioDuracion,"Id Asignacion Servicio Duracion",INT,0,true,false,true,false
+,,id_horario_region,IdHorarioRegion,"Id Horario Region",INT,0,false,true,false,false
+,BITACORA_COMUNICADO,,BitacoraComunicado,,"Bitacora Comunicado",,,,
+,,fecha,Fecha,"Fecha",TIMESTAMP,0,false,false,false,false
+,,id_contacto_proveedor_estacion,IdContactoProveedorEstacion,"Id Contacto Proveedor Estacion",INT,0,false,true,false,false
+,,id_comunicado,IdComunicado,"Id Comunicado",INT,10,false,true,false,false
+,,id_proveedor_estacion,IdProveedorEstacion,"Id Proveedor Estacion",INT,0,false,true,false,false
+,,id_bitacora,IdBitacora,"Id Bitacora",INT,0,true,false,true,false
+,COMUNICADO_AREAS,,ComunicadoAreas,,"Comunicado Areas",,,,
+,,id_comunicado_aereas,IdComunicadoAereas,"Id Comunicado Aereas",INT,0,true,false,true,false
+,,id_area,IdArea,"Id Area",INT,0,false,true,false,false
+,,id_comunicado,IdComunicado,"Id Comunicado",INT,10,false,true,false,false
+,MATRIZ_DETALLE,,MatrizDetalle,,"Matriz Detalle",,,,
+,,total_cantidad_CY,TotalCantidadCy,"Total Cantidad Cy",INT,0,false,false,false,false
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,false,true,false,false
+,,id_matriz_detalle,IdMatrizDetalle,"Id Matriz Detalle",INT,0,true,false,true,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_matriz,IdMatriz,"Id Matriz",INT,0,false,true,false,false
+,,total_cantidad_CJ,TotalCantidadCj,"Total Cantidad Cj",INT,0,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,CONFIGURACION_REPORTE_DETALLE,,ConfiguracionReporteDetalle,,"Configuracion Reporte Detalle",,,,
+,,id_reporte_configuracion_detalle,IdReporteConfiguracionDetalle,"Id Reporte Configuracion Detalle",INT,0,true,false,true,false
+,,id_tipo_producto_reporte,IdTipoProductoReporte,"Id Tipo Producto Reporte",INT,0,false,true,false,false
+,,id_tipo_irregularidad,IdTipoIrregularidad,"Id Tipo Irregularidad",INT,0,false,true,false,false
+,,id_reporte,IdReporte,"Id Reporte",INT,0,false,true,false,false
+,,id_criterio_irregularidad,IdCriterioIrregularidad,"Id Criterio Irregularidad",INT,0,false,true,false,false
+,EQUIPAMIENTO_FIJO,,EquipamientoFijo,,"Equipamiento Fijo",,,,
+,,observaciones,Observaciones,"Observaciones",VARCHAR,255,false,false,false,true
+,,nombre_en,NombreEn,"Nombre En",VARCHAR,255,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,id_avion,IdAvion,"Id Avion",INT,0,false,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_equipamiento_fijo,IdEquipamientoFijo,"Id Equipamiento Fijo",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,nombre_es,NombreEs,"Nombre Es",VARCHAR,255,false,false,false,false
+,ACTION_FORM,,ActionForm,,"Action Form",,,,
+,,url,Url,"Url",VARCHAR,255,false,false,false,false
+,,id_action_form,IdActionForm,"Id Action Form",INT,0,true,false,true,false
+,,id_opcion_menu,IdOpcionMenu,"Id Opcion Menu",INT,0,false,true,false,false
+,HORARIO,,Horario,,"Horario",,,,
+,,hora_fin,HoraFin,"Hora Fin",TIME,0,false,false,false,false
+,,hora_inicio,HoraInicio,"Hora Inicio",TIME,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_region,IdRegion,"Id Region",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_horario,IdHorario,"Id Horario",INT,0,true,false,true,false
+,POTENCIAL,,Potencial,,"POTENCIALES",,,,
+,,url_potencial,UrlPotencial,,VARCHAR,255,false,false,false,false
+,,id_TipoCiclo,IdTipociclo,,INT,0,false,true,false,true
+,,id_proveedor_estacion,IdProveedorEstacion,,INT,0,false,true,false,true
+,,observaciones,Observaciones,,VARCHAR,255,false,false,false,true
+,,version_potencial,VersionPotencial,,INT,0,false,false,false,true
+,,usuario_creo,UsuarioCreo,,VARCHAR,100,false,false,false,false
+,,id_noCicloTemporada,IdNociclotemporada,,INT,0,false,true,false,false
+,,fecha_observaciones,FechaObservaciones,,DATE,0,false,false,false,true
+,,usuario_observaciones,UsuarioObservaciones,,VARCHAR,100,false,false,false,true
+,,id_codigo_servicio,IdCodigoServicio,,INT,0,false,true,false,true
+,,vigencia_potencial,VigenciaPotencial,,TIMESTAMP,0,false,false,false,true
+,,id_potencial,IdPotencial,,INT,0,true,false,true,false
+,,id_estatusPotencial,IdEstatuspotencial,,INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,,TIMESTAMP,0,false,false,false,false
+,,clave_proveedor,ClaveProveedor,,VARCHAR,10,false,true,false,true
+,,nota_recordatorio,NotaRecordatorio,,VARCHAR,255,false,false,false,true
+,,id_clase,IdClase,,INT,0,false,true,false,false
+,,fecha_recordatorio,FechaRecordatorio,,TIMESTAMP,0,false,false,false,true
+,,mime_type,MimeType,,VARCHAR,64,false,false,false,false
+,MATERIAL_TSU,,MaterialTsu,,"Material Tsu",,,,
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,false,true,false,false
+,,id_material_tsu,IdMaterialTsu,"Id Material Tsu",INT,0,true,false,true,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,cantidad,Cantidad,"Cantidad",INT,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_tsu,IdTsu,"Id Tsu",INT,0,false,true,false,true
+,ARCHIVO,,Archivo,,"Archivo",,,,
+,,id_archivo,IdArchivo,"Id Archivo",INT,0,true,false,true,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,nombre_archivo,NombreArchivo,"Nombre Archivo",VARCHAR,100,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,url_archivo,UrlArchivo,"Url Archivo",VARCHAR,512,false,false,false,false
+,,mime_type,MimeType,"Mime Type",VARCHAR,64,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_proceso,IdProceso,"Id Proceso",INT,0,false,true,false,false
+,PROVEEDOR_REGION,,ProveedorRegion,,"Proveedor Region",,,,
+,,id_region,IdRegion,"Id Region",INT,0,true,true,false,false
+,,clave_proveedor,ClaveProveedor,"Clave Proveedor",VARCHAR,10,true,true,false,false
+,GRAFICO_PRODUCTO,,GraficoProducto,,"Grafico Producto",,,,
+,,id_producto,IdProducto,"Id Producto",INT,0,true,true,false,false
+,,id_grafico,IdGrafico,"Id Grafico",INT,0,true,true,false,false
+,EVIDENCIA,,Evidencia,,"Evidencia",,,,
+,,id_seguimiento,IdSeguimiento,"Id Seguimiento",INT,0,false,true,false,true
+,,id_multimedio,IdMultimedio,"Id Multimedio",INT,0,false,true,false,false
+,,id_evidencia,IdEvidencia,"Id Evidencia",INT,0,true,false,true,false
+,,id_reporte,IdReporte,"Id Reporte",INT,0,false,true,false,false
+,OPCION_MENU_PERFIL,,OpcionMenuPerfil,,"Opcion Menu Perfil",,,,
+,,id_opcion_menu_perfil,IdOpcionMenuPerfil,"Id Opcion Menu Perfil",INT,0,true,false,true,false
+,,id_perfil,IdPerfil,"Id Perfil",VARCHAR,50,false,true,false,false
+,,id_opcion_menu,IdOpcionMenu,"Id Opcion Menu",INT,0,false,true,false,false
+,,permiso_rwd,PermisoRwd,"Permiso Rwd",TINYINT,0,false,false,false,false
+,TRADUCCION,,Traduccion,,"Traduccion",,,,
+,,id_entidad,IdEntidad,"Id Entidad",INT,0,false,false,false,false
+,,valor,Valor,"Valor",VARCHAR,100,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,nombre_entidad,NombreEntidad,"Nombre Entidad",VARCHAR,50,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_traduccion,IdTraduccion,"Id Traduccion",INT,0,true,false,false,false
+,,campo,Campo,"Campo",VARCHAR,50,false,false,false,false
+,PAX_COMPEMENTARIO,,PaxCompementario,,"Pax Compementario",,,,
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,false,true,false,false
+,,cantidad,Cantidad,"Cantidad",INT,0,false,false,false,false
+,,max_pasajeros,MaxPasajeros,"Max Pasajeros",INT,0,false,false,false,false
+,,id_detalle_tabla_complementario,IdDetalleTablaComplementario,"Id Detalle Tabla Complementario",INT,0,false,true,false,false
+,,no_pasajeros,NoPasajeros,"No Pasajeros",INT,0,false,false,false,false
+,,id_pax_complementario,IdPaxComplementario,"Id Pax Complementario",INT,0,true,false,true,false
+,CONFIGURACION_CICLO,,ConfiguracionCiclo,,"Configuracion Ciclo",,,,
+,,id_noCiclo,IdNociclo,"Id Nociclo",INT,0,false,true,false,true
+,,id_temporada,IdTemporada,"Id Temporada",INT,0,false,true,false,true
+,,id_ciclo,IdCiclo,"Id Ciclo",INT,0,false,true,false,false
+,,id_configuracion_ciclo,IdConfiguracionCiclo,"Id Configuracion Ciclo",INT,0,true,false,true,false
+,,id_mes,IdMes,"Id Mes",INT,0,false,true,false,true
+,,id_tipo_temporada,IdTipoTemporada,"Id Tipo Temporada",INT,0,false,true,false,true
+,,id_tipo_quincena,IdTipoQuincena,"Id Tipo Quincena",INT,0,false,true,false,true
+,,id_periodicidad,IdPeriodicidad,"Id Periodicidad",INT,0,false,true,false,true
+,PERFIL_USUARIO,,PerfilUsuario,,"Perfil Usuario",,,,
+,,perfil,Perfil,"Perfil",VARCHAR,50,true,true,false,false
+,,email_usuario,EmailUsuario,"Email Usuario",VARCHAR,100,true,true,false,false
+,RESPONSABLE_PRODUCTO,,ResponsableProducto,,"Responsable Producto",,,,
+,,id_tipo_producto_reporte,IdTipoProductoReporte,"Id Tipo Producto Reporte",INT,0,true,true,false,false
+,,id_responsable_estacion,IdResponsableEstacion,"Id Responsable Estacion",INT,0,true,true,false,false
+,GRAFICO_DETALLE,,GraficoDetalle,,"Grafico Detalle",,,,
+,,url_grafico,UrlGrafico,"Url Grafico",VARCHAR,255,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,anio_rev,AnioRev,"Anio Rev",INT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,mime_type,MimeType,"Mime Type",VARCHAR,64,false,false,false,false
+,,id_grafico,IdGrafico,"Id Grafico",INT,0,false,true,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,no_rev,NoRev,"No Rev",TINYINT,0,false,false,false,false
+,,id_grafico_detalle,IdGraficoDetalle,"Id Grafico Detalle",INT,0,true,false,true,false
+,AVION_AUDIFONO,,AvionAudifono,,"Avion Audifono",,,,
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,false,true,false,false
+,,id_clase,IdClase,"Id Clase",INT,0,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,id_avion,IdAvion,"Id Avion",INT,0,false,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_avion_audifono,IdAvionAudifono,"Id Avion Audifono",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,CANTIDAD_VUELO_COMPLEMENTARIO,,CantidadVueloComplementario,,"Cantidad Vuelo Complementario",,,,
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,false,true,false,false
+,,cantidad,Cantidad,"Cantidad",INT,0,false,false,false,false
+,,id_detalle_vuelo_complementario,IdDetalleVueloComplementario,"Id Detalle Vuelo Complementario",INT,0,true,false,true,false
+,,maximo,Maximo,"Maximo",INT,0,false,false,false,false
+,,id_detalle_complementario,IdDetalleComplementario,"Id Detalle Complementario",INT,0,false,true,false,false
+,MATERIAL_EXTRA,,MaterialExtra,,"Material Extra",,,,
+,,id_material_extra,IdMaterialExtra,"Id Material Extra",INT,0,true,false,true,false
+,,material_comisariato,MaterialComisariato,"Material Comisariato",VARCHAR,50,false,false,false,true
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,false,true,false,true
+,,cve_kit_master,CveKitMaster,"Cve Kit Master",VARCHAR,50,false,true,false,true
+,,id_detalle_tabla_complementario,IdDetalleTablaComplementario,"Id Detalle Tabla Complementario",INT,0,false,true,false,false
+,,instrucciones,Instrucciones,"Instrucciones",VARCHAR,90,false,false,false,true
+,,material_montaje,MaterialMontaje,"Material Montaje",VARCHAR,50,false,true,false,true
+,,material_amx,MaterialAmx,"Material Amx",VARCHAR,50,false,true,false,true
+,,material_montaje_amx,MaterialMontajeAmx,"Material Montaje Amx",VARCHAR,50,false,true,false,true
+,,material_comisariato_montaje,MaterialComisariatoMontaje,"Material Comisariato Montaje",INT,0,false,false,false,true
+,CONFIGURACION_REPORTE,,ConfiguracionReporte,,"Configuracion Reporte",,,,
+,,status,Status,"Status",INT,0,false,true,false,false
+,,id_tipo_producto_reporte,IdTipoProductoReporte,"Id Tipo Producto Reporte",INT,0,false,true,false,false
+,,id_tipo_irregularidad,IdTipoIrregularidad,"Id Tipo Irregularidad",INT,0,false,true,false,false
+,,id_configuracion_reporte,IdConfiguracionReporte,"Id Configuracion Reporte",INT,0,true,false,true,false
+,,id_criterio_irregularidad,IdCriterioIrregularidad,"Id Criterio Irregularidad",INT,0,false,true,false,false
+,DETALLE_MODELO_ABORDAJE,,DetalleModeloAbordaje,,"Detalle Modelo Abordaje",,,,
+,,id_modelo_avion,IdModeloAvion,"Id Modelo Avion",INT,0,true,true,false,false
+,,id_tabla_abordamiento,IdTablaAbordamiento,"Id Tabla Abordamiento",INT,0,true,true,false,false
+,AUDITABLE,,Auditable,,"Auditable",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_auditable,IdAuditable,"Id Auditable",INT,0,true,false,true,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,ACOMODO_PRODUCTO,,AcomodoProducto,,"Acomodo Producto",,,,
+,,id_producto,IdProducto,"Id Producto",INT,0,true,true,false,false
+,,id_acomodo,IdAcomodo,"Id Acomodo",INT,0,true,true,false,false
+,KIT_TSU,,KitTsu,,"Kit Tsu",,,,
+,,cve_kit_master,CveKitMaster,"Cve Kit Master",VARCHAR,50,false,true,false,true
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,cantidad,Cantidad,"Cantidad",INT,0,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,id_kit_tsu,IdKitTsu,"Id Kit Tsu",INT,0,true,false,true,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_tsu,IdTsu,"Id Tsu",INT,0,false,true,false,true
+,COMUNICADO_PROVEEDOR_ESTACION,,ComunicadoProveedorEstacion,,"Comunicado Proveedor Estacion",,,,
+,,contactos_dirigidos,ContactosDirigidos,"Contactos Dirigidos",INT,0,false,false,false,true
+,,id_comunicado_proveedor_estacion,IdComunicadoProveedorEstacion,"Id Comunicado Proveedor Estacion",INT,0,true,false,true,false
+,,id_comunicado,IdComunicado,"Id Comunicado",INT,10,false,true,false,false
+,,id_proveedor_estacion,IdProveedorEstacion,"Id Proveedor Estacion",INT,0,false,true,false,false
+,RELACION_FLOTA,,RelacionFlota,,"Relacion Flota",,,,
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,fecha,Fecha,"Fecha",DATE,0,false,false,false,false
+,,revision,Revision,"Revision",INT,0,false,false,false,false
+,,id_relacion_flota,IdRelacionFlota,"Id Relacion Flota",INT,0,true,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,EQUIPAMIENTO_SEMIFIJO,,EquipamientoSemifijo,,"Equipamiento Semifijo",,,,
+,,observaciones,Observaciones,"Observaciones",VARCHAR,250,false,false,false,true
+,,numero_parte,NumeroParte,"Numero Parte",VARCHAR,50,false,true,false,false
+,,status,Status,"Status",TINYINT,0,false,false,false,false
+,,usuario_modifico,UsuarioModifico,"Usuario Modifico",VARCHAR,100,false,false,false,false
+,,fecha_modifico,FechaModifico,"Fecha Modifico",TIMESTAMP,0,false,false,false,false
+,,cantidad,Cantidad,"Cantidad",INT,0,false,false,false,false
+,,id_avion,IdAvion,"Id Avion",INT,0,false,true,false,false
+,,usuario_creo,UsuarioCreo,"Usuario Creo",VARCHAR,100,false,false,false,false
+,,fecha_creo,FechaCreo,"Fecha Creo",TIMESTAMP,0,false,false,false,false
+,,id_equipamiento_semifijo,IdEquipamientoSemifijo,"Id Equipamiento Semifijo",INT,0,true,false,true,false
+,,peso,Peso,"Peso",DECIMAL,16,false,false,false,false
+
